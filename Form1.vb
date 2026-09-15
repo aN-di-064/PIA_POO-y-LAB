@@ -9,8 +9,12 @@ Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        If (TextBox1.Text = "user") Then
+        If (TextBox1.Text = "user") And (TextBox2.Text = "Caña") Then
+
             Interfaz_Principal.Show()
+            Me.Hide()
+            TextBox1.Text = ""
+            TextBox2.Text = ""
 
         Else
             MessageBox.Show("Los datos de inicio de sesión son incorrectos", "Advertencia",

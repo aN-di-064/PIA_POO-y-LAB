@@ -1,8 +1,8 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Ventas
-    Inherits System.Windows.Forms.Form
+Partial Class UC_Corte
+    Inherits System.Windows.Forms.UserControl
 
-    'Form reemplaza a Dispose para limpiar la lista de componentes.
+    'UserControl reemplaza a Dispose para limpiar la lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -22,30 +22,15 @@ Partial Class Ventas
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        CheckBox1 = New CheckBox()
         SuspendLayout()
         ' 
-        ' CheckBox1
-        ' 
-        CheckBox1.AutoSize = True
-        CheckBox1.Location = New Point(385, 107)
-        CheckBox1.Name = "CheckBox1"
-        CheckBox1.Size = New Size(85, 19)
-        CheckBox1.TabIndex = 0
-        CheckBox1.Text = "CheckBox1"
-        CheckBox1.UseVisualStyleBackColor = True
-        ' 
-        ' Ventas
+        ' UC_Corte
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Controls.Add(CheckBox1)
-        Name = "Ventas"
-        Text = "Ventas"
+        Name = "UC_Corte"
+        Size = New Size(846, 497)
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
-    Friend WithEvents CheckBox1 As CheckBox
 End Class
