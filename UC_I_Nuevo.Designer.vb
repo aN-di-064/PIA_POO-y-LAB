@@ -35,11 +35,15 @@ Partial Class UC_I_Nuevo
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
+        MaskedTextBox6 = New MaskedTextBox()
+        Label7 = New Label()
         Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel_Form
         ' 
+        Panel_Form.Controls.Add(MaskedTextBox6)
+        Panel_Form.Controls.Add(Label7)
         Panel_Form.Controls.Add(Label1)
         Panel_Form.Controls.Add(Button1)
         Panel_Form.Controls.Add(MaskedTextBox5)
@@ -141,7 +145,7 @@ Partial Class UC_I_Nuevo
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Location = New Point(129, 302)
+        Label6.Location = New Point(129, 342)
         Label6.Name = "Label6"
         Label6.Size = New Size(64, 15)
         Label6.TabIndex = 31
@@ -150,11 +154,27 @@ Partial Class UC_I_Nuevo
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(129, 252)
+        Label5.Location = New Point(129, 297)
         Label5.Name = "Label5"
         Label5.Size = New Size(58, 15)
         Label5.TabIndex = 30
         Label5.Text = "Categoría"
+        ' 
+        ' MaskedTextBox6
+        ' 
+        MaskedTextBox6.Location = New Point(219, 339)
+        MaskedTextBox6.Name = "MaskedTextBox6"
+        MaskedTextBox6.Size = New Size(201, 23)
+        MaskedTextBox6.TabIndex = 37
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Location = New Point(129, 252)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(40, 15)
+        Label7.TabIndex = 36
+        Label7.Text = "Precio"
         ' 
         ' UC_I_Nuevo
         ' 
@@ -181,5 +201,7 @@ Partial Class UC_I_Nuevo
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
+    Friend WithEvents MaskedTextBox6 As MaskedTextBox
+    Friend WithEvents Label7 As Label
 
 End Class

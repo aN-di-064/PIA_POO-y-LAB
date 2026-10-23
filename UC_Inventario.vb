@@ -1,5 +1,27 @@
 ﻿Public Class UC_Inventario
 
+    Private Sub UC_Inventario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Simula un clic en el botón Nuevo al abrir la vista por primera vez
+        BTN_NEW.PerformClick()
+    End Sub
+
+    Private Sub MostrarSubVista(uc As UserControl, botonActivo As Button)
+        PANEL_DERECHO.Controls.Clear()
+        uc.Dock = DockStyle.Fill
+        PANEL_DERECHO.Controls.Add(uc)
+        uc.BringToFront()
+
+        ' 1. Restablecer el color de todos los botones a su estado normal (Gris por defecto)
+        BTN_NEW.BackColor = SystemColors.Control
+        BTN_MOD.BackColor = SystemColors.Control
+        BTN_DEL.BackColor = SystemColors.Control
+        BTN_CAT.BackColor = SystemColors.Control
+
+        ' 2. Cambiar el color únicamente al botón que fue presionado (ej. un tono celeste o azul claro)
+        botonActivo.BackColor = Color.LightSkyBlue
+    End Sub
+
+
     Private Sub MostrarSubVista(uc As UserControl)
         PANEL_DERECHO.Controls.Clear()
 
