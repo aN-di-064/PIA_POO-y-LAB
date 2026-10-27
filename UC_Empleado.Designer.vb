@@ -70,7 +70,7 @@ Partial Class UC_Empleado
         ' 
         ' BTN_NEW
         ' 
-        BTN_NEW.Location = New Point(29, 80)
+        BTN_NEW.Location = New Point(29, 74)
         BTN_NEW.Name = "BTN_NEW"
         BTN_NEW.Size = New Size(127, 25)
         BTN_NEW.TabIndex = 0

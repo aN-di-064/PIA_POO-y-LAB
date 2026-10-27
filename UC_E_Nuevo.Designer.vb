@@ -28,7 +28,6 @@ Partial Class UC_E_Nuevo
         Label2 = New Label()
         MaskedTextBox4 = New MaskedTextBox()
         MaskedTextBox1 = New MaskedTextBox()
-        MaskedTextBox3 = New MaskedTextBox()
         Label3 = New Label()
         MaskedTextBox2 = New MaskedTextBox()
         Label4 = New Label()
@@ -36,6 +35,7 @@ Partial Class UC_E_Nuevo
         Label5 = New Label()
         MaskedTextBox6 = New MaskedTextBox()
         Label7 = New Label()
+        ComboBox1 = New ComboBox()
         SuspendLayout()
         ' 
         ' Label1
@@ -86,21 +86,14 @@ Partial Class UC_E_Nuevo
         MaskedTextBox1.Size = New Size(201, 23)
         MaskedTextBox1.TabIndex = 38
         ' 
-        ' MaskedTextBox3
-        ' 
-        MaskedTextBox3.Location = New Point(191, 190)
-        MaskedTextBox3.Name = "MaskedTextBox3"
-        MaskedTextBox3.Size = New Size(201, 23)
-        MaskedTextBox3.TabIndex = 45
-        ' 
         ' Label3
         ' 
         Label3.AutoSize = True
         Label3.Location = New Point(101, 198)
         Label3.Name = "Label3"
-        Label3.Size = New Size(18, 15)
+        Label3.Size = New Size(24, 15)
         Label3.TabIndex = 40
-        Label3.Text = "ID"
+        Label3.Text = "Rol"
         ' 
         ' MaskedTextBox2
         ' 
@@ -152,10 +145,20 @@ Partial Class UC_E_Nuevo
         Label7.TabIndex = 48
         Label7.Text = "RFC"
         ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Items.AddRange(New Object() {"Administrador", "Cajero"})
+        ComboBox1.Location = New Point(191, 195)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(201, 23)
+        ComboBox1.TabIndex = 50
+        ' 
         ' UC_E_Nuevo
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(ComboBox1)
         Controls.Add(MaskedTextBox6)
         Controls.Add(Label7)
         Controls.Add(Label1)
@@ -164,7 +167,6 @@ Partial Class UC_E_Nuevo
         Controls.Add(Label2)
         Controls.Add(MaskedTextBox4)
         Controls.Add(MaskedTextBox1)
-        Controls.Add(MaskedTextBox3)
         Controls.Add(Label3)
         Controls.Add(MaskedTextBox2)
         Controls.Add(Label4)
@@ -182,7 +184,6 @@ Partial Class UC_E_Nuevo
     Friend WithEvents Label2 As Label
     Friend WithEvents MaskedTextBox4 As MaskedTextBox
     Friend WithEvents MaskedTextBox1 As MaskedTextBox
-    Friend WithEvents MaskedTextBox3 As MaskedTextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents MaskedTextBox2 As MaskedTextBox
     Friend WithEvents Label4 As Label
@@ -190,5 +191,6 @@ Partial Class UC_E_Nuevo
     Friend WithEvents Label5 As Label
     Friend WithEvents MaskedTextBox6 As MaskedTextBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 
 End Class

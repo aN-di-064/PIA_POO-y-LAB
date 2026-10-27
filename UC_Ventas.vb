@@ -1,20 +1,20 @@
 ﻿Public Class UC_Ventas
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Using frmBusqueda As New Busqueda_Venta()
-            If frmBusqueda.ShowDialog() = DialogResult.OK Then
-                Dim codigo As String = frmBusqueda.CodigoSeleccionado
-                Dim descripcion As String = frmBusqueda.DescripcionSeleccionada
-                Dim precio As Decimal = frmBusqueda.PrecioSeleccionado
-                Dim cantidad As Integer = 1
-                Dim importe As Decimal = cantidad * precio
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
+        Using frmBusqueda As New Busqueda_Venta
+            If frmBusqueda.ShowDialog = DialogResult.OK Then
+                Dim codigo = frmBusqueda.CodigoSeleccionado
+                Dim descripcion = frmBusqueda.DescripcionSeleccionada
+                Dim precio = frmBusqueda.PrecioSeleccionado
+                Dim cantidad = 1
+                Dim importe = cantidad * precio
 
                 ' Insertar directamente una nueva fila en el DataGridView de Ventas
                 DataGridView1.Rows.Add(codigo, descripcion, cantidad, precio, importe)

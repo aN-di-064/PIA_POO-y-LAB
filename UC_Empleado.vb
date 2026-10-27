@@ -12,7 +12,7 @@
     End Sub
 
     Private Sub BTN_NEW_Click(sender As Object, e As EventArgs) Handles BTN_NEW.Click
-        MostrarSubVista(New UC_E_Nuevo())
+        MostrarSubVista(New UC_E_Nuevo)
     End Sub
 
     Private Sub BTN_MOD_Click(sender As Object, e As EventArgs) Handles BTN_MOD.Click

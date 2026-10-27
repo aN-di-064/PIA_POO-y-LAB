@@ -123,4 +123,8 @@
         ' Si el rol es 1, permite mostrar la vista de Inventario
         MostrarVista(New UC_Empleado())
     End Sub
+
+    Private Sub ToolStripButton7_Click(sender As Object, e As EventArgs) Handles ToolStripButton7.Click
+        MostrarVista(New UC_Compras())
+    End Sub
 End Class
