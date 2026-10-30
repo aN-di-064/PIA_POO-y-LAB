@@ -11,15 +11,19 @@
         uc.BringToFront()
     End Sub
 
-    Private Sub BTN_NEW_Click(sender As Object, e As EventArgs) Handles BTN_NEW.Click
+    Private Sub BTN_NEW_Click(sender As Object, e As EventArgs)
         MostrarSubVista(New UC_E_Nuevo)
     End Sub
 
-    Private Sub BTN_MOD_Click(sender As Object, e As EventArgs) Handles BTN_MOD.Click
-        MostrarSubVista(New UC_E_Modificar())
+    Private Sub BTN_MOD_Click(sender As Object, e As EventArgs)
+        MostrarSubVista(New UC_E_Modificar)
     End Sub
 
-    Private Sub BTN_DEL_Click(sender As Object, e As EventArgs) Handles BTN_DEL.Click
-        MostrarSubVista(New UC_E_Eliminar())
+    Private Sub BTN_DEL_Click(sender As Object, e As EventArgs)
+        MostrarSubVista(New UC_E_Eliminar)
+    End Sub
+
+    Private Sub PANEL_DERECHO_Paint(sender As Object, e As PaintEventArgs)
+
     End Sub
 End Class
