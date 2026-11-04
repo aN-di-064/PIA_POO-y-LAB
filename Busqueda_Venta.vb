@@ -17,17 +17,17 @@ Public Class Busqueda_Venta
         ' Lógica de carga al abrir el buscador
     End Sub
 
-    Private Sub DgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellDoubleClick
+    Private Sub DgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
         If e.RowIndex >= 0 Then
-            Dim fila As DataGridViewRow = dgvProductos.Rows(e.RowIndex)
+            Dim fila = dgvProductos.Rows(e.RowIndex)
 
             ' Coincidir con los campos reales del esquema: Id_prod, Descripcion_prod, Precio_prod
-            CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString()
-            DescripcionSeleccionada = fila.Cells("Descripcion_prod").Value.ToString()
+            CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString
+            DescripcionSeleccionada = fila.Cells("Descripcion_prod").Value.ToString
             PrecioSeleccionado = Convert.ToDecimal(fila.Cells("Precio_prod").Value)
 
-            Me.DialogResult = DialogResult.OK
-            Me.Close()
+            DialogResult = DialogResult.OK
+            Close
         End If
     End Sub
 

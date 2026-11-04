@@ -22,175 +22,201 @@ Partial Class UC_E_Nuevo
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Label1 = New Label()
+        Panel_Form = New Panel()
+        Button2 = New Button()
+        MTB_Contraseña = New MaskedTextBox()
+        Label7 = New Label()
         Button1 = New Button()
-        MaskedTextBox5 = New MaskedTextBox()
+        MTB_RFC = New MaskedTextBox()
         Label2 = New Label()
-        MaskedTextBox4 = New MaskedTextBox()
-        MaskedTextBox1 = New MaskedTextBox()
+        MTB_Telefono = New MaskedTextBox()
+        MTB_Codigo = New MaskedTextBox()
+        MTB_Rol = New MaskedTextBox()
         Label3 = New Label()
-        MaskedTextBox2 = New MaskedTextBox()
+        MTB_Nombre = New MaskedTextBox()
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
-        MaskedTextBox6 = New MaskedTextBox()
-        Label7 = New Label()
-        ComboBox1 = New ComboBox()
+        Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
-        ' Label1
+        ' Panel_Form
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(249, 28)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(105, 15)
-        Label1.TabIndex = 36
-        Label1.Text = "Agregar Empleado"
+        Panel_Form.Anchor = AnchorStyles.None
+        Panel_Form.AutoScroll = True
+        Panel_Form.Controls.Add(Button2)
+        Panel_Form.Controls.Add(MTB_Contraseña)
+        Panel_Form.Controls.Add(Label7)
+        Panel_Form.Controls.Add(Button1)
+        Panel_Form.Controls.Add(MTB_RFC)
+        Panel_Form.Controls.Add(Label2)
+        Panel_Form.Controls.Add(MTB_Telefono)
+        Panel_Form.Controls.Add(MTB_Codigo)
+        Panel_Form.Controls.Add(MTB_Rol)
+        Panel_Form.Controls.Add(Label3)
+        Panel_Form.Controls.Add(MTB_Nombre)
+        Panel_Form.Controls.Add(Label4)
+        Panel_Form.Controls.Add(Label6)
+        Panel_Form.Controls.Add(Label5)
+        Panel_Form.Location = New Point(-8, -21)
+        Panel_Form.Name = "Panel_Form"
+        Panel_Form.Size = New Size(694, 444)
+        Panel_Form.TabIndex = 6
+        ' 
+        ' Button2
+        ' 
+        Button2.Font = New Font("Segoe UI", 12.0F)
+        Button2.Location = New Point(481, 38)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(175, 26)
+        Button2.TabIndex = 67
+        Button2.Text = "Buscar Material"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' MTB_Contraseña
+        ' 
+        MTB_Contraseña.Font = New Font("Segoe UI", 12.0F)
+        MTB_Contraseña.Location = New Point(262, 300)
+        MTB_Contraseña.Name = "MTB_Contraseña"
+        MTB_Contraseña.Size = New Size(201, 29)
+        MTB_Contraseña.TabIndex = 66
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Font = New Font("Segoe UI", 12.0F)
+        Label7.Location = New Point(88, 300)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(89, 21)
+        Label7.TabIndex = 65
+        Label7.Text = "Contraseña"
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(503, 351)
+        Button1.Font = New Font("Segoe UI", 12.0F)
+        Button1.Location = New Point(306, 352)
         Button1.Name = "Button1"
-        Button1.Size = New Size(75, 23)
-        Button1.TabIndex = 39
-        Button1.Text = "Eliminar"
+        Button1.Size = New Size(122, 30)
+        Button1.TabIndex = 56
+        Button1.Text = "Agregar"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' MaskedTextBox5
+        ' MTB_RFC
         ' 
-        MaskedTextBox5.Location = New Point(191, 336)
-        MaskedTextBox5.Name = "MaskedTextBox5"
-        MaskedTextBox5.Size = New Size(201, 23)
-        MaskedTextBox5.TabIndex = 47
+        MTB_RFC.Font = New Font("Segoe UI", 12.0F)
+        MTB_RFC.Location = New Point(262, 248)
+        MTB_RFC.Name = "MTB_RFC"
+        MTB_RFC.Size = New Size(202, 29)
+        MTB_RFC.TabIndex = 64
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(101, 99)
+        Label2.Font = New Font("Segoe UI", 12.0F)
+        Label2.Location = New Point(88, 38)
         Label2.Name = "Label2"
-        Label2.Size = New Size(46, 15)
-        Label2.TabIndex = 37
+        Label2.Size = New Size(60, 21)
+        Label2.TabIndex = 54
         Label2.Text = "Código"
         ' 
-        ' MaskedTextBox4
+        ' MTB_Telefono
         ' 
-        MaskedTextBox4.Location = New Point(191, 241)
-        MaskedTextBox4.Name = "MaskedTextBox4"
-        MaskedTextBox4.Size = New Size(201, 23)
-        MaskedTextBox4.TabIndex = 46
+        MTB_Telefono.Font = New Font("Segoe UI", 12.0F)
+        MTB_Telefono.Location = New Point(262, 195)
+        MTB_Telefono.Name = "MTB_Telefono"
+        MTB_Telefono.Size = New Size(202, 29)
+        MTB_Telefono.TabIndex = 63
         ' 
-        ' MaskedTextBox1
+        ' MTB_Codigo
         ' 
-        MaskedTextBox1.Location = New Point(191, 96)
-        MaskedTextBox1.Name = "MaskedTextBox1"
-        MaskedTextBox1.Size = New Size(201, 23)
-        MaskedTextBox1.TabIndex = 38
+        MTB_Codigo.Font = New Font("Segoe UI", 12.0F)
+        MTB_Codigo.Location = New Point(262, 38)
+        MTB_Codigo.Name = "MTB_Codigo"
+        MTB_Codigo.Size = New Size(202, 29)
+        MTB_Codigo.TabIndex = 55
+        ' 
+        ' MTB_Rol
+        ' 
+        MTB_Rol.Font = New Font("Segoe UI", 12.0F)
+        MTB_Rol.Location = New Point(262, 142)
+        MTB_Rol.Name = "MTB_Rol"
+        MTB_Rol.Size = New Size(202, 29)
+        MTB_Rol.TabIndex = 62
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(101, 198)
+        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.Location = New Point(88, 142)
         Label3.Name = "Label3"
-        Label3.Size = New Size(24, 15)
-        Label3.TabIndex = 40
+        Label3.Size = New Size(33, 21)
+        Label3.TabIndex = 57
         Label3.Text = "Rol"
         ' 
-        ' MaskedTextBox2
+        ' MTB_Nombre
         ' 
-        MaskedTextBox2.Location = New Point(191, 148)
-        MaskedTextBox2.Name = "MaskedTextBox2"
-        MaskedTextBox2.Size = New Size(201, 23)
-        MaskedTextBox2.TabIndex = 44
+        MTB_Nombre.Font = New Font("Segoe UI", 12.0F)
+        MTB_Nombre.Location = New Point(262, 90)
+        MTB_Nombre.Name = "MTB_Nombre"
+        MTB_Nombre.Size = New Size(202, 29)
+        MTB_Nombre.TabIndex = 61
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(101, 148)
+        Label4.Font = New Font("Segoe UI", 12.0F)
+        Label4.Location = New Point(88, 90)
         Label4.Name = "Label4"
-        Label4.Size = New Size(51, 15)
-        Label4.TabIndex = 41
+        Label4.Size = New Size(68, 21)
+        Label4.TabIndex = 58
         Label4.Text = "Nombre"
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Location = New Point(101, 339)
+        Label6.Font = New Font("Segoe UI", 12.0F)
+        Label6.Location = New Point(88, 248)
         Label6.Name = "Label6"
-        Label6.Size = New Size(67, 15)
-        Label6.TabIndex = 43
-        Label6.Text = "Contraseña"
+        Label6.Size = New Size(38, 21)
+        Label6.TabIndex = 60
+        Label6.Text = "RFC"
         ' 
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(101, 244)
+        Label5.Font = New Font("Segoe UI", 12.0F)
+        Label5.Location = New Point(88, 195)
         Label5.Name = "Label5"
-        Label5.Size = New Size(52, 15)
-        Label5.TabIndex = 42
+        Label5.Size = New Size(68, 21)
+        Label5.TabIndex = 59
         Label5.Text = "Telefono"
-        ' 
-        ' MaskedTextBox6
-        ' 
-        MaskedTextBox6.Location = New Point(191, 289)
-        MaskedTextBox6.Name = "MaskedTextBox6"
-        MaskedTextBox6.Size = New Size(201, 23)
-        MaskedTextBox6.TabIndex = 49
-        ' 
-        ' Label7
-        ' 
-        Label7.AutoSize = True
-        Label7.Location = New Point(101, 297)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(28, 15)
-        Label7.TabIndex = 48
-        Label7.Text = "RFC"
-        ' 
-        ' ComboBox1
-        ' 
-        ComboBox1.FormattingEnabled = True
-        ComboBox1.Items.AddRange(New Object() {"Administrador", "Cajero"})
-        ComboBox1.Location = New Point(191, 195)
-        ComboBox1.Name = "ComboBox1"
-        ComboBox1.Size = New Size(201, 23)
-        ComboBox1.TabIndex = 50
         ' 
         ' UC_E_Nuevo
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(ComboBox1)
-        Controls.Add(MaskedTextBox6)
-        Controls.Add(Label7)
-        Controls.Add(Label1)
-        Controls.Add(Button1)
-        Controls.Add(MaskedTextBox5)
-        Controls.Add(Label2)
-        Controls.Add(MaskedTextBox4)
-        Controls.Add(MaskedTextBox1)
-        Controls.Add(Label3)
-        Controls.Add(MaskedTextBox2)
-        Controls.Add(Label4)
-        Controls.Add(Label6)
-        Controls.Add(Label5)
+        Controls.Add(Panel_Form)
         Name = "UC_E_Nuevo"
         Size = New Size(678, 403)
+        Panel_Form.ResumeLayout(False)
+        Panel_Form.PerformLayout()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
-    Friend WithEvents Label1 As Label
+    Friend WithEvents Panel_Form As Panel
+    Friend WithEvents Button2 As Button
+    Friend WithEvents MTB_Contraseña As MaskedTextBox
+    Friend WithEvents Label7 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents MaskedTextBox5 As MaskedTextBox
+    Friend WithEvents MTB_RFC As MaskedTextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents MaskedTextBox4 As MaskedTextBox
-    Friend WithEvents MaskedTextBox1 As MaskedTextBox
+    Friend WithEvents MTB_Telefono As MaskedTextBox
+    Friend WithEvents MTB_Codigo As MaskedTextBox
+    Friend WithEvents MTB_Rol As MaskedTextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents MaskedTextBox2 As MaskedTextBox
+    Friend WithEvents MTB_Nombre As MaskedTextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents MaskedTextBox6 As MaskedTextBox
-    Friend WithEvents Label7 As Label
-    Friend WithEvents ComboBox1 As ComboBox
 
 End Class

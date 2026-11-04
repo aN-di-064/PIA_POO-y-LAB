@@ -32,4 +32,11 @@
         MostrarSubVista(New UC_I_Categoria())
     End Sub
 
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub Panel_de_contenido_Paint(sender As Object, e As PaintEventArgs) Handles Panel_de_contenido.Paint
+
+    End Sub
 End Class

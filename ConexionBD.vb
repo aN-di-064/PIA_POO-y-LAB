@@ -1,8 +1,10 @@
 ﻿Imports System.Data.OleDb
+Imports System.IO
 
 Module ConexionBD
 
-    Public ReadOnly StringConexion As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\FIME\5to Semestre\Laboratorio de programación orientada a objetos\PIA\Dulceria.accdb;"
+    ' Ruta dinámica que apunta automáticamente a la carpeta "Base de datos" junto al ejecutable
+    Public ReadOnly StringConexion As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Base de datos\Dulceria.accdb") & ";"
 
     Public Function ObtenerConexion() As OleDbConnection
         Dim con As New OleDbConnection(StringConexion)

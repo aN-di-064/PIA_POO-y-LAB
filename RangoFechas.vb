@@ -10,7 +10,7 @@
         DateTimePicker2.Value = DateTime.Now
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         ' Validar que la fecha inicial no sea posterior a la fecha final
         If DateTimePicker1.Value.Date > DateTimePicker2.Value.Date Then
             MessageBox.Show("La fecha de inicio no puede ser posterior a la fecha de fin.",
@@ -27,7 +27,7 @@
         FechaFin = DateTimePicker2.Value.Date.AddDays(1).AddSeconds(-1)
 
         ' Indicar que la acción fue exitosa y cerrar la ventana modal
-        Me.DialogResult = DialogResult.OK
-        Me.Close()
+        DialogResult = DialogResult.OK
+        Close
     End Sub
 End Class

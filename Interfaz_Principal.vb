@@ -8,8 +8,14 @@
         panelContenido.Controls.Add(vista)
         vista.BringToFront()
     End Sub
-    Private Sub Interfaz_Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    Private Sub Interfaz_Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Cargar la vista de Ventas por defecto al abrir la interfaz principal
+        MostrarVista(New UC_Ventas())
+
+        ' Opcional: Si quieres que el botón correspondiente a Ventas (ej. ToolStripButton1) 
+        ' aparezca marcado visualmente al iniciar, descomenta la siguiente línea:
+        ' ToolStripButton1.Checked = True
     End Sub
 
     Private Sub VentasToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -106,7 +112,7 @@
             Exit Sub
         End If
 
-        ' Si el rol es 1, permite mostrar la vista de Inventario
+        ' Si el rol es 1, permite mostrar la vista de Clientes
         MostrarVista(New UC_Cliente())
     End Sub
 
@@ -120,11 +126,12 @@
             Exit Sub
         End If
 
-        ' Si el rol es 1, permite mostrar la vista de Inventario
+        ' Si el rol es 1, permite mostrar la vista de Empleados
         MostrarVista(New UC_Empleado())
     End Sub
 
     Private Sub ToolStripButton7_Click(sender As Object, e As EventArgs) Handles ToolStripButton7.Click
         MostrarVista(New UC_Compras())
     End Sub
+
 End Class

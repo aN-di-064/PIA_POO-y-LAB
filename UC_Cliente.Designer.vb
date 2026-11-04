@@ -22,76 +22,127 @@ Partial Class UC_Cliente
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        PANEL_DERECHO = New Panel()
-        PANEL_IZQUIERDO = New Panel()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        Panel1 = New Panel()
+        Label1 = New Label()
+        Panel_de_contenido = New Panel()
+        Panel3 = New Panel()
         BTN_DEL = New Button()
         BTN_MOD = New Button()
         BTN_NEW = New Button()
-        PANEL_IZQUIERDO.SuspendLayout()
+        TableLayoutPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
+        Panel3.SuspendLayout()
         SuspendLayout()
         ' 
-        ' PANEL_DERECHO
+        ' TableLayoutPanel1
         ' 
-        PANEL_DERECHO.Dock = DockStyle.Fill
-        PANEL_DERECHO.Location = New Point(203, 0)
-        PANEL_DERECHO.Name = "PANEL_DERECHO"
-        PANEL_DERECHO.Size = New Size(556, 445)
-        PANEL_DERECHO.TabIndex = 4
+        TableLayoutPanel1.ColumnCount = 1
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.Controls.Add(Panel1, 0, 0)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 1
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.Size = New Size(1120, 540)
+        TableLayoutPanel1.TabIndex = 0
         ' 
-        ' PANEL_IZQUIERDO
+        ' Panel1
         ' 
-        PANEL_IZQUIERDO.Controls.Add(BTN_DEL)
-        PANEL_IZQUIERDO.Controls.Add(BTN_MOD)
-        PANEL_IZQUIERDO.Controls.Add(BTN_NEW)
-        PANEL_IZQUIERDO.Dock = DockStyle.Left
-        PANEL_IZQUIERDO.Location = New Point(0, 0)
-        PANEL_IZQUIERDO.Name = "PANEL_IZQUIERDO"
-        PANEL_IZQUIERDO.Size = New Size(203, 445)
-        PANEL_IZQUIERDO.TabIndex = 3
+        Panel1.Anchor = AnchorStyles.None
+        Panel1.BackColor = Color.White
+        Panel1.Controls.Add(Label1)
+        Panel1.Controls.Add(Panel_de_contenido)
+        Panel1.Controls.Add(Panel3)
+        Panel1.Location = New Point(105, 7)
+        Panel1.Margin = New Padding(3, 2, 3, 2)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(910, 525)
+        Panel1.TabIndex = 0
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        Label1.Location = New Point(26, 10)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(95, 30)
+        Label1.TabIndex = 2
+        Label1.Text = "Clientes"
+        ' 
+        ' Panel_de_contenido
+        ' 
+        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel_de_contenido.AutoScroll = True
+        Panel_de_contenido.Location = New Point(26, 90)
+        Panel_de_contenido.Name = "Panel_de_contenido"
+        Panel_de_contenido.Size = New Size(858, 405)
+        Panel_de_contenido.TabIndex = 4
+        ' 
+        ' Panel3
+        ' 
+        Panel3.Anchor = AnchorStyles.Left Or AnchorStyles.Right
+        Panel3.BackColor = Color.LightGray
+        Panel3.Controls.Add(BTN_DEL)
+        Panel3.Controls.Add(BTN_MOD)
+        Panel3.Controls.Add(BTN_NEW)
+        Panel3.Location = New Point(26, 45)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(858, 45)
+        Panel3.TabIndex = 3
         ' 
         ' BTN_DEL
         ' 
-        BTN_DEL.Location = New Point(29, 200)
+        BTN_DEL.Font = New Font("Segoe UI", 12F)
+        BTN_DEL.Location = New Point(711, 9)
         BTN_DEL.Name = "BTN_DEL"
-        BTN_DEL.Size = New Size(127, 23)
+        BTN_DEL.Size = New Size(122, 30)
         BTN_DEL.TabIndex = 2
         BTN_DEL.Text = "Eliminar"
         BTN_DEL.UseVisualStyleBackColor = True
         ' 
         ' BTN_MOD
         ' 
-        BTN_MOD.Location = New Point(29, 138)
+        BTN_MOD.Font = New Font("Segoe UI", 12F)
+        BTN_MOD.Location = New Point(389, 9)
         BTN_MOD.Name = "BTN_MOD"
-        BTN_MOD.Size = New Size(127, 23)
+        BTN_MOD.Size = New Size(122, 30)
         BTN_MOD.TabIndex = 1
         BTN_MOD.Text = "Modificar"
         BTN_MOD.UseVisualStyleBackColor = True
         ' 
         ' BTN_NEW
         ' 
-        BTN_NEW.Location = New Point(29, 80)
+        BTN_NEW.Font = New Font("Segoe UI", 12F)
+        BTN_NEW.Location = New Point(79, 9)
         BTN_NEW.Name = "BTN_NEW"
-        BTN_NEW.Size = New Size(127, 25)
+        BTN_NEW.Size = New Size(122, 30)
         BTN_NEW.TabIndex = 0
-        BTN_NEW.Text = "Nuevo"
+        BTN_NEW.Text = "Agregar"
         BTN_NEW.UseVisualStyleBackColor = True
         ' 
         ' UC_Cliente
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(PANEL_DERECHO)
-        Controls.Add(PANEL_IZQUIERDO)
+        Controls.Add(TableLayoutPanel1)
         Name = "UC_Cliente"
-        Size = New Size(759, 445)
-        PANEL_IZQUIERDO.ResumeLayout(False)
+        Size = New Size(1120, 540)
+        TableLayoutPanel1.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
+        Panel1.PerformLayout()
+        Panel3.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents PANEL_DERECHO As Panel
-    Friend WithEvents PANEL_IZQUIERDO As Panel
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel3 As Panel
     Friend WithEvents BTN_DEL As Button
     Friend WithEvents BTN_MOD As Button
     Friend WithEvents BTN_NEW As Button
+    Friend WithEvents Panel_de_contenido As Panel
+    Friend WithEvents Label1 As Label
 
 End Class
