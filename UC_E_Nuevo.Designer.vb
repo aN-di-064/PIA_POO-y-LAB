@@ -31,12 +31,12 @@ Partial Class UC_E_Nuevo
         Label2 = New Label()
         MTB_Telefono = New MaskedTextBox()
         MTB_Codigo = New MaskedTextBox()
-        MTB_Rol = New MaskedTextBox()
         Label3 = New Label()
         MTB_Nombre = New MaskedTextBox()
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
+        CB_Rol = New ComboBox()
         Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
@@ -44,6 +44,7 @@ Partial Class UC_E_Nuevo
         ' 
         Panel_Form.Anchor = AnchorStyles.None
         Panel_Form.AutoScroll = True
+        Panel_Form.Controls.Add(CB_Rol)
         Panel_Form.Controls.Add(Button2)
         Panel_Form.Controls.Add(MTB_Contraseña)
         Panel_Form.Controls.Add(Label7)
@@ -52,7 +53,6 @@ Partial Class UC_E_Nuevo
         Panel_Form.Controls.Add(Label2)
         Panel_Form.Controls.Add(MTB_Telefono)
         Panel_Form.Controls.Add(MTB_Codigo)
-        Panel_Form.Controls.Add(MTB_Rol)
         Panel_Form.Controls.Add(Label3)
         Panel_Form.Controls.Add(MTB_Nombre)
         Panel_Form.Controls.Add(Label4)
@@ -65,7 +65,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' Button2
         ' 
-        Button2.Font = New Font("Segoe UI", 12.0F)
+        Button2.Font = New Font("Segoe UI", 12F)
         Button2.Location = New Point(481, 38)
         Button2.Name = "Button2"
         Button2.Size = New Size(175, 26)
@@ -75,7 +75,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' MTB_Contraseña
         ' 
-        MTB_Contraseña.Font = New Font("Segoe UI", 12.0F)
+        MTB_Contraseña.Font = New Font("Segoe UI", 12F)
         MTB_Contraseña.Location = New Point(262, 300)
         MTB_Contraseña.Name = "MTB_Contraseña"
         MTB_Contraseña.Size = New Size(201, 29)
@@ -84,7 +84,7 @@ Partial Class UC_E_Nuevo
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 12.0F)
+        Label7.Font = New Font("Segoe UI", 12F)
         Label7.Location = New Point(88, 300)
         Label7.Name = "Label7"
         Label7.Size = New Size(89, 21)
@@ -93,7 +93,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' Button1
         ' 
-        Button1.Font = New Font("Segoe UI", 12.0F)
+        Button1.Font = New Font("Segoe UI", 12F)
         Button1.Location = New Point(306, 352)
         Button1.Name = "Button1"
         Button1.Size = New Size(122, 30)
@@ -103,7 +103,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' MTB_RFC
         ' 
-        MTB_RFC.Font = New Font("Segoe UI", 12.0F)
+        MTB_RFC.Font = New Font("Segoe UI", 12F)
         MTB_RFC.Location = New Point(262, 248)
         MTB_RFC.Name = "MTB_RFC"
         MTB_RFC.Size = New Size(202, 29)
@@ -112,7 +112,7 @@ Partial Class UC_E_Nuevo
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 12.0F)
+        Label2.Font = New Font("Segoe UI", 12F)
         Label2.Location = New Point(88, 38)
         Label2.Name = "Label2"
         Label2.Size = New Size(60, 21)
@@ -121,7 +121,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' MTB_Telefono
         ' 
-        MTB_Telefono.Font = New Font("Segoe UI", 12.0F)
+        MTB_Telefono.Font = New Font("Segoe UI", 12F)
         MTB_Telefono.Location = New Point(262, 195)
         MTB_Telefono.Name = "MTB_Telefono"
         MTB_Telefono.Size = New Size(202, 29)
@@ -129,24 +129,16 @@ Partial Class UC_E_Nuevo
         ' 
         ' MTB_Codigo
         ' 
-        MTB_Codigo.Font = New Font("Segoe UI", 12.0F)
+        MTB_Codigo.Font = New Font("Segoe UI", 12F)
         MTB_Codigo.Location = New Point(262, 38)
         MTB_Codigo.Name = "MTB_Codigo"
         MTB_Codigo.Size = New Size(202, 29)
         MTB_Codigo.TabIndex = 55
         ' 
-        ' MTB_Rol
-        ' 
-        MTB_Rol.Font = New Font("Segoe UI", 12.0F)
-        MTB_Rol.Location = New Point(262, 142)
-        MTB_Rol.Name = "MTB_Rol"
-        MTB_Rol.Size = New Size(202, 29)
-        MTB_Rol.TabIndex = 62
-        ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.Font = New Font("Segoe UI", 12F)
         Label3.Location = New Point(88, 142)
         Label3.Name = "Label3"
         Label3.Size = New Size(33, 21)
@@ -155,7 +147,7 @@ Partial Class UC_E_Nuevo
         ' 
         ' MTB_Nombre
         ' 
-        MTB_Nombre.Font = New Font("Segoe UI", 12.0F)
+        MTB_Nombre.Font = New Font("Segoe UI", 12F)
         MTB_Nombre.Location = New Point(262, 90)
         MTB_Nombre.Name = "MTB_Nombre"
         MTB_Nombre.Size = New Size(202, 29)
@@ -164,7 +156,7 @@ Partial Class UC_E_Nuevo
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 12.0F)
+        Label4.Font = New Font("Segoe UI", 12F)
         Label4.Location = New Point(88, 90)
         Label4.Name = "Label4"
         Label4.Size = New Size(68, 21)
@@ -174,7 +166,7 @@ Partial Class UC_E_Nuevo
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12.0F)
+        Label6.Font = New Font("Segoe UI", 12F)
         Label6.Location = New Point(88, 248)
         Label6.Name = "Label6"
         Label6.Size = New Size(38, 21)
@@ -184,16 +176,24 @@ Partial Class UC_E_Nuevo
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 12.0F)
+        Label5.Font = New Font("Segoe UI", 12F)
         Label5.Location = New Point(88, 195)
         Label5.Name = "Label5"
         Label5.Size = New Size(68, 21)
         Label5.TabIndex = 59
         Label5.Text = "Telefono"
         ' 
+        ' CB_Rol
+        ' 
+        CB_Rol.FormattingEnabled = True
+        CB_Rol.Location = New Point(262, 144)
+        CB_Rol.Name = "CB_Rol"
+        CB_Rol.Size = New Size(202, 23)
+        CB_Rol.TabIndex = 68
+        ' 
         ' UC_E_Nuevo
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(Panel_Form)
         Name = "UC_E_Nuevo"
@@ -212,11 +212,11 @@ Partial Class UC_E_Nuevo
     Friend WithEvents Label2 As Label
     Friend WithEvents MTB_Telefono As MaskedTextBox
     Friend WithEvents MTB_Codigo As MaskedTextBox
-    Friend WithEvents MTB_Rol As MaskedTextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents MTB_Nombre As MaskedTextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
+    Friend WithEvents CB_Rol As ComboBox
 
 End Class

@@ -3,11 +3,33 @@
 Public Class UC_E_Nuevo
 
     Private Sub UC_E_Nuevo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Cargar lista de roles desde la base de datos
+        CargarRoles()
+
         ' Al cargar el control, calculamos y mostramos el ID disponible
         CargarSiguienteID()
 
         ' Hacemos que el campo de Código sea de solo lectura para el usuario
         MTB_Codigo.ReadOnly = True
+    End Sub
+
+    ' Llena el ComboBox desde la tabla Rol mostrando la descripción y conservando el ID
+    Private Sub CargarRoles()
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim query As String = "SELECT ID_rol, Descripcion_rol FROM Rol"
+                Using adapter As New OleDbDataAdapter(query, con)
+                    Dim dt As New DataTable()
+                    adapter.Fill(dt)
+
+                    CB_Rol.DataSource = dt
+                    CB_Rol.DisplayMember = "Descripcion_rol" ' Texto visible ("Administrador", "Cajero")
+                    CB_Rol.ValueMember = "ID_rol"           ' Valor numérico almacenado en BD (1, 2)
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar los roles: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     ' Método para obtener el ID más bajo disponible o el siguiente consecutivo
@@ -30,7 +52,7 @@ Public Class UC_E_Nuevo
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ' Validar campos obligatorios básicos
         If String.IsNullOrWhiteSpace(MTB_Nombre.Text) OrElse
-           String.IsNullOrWhiteSpace(MTB_Rol.Text) OrElse
+           CB_Rol.SelectedValue Is Nothing OrElse
            String.IsNullOrWhiteSpace(MTB_Contraseña.Text) Then
             MessageBox.Show("Por favor, complete al menos los campos obligatorios (Nombre, Rol y Contraseña).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -43,7 +65,7 @@ Public Class UC_E_Nuevo
 
                 Using cmd As New OleDbCommand(query, con)
                     cmd.Parameters.AddWithValue("?", MTB_Nombre.Text.Trim())
-                    cmd.Parameters.AddWithValue("?", Convert.ToInt32(MTB_Rol.Text.Trim()))
+                    cmd.Parameters.AddWithValue("?", Convert.ToInt32(CB_Rol.SelectedValue))
                     cmd.Parameters.AddWithValue("?", MTB_Telefono.Text.Trim())
                     cmd.Parameters.AddWithValue("?", MTB_RFC.Text.Trim())
                     cmd.Parameters.AddWithValue("?", MTB_Contraseña.Text.Trim())
@@ -56,7 +78,7 @@ Public Class UC_E_Nuevo
 
             ' Limpiar los campos para un nuevo registro
             MTB_Nombre.Clear()
-            MTB_Rol.Clear()
+            If CB_Rol.Items.Count > 0 Then CB_Rol.SelectedIndex = 0
             MTB_Telefono.Clear()
             MTB_RFC.Clear()
             MTB_Contraseña.Clear()
@@ -67,6 +89,10 @@ Public Class UC_E_Nuevo
         Catch ex As Exception
             MessageBox.Show("Error al guardar en la base de datos: " & ex.Message, "Error de Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub Panel_Form_Paint(sender As Object, e As PaintEventArgs) Handles Panel_Form.Paint
+
     End Sub
 
 End Class

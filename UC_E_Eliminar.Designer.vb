@@ -23,20 +23,20 @@ Partial Class UC_E_Eliminar
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel_Form = New Panel()
-        Button2 = New Button()
-        MTB_Pventa = New MaskedTextBox()
+        Me.Button_Buscar = New Button()
+        Me.MTB_Contraseña = New MaskedTextBox()
         Label7 = New Label()
         Button1 = New Button()
-        MTB_Pcompra = New MaskedTextBox()
+        Me.MTB_RFC = New MaskedTextBox()
         Label2 = New Label()
-        MTB_Unidad = New MaskedTextBox()
+        MTB_Telefono = New MaskedTextBox()
         MTB_Codigo = New MaskedTextBox()
-        MTB_Tipo = New MaskedTextBox()
         Label3 = New Label()
         MTB_Nombre = New MaskedTextBox()
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
+        CB_Rol = New ComboBox()
         Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
@@ -44,15 +44,15 @@ Partial Class UC_E_Eliminar
         ' 
         Panel_Form.Anchor = AnchorStyles.None
         Panel_Form.AutoScroll = True
-        Panel_Form.Controls.Add(Button2)
-        Panel_Form.Controls.Add(MTB_Pventa)
+        Panel_Form.Controls.Add(CB_Rol)
+        Panel_Form.Controls.Add(Me.Button_Buscar)
+        Panel_Form.Controls.Add(Me.MTB_Contraseña)
         Panel_Form.Controls.Add(Label7)
         Panel_Form.Controls.Add(Button1)
-        Panel_Form.Controls.Add(MTB_Pcompra)
+        Panel_Form.Controls.Add(Me.MTB_RFC)
         Panel_Form.Controls.Add(Label2)
-        Panel_Form.Controls.Add(MTB_Unidad)
+        Panel_Form.Controls.Add(MTB_Telefono)
         Panel_Form.Controls.Add(MTB_Codigo)
-        Panel_Form.Controls.Add(MTB_Tipo)
         Panel_Form.Controls.Add(Label3)
         Panel_Form.Controls.Add(MTB_Nombre)
         Panel_Form.Controls.Add(Label4)
@@ -63,23 +63,23 @@ Partial Class UC_E_Eliminar
         Panel_Form.Size = New Size(694, 444)
         Panel_Form.TabIndex = 4
         ' 
-        ' Button2
+        ' Button_Buscar
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(481, 38)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 67
-        Button2.Text = "Buscar Material"
-        Button2.UseVisualStyleBackColor = True
+        Me.Button_Buscar.Font = New Font("Segoe UI", 12F)
+        Me.Button_Buscar.Location = New Point(481, 38)
+        Me.Button_Buscar.Name = "Button_Buscar"
+        Me.Button_Buscar.Size = New Size(175, 26)
+        Me.Button_Buscar.TabIndex = 67
+        Me.Button_Buscar.Text = "Buscar Material"
+        Me.Button_Buscar.UseVisualStyleBackColor = True
         ' 
-        ' MTB_Pventa
+        ' MTB_Contraseña
         ' 
-        MTB_Pventa.Font = New Font("Segoe UI", 12F)
-        MTB_Pventa.Location = New Point(262, 300)
-        MTB_Pventa.Name = "MTB_Pventa"
-        MTB_Pventa.Size = New Size(201, 29)
-        MTB_Pventa.TabIndex = 66
+        Me.MTB_Contraseña.Font = New Font("Segoe UI", 12F)
+        Me.MTB_Contraseña.Location = New Point(262, 300)
+        Me.MTB_Contraseña.Name = "MTB_Contraseña"
+        Me.MTB_Contraseña.Size = New Size(201, 29)
+        Me.MTB_Contraseña.TabIndex = 66
         ' 
         ' Label7
         ' 
@@ -101,13 +101,13 @@ Partial Class UC_E_Eliminar
         Button1.Text = "Eliminar"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' MTB_Pcompra
+        ' MTB_RFC
         ' 
-        MTB_Pcompra.Font = New Font("Segoe UI", 12F)
-        MTB_Pcompra.Location = New Point(262, 248)
-        MTB_Pcompra.Name = "MTB_Pcompra"
-        MTB_Pcompra.Size = New Size(202, 29)
-        MTB_Pcompra.TabIndex = 64
+        Me.MTB_RFC.Font = New Font("Segoe UI", 12F)
+        Me.MTB_RFC.Location = New Point(262, 248)
+        Me.MTB_RFC.Name = "MTB_RFC"
+        Me.MTB_RFC.Size = New Size(202, 29)
+        Me.MTB_RFC.TabIndex = 64
         ' 
         ' Label2
         ' 
@@ -119,13 +119,13 @@ Partial Class UC_E_Eliminar
         Label2.TabIndex = 54
         Label2.Text = "Código"
         ' 
-        ' MTB_Unidad
+        ' MTB_Telefono
         ' 
-        MTB_Unidad.Font = New Font("Segoe UI", 12F)
-        MTB_Unidad.Location = New Point(262, 195)
-        MTB_Unidad.Name = "MTB_Unidad"
-        MTB_Unidad.Size = New Size(202, 29)
-        MTB_Unidad.TabIndex = 63
+        MTB_Telefono.Font = New Font("Segoe UI", 12F)
+        MTB_Telefono.Location = New Point(262, 195)
+        MTB_Telefono.Name = "MTB_Telefono"
+        MTB_Telefono.Size = New Size(202, 29)
+        MTB_Telefono.TabIndex = 63
         ' 
         ' MTB_Codigo
         ' 
@@ -134,14 +134,6 @@ Partial Class UC_E_Eliminar
         MTB_Codigo.Name = "MTB_Codigo"
         MTB_Codigo.Size = New Size(202, 29)
         MTB_Codigo.TabIndex = 55
-        ' 
-        ' MTB_Tipo
-        ' 
-        MTB_Tipo.Font = New Font("Segoe UI", 12F)
-        MTB_Tipo.Location = New Point(262, 142)
-        MTB_Tipo.Name = "MTB_Tipo"
-        MTB_Tipo.Size = New Size(202, 29)
-        MTB_Tipo.TabIndex = 62
         ' 
         ' Label3
         ' 
@@ -191,6 +183,14 @@ Partial Class UC_E_Eliminar
         Label5.TabIndex = 59
         Label5.Text = "Telefono"
         ' 
+        ' CB_Rol
+        ' 
+        CB_Rol.FormattingEnabled = True
+        CB_Rol.Location = New Point(261, 140)
+        CB_Rol.Name = "CB_Rol"
+        CB_Rol.Size = New Size(202, 23)
+        CB_Rol.TabIndex = 69
+        ' 
         ' UC_E_Eliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -204,19 +204,19 @@ Partial Class UC_E_Eliminar
     End Sub
 
     Friend WithEvents Panel_Form As Panel
-    Friend WithEvents Button2 As Button
-    Friend WithEvents MTB_Pventa As MaskedTextBox
+    Friend WithEvents Button_Buscar As Button
+    Friend WithEvents MTB_Contraseña As MaskedTextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents MTB_Pcompra As MaskedTextBox
+    Friend WithEvents MTB_RFC As MaskedTextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents MTB_Unidad As MaskedTextBox
+    Friend WithEvents MTB_Telefono As MaskedTextBox
     Friend WithEvents MTB_Codigo As MaskedTextBox
-    Friend WithEvents MTB_Tipo As MaskedTextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents MTB_Nombre As MaskedTextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
+    Friend WithEvents CB_Rol As ComboBox
 
 End Class

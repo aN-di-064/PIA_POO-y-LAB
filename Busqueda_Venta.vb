@@ -3,7 +3,9 @@ Imports System.Data.OleDb
 
 Public Class Busqueda_Venta
 
-    ' Atributos para ignorar la serialización en el diseñador de Windows Forms
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property TipoBusqueda As String = "EMPLEADO"
+
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
     Public Property CodigoSeleccionado As String
 
@@ -14,21 +16,110 @@ Public Class Busqueda_Venta
     Public Property PrecioSeleccionado As Decimal
 
     Private Sub Busqueda_Venta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Lógica de carga al abrir el buscador
+        If TipoBusqueda = "EMPLEADO" Then
+            CargarFiltroRoles()
+            CargarDatosGrid("")
+        Else
+            If ComboBox IsNot Nothing Then ComboBox.Visible = False
+            CargarDatosGrid("")
+        End If
     End Sub
 
-    Private Sub DgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
+    Private Sub CargarFiltroRoles()
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim query As String = "SELECT ID_rol, Descripcion_rol FROM Rol"
+                Using adapter As New OleDbDataAdapter(query, con)
+                    Dim dt As New DataTable()
+                    adapter.Fill(dt)
+
+                    Dim filaTodos As DataRow = dt.NewRow()
+                    filaTodos("ID_rol") = 0
+                    filaTodos("Descripcion_rol") = "Todos"
+                    dt.Rows.InsertAt(filaTodos, 0)
+
+                    ComboBox.DataSource = dt
+                    ComboBox.DisplayMember = "Descripcion_rol"
+                    ComboBox.ValueMember = "ID_rol"
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar roles: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub CargarDatosGrid(filtro As String)
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim query As String = ""
+
+                If TipoBusqueda = "EMPLEADO" Then
+                    query = "SELECT E.Id_emp, E.Nombre_emp, R.Descripcion_rol, E.Telefono_emp, E.rfc_emp " &
+                            "FROM Empleado E INNER JOIN Rol R ON E.ID_rol = R.ID_rol WHERE 1=1"
+
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        query &= " AND E.Nombre_emp LIKE ?"
+                    End If
+
+                    If ComboBox IsNot Nothing AndAlso ComboBox.Visible AndAlso ComboBox.SelectedValue IsNot Nothing AndAlso TypeOf ComboBox.SelectedValue Is Integer Then
+                        Dim idRolSeleccionado As Integer = Convert.ToInt32(ComboBox.SelectedValue)
+                        If idRolSeleccionado > 0 Then
+                            query &= " AND E.ID_rol = " & idRolSeleccionado
+                        End If
+                    End If
+                Else
+                    query = "SELECT Id_prod, Descripcion_prod, Precio_prod FROM Producto WHERE 1=1"
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        query &= " AND Descripcion_prod LIKE ?"
+                    End If
+                End If
+
+                Using cmd As New OleDbCommand(query, con)
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        cmd.Parameters.AddWithValue("?", "%" & txtBuscar.Text.Trim() & "%")
+                    End If
+
+                    Using adapter As New OleDbDataAdapter(cmd)
+                        Dim dt As New DataTable()
+                        adapter.Fill(dt)
+                        dgvProductos.DataSource = dt
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error al filtrar los datos: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub txtBuscar_TextChanged(sender As Object, e As EventArgs) Handles txtBuscar.TextChanged
+        CargarDatosGrid(txtBuscar.Text)
+    End Sub
+
+    Private Sub ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox.SelectedIndexChanged
+        If ComboBox IsNot Nothing AndAlso ComboBox.Visible AndAlso ComboBox.SelectedValue IsNot Nothing AndAlso TypeOf ComboBox.SelectedValue Is Integer Then
+            CargarDatosGrid("")
+        End If
+    End Sub
+
+    Private Sub dgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellDoubleClick
         If e.RowIndex >= 0 Then
             Dim fila = dgvProductos.Rows(e.RowIndex)
 
-            ' Coincidir con los campos reales del esquema: Id_prod, Descripcion_prod, Precio_prod
-            CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString
-            DescripcionSeleccionada = fila.Cells("Descripcion_prod").Value.ToString
-            PrecioSeleccionado = Convert.ToDecimal(fila.Cells("Precio_prod").Value)
+            If TipoBusqueda = "EMPLEADO" Then
+                CodigoSeleccionado = fila.Cells("Id_emp").Value.ToString()
+                Me.Tag = CodigoSeleccionado
+            Else
+                CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString()
+                DescripcionSeleccionada = fila.Cells("Descripcion_prod").Value.ToString()
+                PrecioSeleccionado = Convert.ToDecimal(fila.Cells("Precio_prod").Value)
+            End If
 
             DialogResult = DialogResult.OK
-            Close
+            Close()
         End If
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
     End Sub
 
 End Class

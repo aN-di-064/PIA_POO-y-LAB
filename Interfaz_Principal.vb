@@ -134,4 +134,7 @@
         MostrarVista(New UC_Compras())
     End Sub
 
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        MostrarVista(New UC_Proveedores())
+    End Sub
 End Class

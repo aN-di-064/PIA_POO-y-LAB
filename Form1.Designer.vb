@@ -36,13 +36,13 @@ Partial Class Form1
         ' Form1Container
         ' 
         Form1Container.ColumnCount = 1
-        Form1Container.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
+        Form1Container.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
         Form1Container.Controls.Add(Panel1, 0, 0)
         Form1Container.Dock = DockStyle.Fill
         Form1Container.Location = New Point(0, 0)
         Form1Container.Name = "Form1Container"
         Form1Container.RowCount = 1
-        Form1Container.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
+        Form1Container.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
         Form1Container.Size = New Size(803, 457)
         Form1Container.TabIndex = 5
         ' 
@@ -63,7 +63,7 @@ Partial Class Form1
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 11.0F)
+        Label1.Font = New Font("Segoe UI", 11F)
         Label1.Location = New Point(128, 67)
         Label1.Name = "Label1"
         Label1.Size = New Size(131, 20)
@@ -73,7 +73,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 11.0F)
+        Label2.Font = New Font("Segoe UI", 11F)
         Label2.Location = New Point(160, 160)
         Label2.Name = "Label2"
         Label2.Size = New Size(83, 20)
@@ -82,7 +82,7 @@ Partial Class Form1
         ' 
         ' Button1
         ' 
-        Button1.Font = New Font("Segoe UI", 11.0F)
+        Button1.Font = New Font("Segoe UI", 11F)
         Button1.Location = New Point(141, 250)
         Button1.Name = "Button1"
         Button1.Size = New Size(118, 32)
@@ -107,7 +107,7 @@ Partial Class Form1
         ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(803, 457)
         Controls.Add(Form1Container)
