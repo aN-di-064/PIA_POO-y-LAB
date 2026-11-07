@@ -25,7 +25,7 @@ Partial Class UC_Corte
         Panel1 = New Panel()
         Label1 = New Label()
         Label7 = New Label()
-        LBL_IDCORTE = New Label()
+        Label_CorteNo = New Label()
         LabelMontoInicial = New Label()
         MTB_MontoInicial = New MaskedTextBox()
         LabelTotalVentas = New Label()
@@ -43,7 +43,7 @@ Partial Class UC_Corte
         Panel1.BackColor = Color.White
         Panel1.Controls.Add(Label1)
         Panel1.Controls.Add(Label7)
-        Panel1.Controls.Add(LBL_IDCORTE)
+        Panel1.Controls.Add(Label_CorteNo)
         Panel1.Controls.Add(LabelMontoInicial)
         Panel1.Controls.Add(MTB_MontoInicial)
         Panel1.Controls.Add(LabelTotalVentas)
@@ -64,7 +64,7 @@ Partial Class UC_Corte
         Label1.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(26, 25)
         Label1.Name = "Label1"
-        Label1.Size = New Size(185, 32)
+        Label1.Size = New Size(164, 32)
         Label1.TabIndex = 9
         Label1.Text = "Corte de caja"
         ' 
@@ -74,19 +74,19 @@ Partial Class UC_Corte
         Label7.Font = New Font("Segoe UI", 12.0F)
         Label7.Location = New Point(26, 75)
         Label7.Name = "Label7"
-        Label7.Size = New Size(74, 21)
+        Label7.Size = New Size(73, 21)
         Label7.TabIndex = 27
         Label7.Text = "Corte no."
         ' 
-        ' LBL_IDCORTE
+        ' Label_CorteNo
         ' 
-        LBL_IDCORTE.AutoSize = True
-        LBL_IDCORTE.Font = New Font("Segoe UI", 12.0F)
-        LBL_IDCORTE.Location = New Point(120, 75)
-        LBL_IDCORTE.Name = "LBL_IDCORTE"
-        LBL_IDCORTE.Size = New Size(43, 21)
-        LBL_IDCORTE.TabIndex = 26
-        LBL_IDCORTE.Text = "label"
+        Label_CorteNo.AutoSize = True
+        Label_CorteNo.Font = New Font("Segoe UI", 12.0F)
+        Label_CorteNo.Location = New Point(120, 75)
+        Label_CorteNo.Name = "Label_CorteNo"
+        Label_CorteNo.Size = New Size(43, 21)
+        Label_CorteNo.TabIndex = 26
+        Label_CorteNo.Text = "label"
         ' 
         ' LabelMontoInicial
         ' 
@@ -94,7 +94,7 @@ Partial Class UC_Corte
         LabelMontoInicial.Font = New Font("Segoe UI", 12.0F)
         LabelMontoInicial.Location = New Point(26, 130)
         LabelMontoInicial.Name = "LabelMontoInicial"
-        LabelMontoInicial.Size = New Size(105, 21)
+        LabelMontoInicial.Size = New Size(103, 21)
         LabelMontoInicial.TabIndex = 28
         LabelMontoInicial.Text = "Monto inicial:"
         ' 
@@ -112,7 +112,7 @@ Partial Class UC_Corte
         LabelTotalVentas.Font = New Font("Segoe UI", 12.0F)
         LabelTotalVentas.Location = New Point(26, 185)
         LabelTotalVentas.Name = "LabelTotalVentas"
-        LabelTotalVentas.Size = New Size(140, 21)
+        LabelTotalVentas.Size = New Size(126, 21)
         LabelTotalVentas.TabIndex = 30
         LabelTotalVentas.Text = "Ventas del turno:"
         ' 
@@ -131,7 +131,7 @@ Partial Class UC_Corte
         LabelMontoFinal.Font = New Font("Segoe UI", 12.0F)
         LabelMontoFinal.Location = New Point(26, 240)
         LabelMontoFinal.Name = "LabelMontoFinal"
-        LabelMontoFinal.Size = New Size(148, 21)
+        LabelMontoFinal.Size = New Size(159, 21)
         LabelMontoFinal.TabIndex = 32
         LabelMontoFinal.Text = "Conteo físico (Cierre):"
         ' 
@@ -178,7 +178,7 @@ Partial Class UC_Corte
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Label7 As Label
-    Friend WithEvents LBL_IDCORTE As Label
+    Friend WithEvents Label_CorteNo As Label
     Friend WithEvents LabelMontoInicial As Label
     Friend WithEvents MTB_MontoInicial As MaskedTextBox
     Friend WithEvents LabelTotalVentas As Label

@@ -37,12 +37,13 @@ Partial Class UC_Ventas
         Label1 = New Label()
         Label2 = New Label()
         DataGridView1 = New DataGridView()
+        Button2 = New Button()
         Col_Cantidad = New DataGridViewTextBoxColumn()
         Col_Código = New DataGridViewTextBoxColumn()
         Col_Descripcion = New DataGridViewTextBoxColumn()
         Col_Precio = New DataGridViewTextBoxColumn()
+        Col_Descuento = New DataGridViewTextBoxColumn()
         Col_Importe = New DataGridViewTextBoxColumn()
-        Button2 = New Button()
         Panel1.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -217,13 +218,23 @@ Partial Class UC_Ventas
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.BackgroundColor = Color.White
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Importe})
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Descuento, Col_Importe})
         DataGridView1.Location = New Point(26, 120)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.RowHeadersWidth = 51
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         DataGridView1.Size = New Size(858, 300)
         DataGridView1.TabIndex = 4
+        ' 
+        ' Button2
+        ' 
+        Button2.Font = New Font("Segoe UI", 12.0F)
+        Button2.Location = New Point(638, 74)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(175, 29)
+        Button2.TabIndex = 3
+        Button2.Text = "Buscar producto"
+        Button2.UseVisualStyleBackColor = True
         ' 
         ' Col_Cantidad
         ' 
@@ -253,22 +264,17 @@ Partial Class UC_Ventas
         Col_Precio.Name = "Col_Precio"
         Col_Precio.ReadOnly = True
         ' 
+        ' Col_Descuento
+        ' 
+        Col_Descuento.HeaderText = "Descuento"
+        Col_Descuento.Name = "Col_Descuento"
+        ' 
         ' Col_Importe
         ' 
         Col_Importe.HeaderText = "Subtotal"
         Col_Importe.MinimumWidth = 6
         Col_Importe.Name = "Col_Importe"
         Col_Importe.ReadOnly = True
-        ' 
-        ' Button2
-        ' 
-        Button2.Font = New Font("Segoe UI", 12.0F)
-        Button2.Location = New Point(638, 74)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 29)
-        Button2.TabIndex = 3
-        Button2.Text = "Buscar producto"
-        Button2.UseVisualStyleBackColor = True
         ' 
         ' UC_Ventas
         ' 
@@ -291,11 +297,6 @@ Partial Class UC_Ventas
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents Col_Cantidad As DataGridViewTextBoxColumn
-    Friend WithEvents Col_Código As DataGridViewTextBoxColumn
-    Friend WithEvents Col_Descripcion As DataGridViewTextBoxColumn
-    Friend WithEvents Col_Precio As DataGridViewTextBoxColumn
-    Friend WithEvents Col_Importe As DataGridViewTextBoxColumn
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Label4 As Label
@@ -305,5 +306,11 @@ Partial Class UC_Ventas
     Friend WithEvents Label6 As Label
     Friend WithEvents LBL_IDCOMPRA As Label
     Friend WithEvents Label7 As Label
+    Friend WithEvents Col_Cantidad As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Código As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Descripcion As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Precio As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Descuento As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Importe As DataGridViewTextBoxColumn
 
 End Class

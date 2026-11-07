@@ -39,7 +39,6 @@ Public Class UC_Ventas
                     CB_Cliente.DisplayMember = "Nombre_cli"
                     CB_Cliente.ValueMember = "Id_cli"
 
-                    ' Seleccionar el primer registro si existe
                     If dt.Rows.Count > 0 Then
                         CB_Cliente.SelectedIndex = 0
                     Else
@@ -54,6 +53,10 @@ Public Class UC_Ventas
 
     ' 3. Botón "Buscar producto"
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        ConexionBusqueda()
+    End Sub
+
+    Private Sub ConexionBusqueda()
         Dim buscador As New Busqueda_Venta()
         buscador.TipoBusqueda = "PRODUCTO"
 
@@ -67,33 +70,45 @@ Public Class UC_Ventas
             For Each row As DataGridViewRow In DataGridView1.Rows
                 If row.Cells("Col_Código").Value IsNot Nothing AndAlso row.Cells("Col_Código").Value.ToString() = codigo Then
                     Dim cantActual As Decimal = Convert.ToDecimal(row.Cells("Col_Cantidad").Value)
-                    row.Cells("Col_Cantidad").Value = cantActual + 1
-                    row.Cells("Col_Importe").Value = (cantActual + 1) * precio
+                    Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells("Col_Descuento").Value)
+
+                    Dim nuevaCant As Decimal = cantActual + 1
+                    Dim importeBruto As Decimal = nuevaCant * precio
+                    Dim montoDescuento As Decimal = importeBruto * (pctDescuento / 100)
+
+                    row.Cells("Col_Cantidad").Value = nuevaCant
+                    row.Cells("Col_Importe").Value = importeBruto - montoDescuento
                     yaExiste = True
                     Exit For
                 End If
             Next
 
-            ' Si no existe, agregarlo como nuevo renglón (Cantidad por defecto = 1)
+            ' Si no existe, agregarlo como nuevo renglón (Cantidad = 1, Descuento % = 0)
             If Not yaExiste Then
-                DataGridView1.Rows.Add(1, codigo, descripcion, precio, precio)
+                DataGridView1.Rows.Add(1, codigo, descripcion, precio, 0.00, precio)
             End If
 
             CalcularTotal()
         End If
     End Sub
 
-    ' 4. Recalcular subtotal al editar directamente la cantidad en la celda
+    ' 4. Recalcular subtotal al editar la cantidad o el % de descuento
     Private Sub DataGridView1_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellValueChanged
-        If e.RowIndex >= 0 AndAlso e.ColumnIndex = DataGridView1.Columns("Col_Cantidad").Index Then
+        If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
             Dim cantidad As Decimal = 0
             Dim precio As Decimal = 0
+            Dim pctDescuento As Decimal = 0
 
             Decimal.TryParse(Convert.ToString(row.Cells("Col_Cantidad").Value), cantidad)
             Decimal.TryParse(Convert.ToString(row.Cells("Col_Precio").Value), precio)
+            Decimal.TryParse(Convert.ToString(row.Cells("Col_Descuento").Value), pctDescuento)
 
-            row.Cells("Col_Importe").Value = cantidad * precio
+            ' Subtotal = (Cantidad * Precio) - porcentaje de descuento
+            Dim bruto As Decimal = cantidad * precio
+            Dim descuentoCalculado As Decimal = bruto * (pctDescuento / 100)
+
+            row.Cells("Col_Importe").Value = bruto - descuentoCalculado
             CalcularTotal()
         End If
     End Sub
@@ -107,10 +122,10 @@ Public Class UC_Ventas
             End If
         Next
         Label4.Text = total.ToString("C2")
-        Label4.Tag = total ' Guardar valor numérico real
+        Label4.Tag = total
     End Sub
 
-    ' Método auxiliar para confirmar y eliminar productos seleccionados
+    ' Método auxiliar para eliminar producto seleccionado
     Private Sub EliminarProductoSeleccionado()
         If DataGridView1.SelectedRows.Count > 0 Then
             Dim respuesta As DialogResult = MessageBox.Show("¿Desea eliminar el producto seleccionado?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -127,27 +142,25 @@ Public Class UC_Ventas
         End If
     End Sub
 
-    ' 6. Botón "Borrar producto seleccionado" (Button3 o BTN_BORRAR)
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click, BTN_BORRAR.Click
         EliminarProductoSeleccionado()
     End Sub
 
-    ' 6.1 Evento para eliminar al presionar la tecla Suprimir (Delete) en el DataGridView
     Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown
         If e.KeyCode = Keys.Delete Then
             EliminarProductoSeleccionado()
         End If
     End Sub
 
-    ' 7. Botón "Cobrar" (Button4)
+    ' 7. Botón "Cobrar" (Con validación previa de caja para evitar impresiones si hay imprevistos)
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, Button1.Click
-        ' Validar que existan productos en el DataGridView
+        ' Validar productos
         If DataGridView1.Rows.Count = 0 Then
             MessageBox.Show("No hay productos agregados a la venta.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' Validar estrictamente que un cliente esté seleccionado en el ComboBox
+        ' Validar cliente seleccionado
         If CB_Cliente.Items.Count = 0 OrElse
            CB_Cliente.SelectedIndex = -1 OrElse
            CB_Cliente.SelectedValue Is Nothing OrElse
@@ -158,9 +171,26 @@ Public Class UC_Ventas
             Exit Sub
         End If
 
+        ' --- VALIDACIÓN PREVIA DE CAJA ABIERTA ---
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim queryCorte As String = "SELECT TOP 1 Id_cor FROM Corte WHERE FechaCierre_cor IS NULL ORDER BY Id_cor DESC"
+                Using cmdCorte As New OleDbCommand(queryCorte, con)
+                    Dim idCorteActivo = cmdCorte.ExecuteScalar()
+                    If idCorteActivo Is Nothing OrElse idCorteActivo Is DBNull.Value Then
+                        MessageBox.Show("No hay ninguna caja abierta actualmente. Por favor, realice la Apertura de Caja primero en el módulo de Corte.", "Caja Cerrada", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Exit Sub
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error al comprobar el estado de la caja: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End Try
+
+        ' Abrir la pantalla de cobro únicamente si la caja está efectivamente abierta
         Dim totalVenta As Decimal = If(Label4.Tag IsNot Nothing, Convert.ToDecimal(Label4.Tag), 0)
 
-        ' Abrir el formulario unificado de Cobro enviando datos para el Ticket
         Dim frmCobro As New Cobro()
         frmCobro.EsVenta = True
         frmCobro.TotalTransaccion = totalVenta
@@ -173,12 +203,11 @@ Public Class UC_Ventas
         End If
     End Sub
 
-    ' 8. Guardar Venta, Detalle_VP y actualizar Existencias del inventario
+    ' 8. Guardar Venta, Detalle_VP y actualizar existencias (Corregido con tipos OleDb explícitos)
     Private Sub ProcesarVentaEnBD(totalVenta As Decimal)
         Try
             Using con As OleDbConnection = ObtenerConexion()
 
-                ' a) Obtener el Id_cor activo (Corte de caja sin cerrar)
                 Dim idCorteActivo As Object = Nothing
                 Dim queryCorte As String = "SELECT TOP 1 Id_cor FROM Corte WHERE FechaCierre_cor IS NULL ORDER BY Id_cor DESC"
                 Using cmdCorte As New OleDbCommand(queryCorte, con)
@@ -190,55 +219,57 @@ Public Class UC_Ventas
                     Exit Sub
                 End If
 
-                ' b) Insertar la cabecera en la tabla Venta
+                Dim idCorteInt As Integer = Convert.ToInt32(idCorteActivo)
+                Dim idClienteInt As Integer = Convert.ToInt32(CB_Cliente.SelectedValue)
+                Dim idEmpleadoInt As Integer = 1 ' Puedes cambiarlo por tu variable global de sesión de empleado
+
                 Dim idVentaGenerado As Integer = 0
                 Dim queryVenta As String = "INSERT INTO Venta (fecha_v, Id_cli, Id_emp, Id_cor, total_v) VALUES (?, ?, ?, ?, ?)"
                 Using cmdVenta As New OleDbCommand(queryVenta, con)
-                    cmdVenta.Parameters.AddWithValue("?", DateTime.Now)
-                    cmdVenta.Parameters.AddWithValue("?", Convert.ToInt32(CB_Cliente.SelectedValue))
-                    cmdVenta.Parameters.AddWithValue("?", 1) ' Reemplazar 1 por el ID del Empleado activo en sesión
-                    cmdVenta.Parameters.AddWithValue("?", Convert.ToInt32(idCorteActivo))
-                    cmdVenta.Parameters.AddWithValue("?", totalVenta)
+                    cmdVenta.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now
+                    cmdVenta.Parameters.Add("?", OleDbType.Integer).Value = idClienteInt
+                    cmdVenta.Parameters.Add("?", OleDbType.Integer).Value = idEmpleadoInt
+                    cmdVenta.Parameters.Add("?", OleDbType.Integer).Value = idCorteInt
+                    cmdVenta.Parameters.Add("?", OleDbType.Currency).Value = totalVenta
                     cmdVenta.ExecuteNonQuery()
 
-                    ' Recuperar el ID de la venta creada
                     cmdVenta.CommandText = "SELECT @@IDENTITY"
                     idVentaGenerado = Convert.ToInt32(cmdVenta.ExecuteScalar())
                 End Using
 
-                ' c) Insertar detalles en Detalle_VP y descontar existencias en Producto
                 For Each row As DataGridViewRow In DataGridView1.Rows
                     If row.IsNewRow Then Continue For
 
                     Dim idProd As Integer = Convert.ToInt32(row.Cells("Col_Código").Value)
                     Dim cantidad As Decimal = Convert.ToDecimal(row.Cells("Col_Cantidad").Value)
                     Dim precio As Decimal = Convert.ToDecimal(row.Cells("Col_Precio").Value)
+                    Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells("Col_Descuento").Value)
                     Dim subtotal As Decimal = Convert.ToDecimal(row.Cells("Col_Importe").Value)
 
-                    ' Insertar en Detalle_VP
+                    Dim montoDescuentoTotal As Decimal = (cantidad * precio) * (pctDescuento / 100)
+
                     Dim queryDetalle As String = "INSERT INTO Detalle_VP (Id_v, Id_prod, Cantidad_VP, Precio_VP, Descuento_VP, Subtotal_VP) VALUES (?, ?, ?, ?, ?, ?)"
                     Using cmdDet As New OleDbCommand(queryDetalle, con)
-                        cmdDet.Parameters.AddWithValue("?", idVentaGenerado)
-                        cmdDet.Parameters.AddWithValue("?", idProd)
-                        cmdDet.Parameters.AddWithValue("?", cantidad)
-                        cmdDet.Parameters.AddWithValue("?", precio)
-                        cmdDet.Parameters.AddWithValue("?", 0) ' Descuento
-                        cmdDet.Parameters.AddWithValue("?", subtotal)
+                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idVentaGenerado
+                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idProd
+                        cmdDet.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = precio
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = montoDescuentoTotal
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = subtotal
                         cmdDet.ExecuteNonQuery()
                     End Using
 
-                    ' Actualizar (restar) Inventario en Producto
                     Dim queryStock As String = "UPDATE Producto SET Existencias = Existencias - ? WHERE Id_prod = ?"
                     Using cmdStock As New OleDbCommand(queryStock, con)
-                        cmdStock.Parameters.AddWithValue("?", cantidad)
-                        cmdStock.Parameters.AddWithValue("?", idProd)
+                        cmdStock.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
+                        cmdStock.Parameters.Add("?", OleDbType.Integer).Value = idProd
                         cmdStock.ExecuteNonQuery()
                     End Using
                 Next
 
                 MessageBox.Show("¡Venta completada exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' Limpiar pantalla, restablecer cliente al primero e incrementar el Folio de Venta
+                ' Limpieza y actualización automática del folio de venta
                 DataGridView1.Rows.Clear()
                 CalcularTotal()
                 ObtenerSiguienteIDVenta()
