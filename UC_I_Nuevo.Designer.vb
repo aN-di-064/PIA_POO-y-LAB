@@ -23,158 +23,230 @@ Partial Class UC_I_Nuevo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel_Form = New Panel()
-        Label1 = New Label()
-        Button1 = New Button()
-        MaskedTextBox5 = New MaskedTextBox()
+        Panel1 = New Panel()
+        Button2 = New Button()
+        CB_Cat = New ComboBox()
+        MTB_Existencias = New MaskedTextBox()
+        MTB_PVenta = New MaskedTextBox()
+        MTB_PCompra = New MaskedTextBox()
+        MTB_Codigo = New MaskedTextBox()
+        MTB_Descripcion = New MaskedTextBox()
+        Button_Buscar = New Button()
+        Label7 = New Label()
         Label2 = New Label()
-        MaskedTextBox4 = New MaskedTextBox()
-        MaskedTextBox1 = New MaskedTextBox()
-        MaskedTextBox3 = New MaskedTextBox()
         Label3 = New Label()
-        MaskedTextBox2 = New MaskedTextBox()
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
-        MaskedTextBox6 = New MaskedTextBox()
-        Label7 = New Label()
+        Button3 = New Button()
+        MTB_Proveedores = New MaskedTextBox()
+        Label1 = New Label()
+        Button1 = New Button()
         Panel_Form.SuspendLayout()
+        Panel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel_Form
         ' 
-        Panel_Form.Controls.Add(MaskedTextBox6)
-        Panel_Form.Controls.Add(Label7)
-        Panel_Form.Controls.Add(Label1)
-        Panel_Form.Controls.Add(Button1)
-        Panel_Form.Controls.Add(MaskedTextBox5)
-        Panel_Form.Controls.Add(Label2)
-        Panel_Form.Controls.Add(MaskedTextBox4)
-        Panel_Form.Controls.Add(MaskedTextBox1)
-        Panel_Form.Controls.Add(MaskedTextBox3)
-        Panel_Form.Controls.Add(Label3)
-        Panel_Form.Controls.Add(MaskedTextBox2)
-        Panel_Form.Controls.Add(Label4)
-        Panel_Form.Controls.Add(Label6)
-        Panel_Form.Controls.Add(Label5)
+        Panel_Form.Controls.Add(Panel1)
         Panel_Form.Dock = DockStyle.Fill
         Panel_Form.Location = New Point(0, 0)
         Panel_Form.Name = "Panel_Form"
         Panel_Form.Size = New Size(678, 403)
         Panel_Form.TabIndex = 0
         ' 
-        ' Label1
+        ' Panel1
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(252, 32)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(139, 15)
-        Label1.TabIndex = 24
-        Label1.Text = "Agregar Nuevo Producto"
+        Panel1.Anchor = AnchorStyles.None
+        Panel1.AutoScroll = True
+        Panel1.Controls.Add(Button3)
+        Panel1.Controls.Add(MTB_Proveedores)
+        Panel1.Controls.Add(Label1)
+        Panel1.Controls.Add(Button1)
+        Panel1.Controls.Add(Button2)
+        Panel1.Controls.Add(CB_Cat)
+        Panel1.Controls.Add(MTB_Existencias)
+        Panel1.Controls.Add(MTB_PVenta)
+        Panel1.Controls.Add(MTB_PCompra)
+        Panel1.Controls.Add(MTB_Codigo)
+        Panel1.Controls.Add(MTB_Descripcion)
+        Panel1.Controls.Add(Button_Buscar)
+        Panel1.Controls.Add(Label7)
+        Panel1.Controls.Add(Label2)
+        Panel1.Controls.Add(Label3)
+        Panel1.Controls.Add(Label4)
+        Panel1.Controls.Add(Label6)
+        Panel1.Controls.Add(Label5)
+        Panel1.Location = New Point(-8, -21)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(694, 444)
+        Panel1.TabIndex = 6
         ' 
-        ' Button1
+        ' Button2
         ' 
-        Button1.Location = New Point(510, 339)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(75, 23)
-        Button1.TabIndex = 27
-        Button1.Text = "Agregar"
-        Button1.UseVisualStyleBackColor = True
+        Button2.Font = New Font("Segoe UI", 12F)
+        Button2.Location = New Point(481, 140)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(175, 26)
+        Button2.TabIndex = 76
+        Button2.Text = "Buscar Categoría"
+        Button2.UseVisualStyleBackColor = True
         ' 
-        ' MaskedTextBox5
+        ' CB_Cat
         ' 
-        MaskedTextBox5.Location = New Point(219, 294)
-        MaskedTextBox5.Name = "MaskedTextBox5"
-        MaskedTextBox5.Size = New Size(201, 23)
-        MaskedTextBox5.TabIndex = 35
+        CB_Cat.FormattingEnabled = True
+        CB_Cat.Location = New Point(262, 140)
+        CB_Cat.Name = "CB_Cat"
+        CB_Cat.Size = New Size(202, 23)
+        CB_Cat.TabIndex = 75
+        ' 
+        ' MTB_Existencias
+        ' 
+        MTB_Existencias.Font = New Font("Segoe UI", 12F)
+        MTB_Existencias.Location = New Point(262, 300)
+        MTB_Existencias.Name = "MTB_Existencias"
+        MTB_Existencias.Size = New Size(201, 29)
+        MTB_Existencias.TabIndex = 74
+        ' 
+        ' MTB_PVenta
+        ' 
+        MTB_PVenta.Font = New Font("Segoe UI", 12F)
+        MTB_PVenta.Location = New Point(261, 248)
+        MTB_PVenta.Name = "MTB_PVenta"
+        MTB_PVenta.Size = New Size(202, 29)
+        MTB_PVenta.TabIndex = 73
+        ' 
+        ' MTB_PCompra
+        ' 
+        MTB_PCompra.Font = New Font("Segoe UI", 12F)
+        MTB_PCompra.Location = New Point(261, 195)
+        MTB_PCompra.Name = "MTB_PCompra"
+        MTB_PCompra.Size = New Size(202, 29)
+        MTB_PCompra.TabIndex = 72
+        ' 
+        ' MTB_Codigo
+        ' 
+        MTB_Codigo.Font = New Font("Segoe UI", 12F)
+        MTB_Codigo.Location = New Point(261, 38)
+        MTB_Codigo.Name = "MTB_Codigo"
+        MTB_Codigo.Size = New Size(202, 29)
+        MTB_Codigo.TabIndex = 70
+        ' 
+        ' MTB_Descripcion
+        ' 
+        MTB_Descripcion.Font = New Font("Segoe UI", 12F)
+        MTB_Descripcion.Location = New Point(261, 90)
+        MTB_Descripcion.Name = "MTB_Descripcion"
+        MTB_Descripcion.Size = New Size(202, 29)
+        MTB_Descripcion.TabIndex = 71
+        ' 
+        ' Button_Buscar
+        ' 
+        Button_Buscar.Font = New Font("Segoe UI", 12F)
+        Button_Buscar.Location = New Point(481, 38)
+        Button_Buscar.Name = "Button_Buscar"
+        Button_Buscar.Size = New Size(175, 26)
+        Button_Buscar.TabIndex = 67
+        Button_Buscar.Text = "Buscar Producto"
+        Button_Buscar.UseVisualStyleBackColor = True
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Font = New Font("Segoe UI", 12F)
+        Label7.Location = New Point(88, 300)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(84, 21)
+        Label7.TabIndex = 65
+        Label7.Text = "Existencias"
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(129, 107)
+        Label2.Font = New Font("Segoe UI", 12F)
+        Label2.Location = New Point(88, 38)
         Label2.Name = "Label2"
-        Label2.Size = New Size(46, 15)
-        Label2.TabIndex = 25
+        Label2.Size = New Size(60, 21)
+        Label2.TabIndex = 54
         Label2.Text = "Código"
-        ' 
-        ' MaskedTextBox4
-        ' 
-        MaskedTextBox4.Location = New Point(219, 249)
-        MaskedTextBox4.Name = "MaskedTextBox4"
-        MaskedTextBox4.Size = New Size(201, 23)
-        MaskedTextBox4.TabIndex = 34
-        ' 
-        ' MaskedTextBox1
-        ' 
-        MaskedTextBox1.Location = New Point(219, 104)
-        MaskedTextBox1.Name = "MaskedTextBox1"
-        MaskedTextBox1.Size = New Size(201, 23)
-        MaskedTextBox1.TabIndex = 26
-        ' 
-        ' MaskedTextBox3
-        ' 
-        MaskedTextBox3.Location = New Point(219, 198)
-        MaskedTextBox3.Name = "MaskedTextBox3"
-        MaskedTextBox3.Size = New Size(201, 23)
-        MaskedTextBox3.TabIndex = 33
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(129, 206)
+        Label3.Font = New Font("Segoe UI", 12F)
+        Label3.Location = New Point(88, 142)
         Label3.Name = "Label3"
-        Label3.Size = New Size(61, 15)
-        Label3.TabIndex = 28
-        Label3.Text = "Proveedor"
-        ' 
-        ' MaskedTextBox2
-        ' 
-        MaskedTextBox2.Location = New Point(219, 156)
-        MaskedTextBox2.Name = "MaskedTextBox2"
-        MaskedTextBox2.Size = New Size(201, 23)
-        MaskedTextBox2.TabIndex = 32
+        Label3.Size = New Size(77, 21)
+        Label3.TabIndex = 57
+        Label3.Text = "Categoría"
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(129, 156)
+        Label4.Font = New Font("Segoe UI", 12F)
+        Label4.Location = New Point(88, 90)
         Label4.Name = "Label4"
-        Label4.Size = New Size(69, 15)
-        Label4.TabIndex = 29
+        Label4.Size = New Size(91, 21)
+        Label4.TabIndex = 58
         Label4.Text = "Descripción"
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Location = New Point(129, 342)
+        Label6.Font = New Font("Segoe UI", 12F)
+        Label6.Location = New Point(88, 248)
         Label6.Name = "Label6"
-        Label6.Size = New Size(64, 15)
-        Label6.TabIndex = 31
-        Label6.Text = "Existencias"
+        Label6.Size = New Size(116, 21)
+        Label6.TabIndex = 60
+        Label6.Text = "Precio de venta"
         ' 
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(129, 297)
+        Label5.Font = New Font("Segoe UI", 12F)
+        Label5.Location = New Point(88, 195)
         Label5.Name = "Label5"
-        Label5.Size = New Size(58, 15)
-        Label5.TabIndex = 30
-        Label5.Text = "Categoría"
+        Label5.Size = New Size(131, 21)
+        Label5.TabIndex = 59
+        Label5.Text = "Precio de compra"
         ' 
-        ' MaskedTextBox6
+        ' Button3
         ' 
-        MaskedTextBox6.Location = New Point(219, 339)
-        MaskedTextBox6.Name = "MaskedTextBox6"
-        MaskedTextBox6.Size = New Size(201, 23)
-        MaskedTextBox6.TabIndex = 37
+        Button3.Font = New Font("Segoe UI", 12F)
+        Button3.Location = New Point(487, 350)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(175, 26)
+        Button3.TabIndex = 89
+        Button3.Text = "Buscar Categoría"
+        Button3.UseVisualStyleBackColor = True
         ' 
-        ' Label7
+        ' MTB_Proveedores
         ' 
-        Label7.AutoSize = True
-        Label7.Location = New Point(129, 252)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(40, 15)
-        Label7.TabIndex = 36
-        Label7.Text = "Precio"
+        MTB_Proveedores.Font = New Font("Segoe UI", 12F)
+        MTB_Proveedores.Location = New Point(262, 347)
+        MTB_Proveedores.Name = "MTB_Proveedores"
+        MTB_Proveedores.Size = New Size(201, 29)
+        MTB_Proveedores.TabIndex = 88
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 12F)
+        Label1.Location = New Point(95, 347)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(97, 21)
+        Label1.TabIndex = 87
+        Label1.Text = "Proveedores"
+        ' 
+        ' Button1
+        ' 
+        Button1.Font = New Font("Segoe UI", 12F)
+        Button1.Location = New Point(286, 394)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(122, 30)
+        Button1.TabIndex = 86
+        Button1.Text = "Eliminar"
+        Button1.UseVisualStyleBackColor = True
         ' 
         ' UC_I_Nuevo
         ' 
@@ -184,24 +256,30 @@ Partial Class UC_I_Nuevo
         Name = "UC_I_Nuevo"
         Size = New Size(678, 403)
         Panel_Form.ResumeLayout(False)
-        Panel_Form.PerformLayout()
+        Panel1.ResumeLayout(False)
+        Panel1.PerformLayout()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents Panel_Form As Panel
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Button1 As Button
-    Friend WithEvents MaskedTextBox5 As MaskedTextBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents CB_Cat As ComboBox
+    Friend WithEvents MTB_Existencias As MaskedTextBox
+    Friend WithEvents MTB_PVenta As MaskedTextBox
+    Friend WithEvents MTB_PCompra As MaskedTextBox
+    Friend WithEvents MTB_Codigo As MaskedTextBox
+    Friend WithEvents MTB_Descripcion As MaskedTextBox
+    Friend WithEvents Button_Buscar As Button
+    Friend WithEvents Label7 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents MaskedTextBox4 As MaskedTextBox
-    Friend WithEvents MaskedTextBox1 As MaskedTextBox
-    Friend WithEvents MaskedTextBox3 As MaskedTextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents MaskedTextBox2 As MaskedTextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents MaskedTextBox6 As MaskedTextBox
-    Friend WithEvents Label7 As Label
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents MTB_Proveedores As MaskedTextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Button1 As Button
 
 End Class

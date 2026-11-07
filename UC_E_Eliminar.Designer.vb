@@ -23,11 +23,12 @@ Partial Class UC_E_Eliminar
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel_Form = New Panel()
-        Me.Button_Buscar = New Button()
-        Me.MTB_Contraseña = New MaskedTextBox()
+        CB_Rol = New ComboBox()
+        Button_Buscar = New Button()
+        MTB_Contraseña = New MaskedTextBox()
         Label7 = New Label()
         Button1 = New Button()
-        Me.MTB_RFC = New MaskedTextBox()
+        MTB_RFC = New MaskedTextBox()
         Label2 = New Label()
         MTB_Telefono = New MaskedTextBox()
         MTB_Codigo = New MaskedTextBox()
@@ -36,7 +37,6 @@ Partial Class UC_E_Eliminar
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
-        CB_Rol = New ComboBox()
         Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
@@ -45,11 +45,11 @@ Partial Class UC_E_Eliminar
         Panel_Form.Anchor = AnchorStyles.None
         Panel_Form.AutoScroll = True
         Panel_Form.Controls.Add(CB_Rol)
-        Panel_Form.Controls.Add(Me.Button_Buscar)
-        Panel_Form.Controls.Add(Me.MTB_Contraseña)
+        Panel_Form.Controls.Add(Button_Buscar)
+        Panel_Form.Controls.Add(MTB_Contraseña)
         Panel_Form.Controls.Add(Label7)
         Panel_Form.Controls.Add(Button1)
-        Panel_Form.Controls.Add(Me.MTB_RFC)
+        Panel_Form.Controls.Add(MTB_RFC)
         Panel_Form.Controls.Add(Label2)
         Panel_Form.Controls.Add(MTB_Telefono)
         Panel_Form.Controls.Add(MTB_Codigo)
@@ -63,23 +63,33 @@ Partial Class UC_E_Eliminar
         Panel_Form.Size = New Size(694, 444)
         Panel_Form.TabIndex = 4
         ' 
+        ' CB_Rol
+        ' 
+        CB_Rol.Enabled = False
+        CB_Rol.FormattingEnabled = True
+        CB_Rol.Location = New Point(261, 140)
+        CB_Rol.Name = "CB_Rol"
+        CB_Rol.Size = New Size(202, 23)
+        CB_Rol.TabIndex = 69
+        ' 
         ' Button_Buscar
         ' 
-        Me.Button_Buscar.Font = New Font("Segoe UI", 12F)
-        Me.Button_Buscar.Location = New Point(481, 38)
-        Me.Button_Buscar.Name = "Button_Buscar"
-        Me.Button_Buscar.Size = New Size(175, 26)
-        Me.Button_Buscar.TabIndex = 67
-        Me.Button_Buscar.Text = "Buscar Material"
-        Me.Button_Buscar.UseVisualStyleBackColor = True
+        Button_Buscar.Font = New Font("Segoe UI", 12F)
+        Button_Buscar.Location = New Point(481, 38)
+        Button_Buscar.Name = "Button_Buscar"
+        Button_Buscar.Size = New Size(175, 26)
+        Button_Buscar.TabIndex = 67
+        Button_Buscar.Text = "Buscar Empleado"
+        Button_Buscar.UseVisualStyleBackColor = True
         ' 
         ' MTB_Contraseña
         ' 
-        Me.MTB_Contraseña.Font = New Font("Segoe UI", 12F)
-        Me.MTB_Contraseña.Location = New Point(262, 300)
-        Me.MTB_Contraseña.Name = "MTB_Contraseña"
-        Me.MTB_Contraseña.Size = New Size(201, 29)
-        Me.MTB_Contraseña.TabIndex = 66
+        MTB_Contraseña.Enabled = False
+        MTB_Contraseña.Font = New Font("Segoe UI", 12F)
+        MTB_Contraseña.Location = New Point(262, 300)
+        MTB_Contraseña.Name = "MTB_Contraseña"
+        MTB_Contraseña.Size = New Size(201, 29)
+        MTB_Contraseña.TabIndex = 66
         ' 
         ' Label7
         ' 
@@ -103,11 +113,12 @@ Partial Class UC_E_Eliminar
         ' 
         ' MTB_RFC
         ' 
-        Me.MTB_RFC.Font = New Font("Segoe UI", 12F)
-        Me.MTB_RFC.Location = New Point(262, 248)
-        Me.MTB_RFC.Name = "MTB_RFC"
-        Me.MTB_RFC.Size = New Size(202, 29)
-        Me.MTB_RFC.TabIndex = 64
+        MTB_RFC.Enabled = False
+        MTB_RFC.Font = New Font("Segoe UI", 12F)
+        MTB_RFC.Location = New Point(262, 248)
+        MTB_RFC.Name = "MTB_RFC"
+        MTB_RFC.Size = New Size(202, 29)
+        MTB_RFC.TabIndex = 64
         ' 
         ' Label2
         ' 
@@ -121,6 +132,7 @@ Partial Class UC_E_Eliminar
         ' 
         ' MTB_Telefono
         ' 
+        MTB_Telefono.Enabled = False
         MTB_Telefono.Font = New Font("Segoe UI", 12F)
         MTB_Telefono.Location = New Point(262, 195)
         MTB_Telefono.Name = "MTB_Telefono"
@@ -129,6 +141,7 @@ Partial Class UC_E_Eliminar
         ' 
         ' MTB_Codigo
         ' 
+        MTB_Codigo.Enabled = False
         MTB_Codigo.Font = New Font("Segoe UI", 12F)
         MTB_Codigo.Location = New Point(262, 38)
         MTB_Codigo.Name = "MTB_Codigo"
@@ -147,6 +160,7 @@ Partial Class UC_E_Eliminar
         ' 
         ' MTB_Nombre
         ' 
+        MTB_Nombre.Enabled = False
         MTB_Nombre.Font = New Font("Segoe UI", 12F)
         MTB_Nombre.Location = New Point(262, 90)
         MTB_Nombre.Name = "MTB_Nombre"
@@ -182,14 +196,6 @@ Partial Class UC_E_Eliminar
         Label5.Size = New Size(68, 21)
         Label5.TabIndex = 59
         Label5.Text = "Telefono"
-        ' 
-        ' CB_Rol
-        ' 
-        CB_Rol.FormattingEnabled = True
-        CB_Rol.Location = New Point(261, 140)
-        CB_Rol.Name = "CB_Rol"
-        CB_Rol.Size = New Size(202, 23)
-        CB_Rol.TabIndex = 69
         ' 
         ' UC_E_Eliminar
         ' 

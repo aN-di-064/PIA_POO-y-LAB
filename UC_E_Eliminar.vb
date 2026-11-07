@@ -5,7 +5,8 @@ Public Class UC_E_Eliminar
     Private Sub UC_E_Eliminar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarRoles()
         MTB_Codigo.ReadOnly = True
-        ' Deshabilitar edición en controles para que solo sirvan de visualización antes de borrar
+
+        ' Hacer solo lectura para que el usuario verifique antes de borrar
         MTB_Nombre.ReadOnly = True
         MTB_Telefono.ReadOnly = True
         MTB_RFC.ReadOnly = True
@@ -25,17 +26,18 @@ Public Class UC_E_Eliminar
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Error al cargar roles: " & ex.Message)
+            MessageBox.Show("Error al cargar roles: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ' Botón "Buscar Material"
+    ' Botón "Buscar Material" / "Buscar Empleado"
     Private Sub Button_Buscar_Click(sender As Object, e As EventArgs) Handles Button_Buscar.Click
         Dim buscador As New Busqueda_Venta()
-        buscador.TipoBusqueda = "ELIMINAR"
+        ' Marcamos explícitamente que la búsqueda es para EMPLEADOS
+        buscador.TipoBusqueda = "EMPLEADO"
 
         If buscador.ShowDialog() = DialogResult.OK Then
-            Dim idSeleccionado As String = buscador.Tag.ToString()
+            Dim idSeleccionado As String = buscador.CodigoSeleccionado
             CargarDatosEmpleado(idSeleccionado)
         End If
     End Sub
@@ -59,7 +61,7 @@ Public Class UC_E_Eliminar
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Error al cargar los datos del empleado: " & ex.Message)
+            MessageBox.Show("Error al cargar los datos del empleado: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -71,6 +73,7 @@ Public Class UC_E_Eliminar
         End If
 
         Dim respuesta As DialogResult = MessageBox.Show($"¿Estás seguro de eliminar al empleado {MTB_Nombre.Text}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
         If respuesta = DialogResult.Yes Then
             Try
                 Using con As OleDbConnection = ObtenerConexion()
@@ -84,7 +87,7 @@ Public Class UC_E_Eliminar
                 MessageBox.Show("¡Empleado eliminado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 LimpiarCampos()
             Catch ex As Exception
-                MessageBox.Show("Error al eliminar el registro: " & ex.Message)
+                MessageBox.Show("Error al eliminar el registro: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
     End Sub
@@ -100,4 +103,5 @@ Public Class UC_E_Eliminar
 
     Private Sub Panel_Form_Paint(sender As Object, e As PaintEventArgs) Handles Panel_Form.Paint
     End Sub
+
 End Class

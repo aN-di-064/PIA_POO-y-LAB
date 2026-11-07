@@ -73,7 +73,7 @@ Partial Class UC_E_Modificar
         ' 
         ' MTB_Contraseña
         ' 
-        MTB_Contraseña.Font = New Font("Segoe UI", 12.0F)
+        MTB_Contraseña.Font = New Font("Segoe UI", 12F)
         MTB_Contraseña.Location = New Point(262, 300)
         MTB_Contraseña.Name = "MTB_Contraseña"
         MTB_Contraseña.Size = New Size(201, 29)
@@ -81,7 +81,7 @@ Partial Class UC_E_Modificar
         ' 
         ' MTB_RFC
         ' 
-        MTB_RFC.Font = New Font("Segoe UI", 12.0F)
+        MTB_RFC.Font = New Font("Segoe UI", 12F)
         MTB_RFC.Location = New Point(261, 248)
         MTB_RFC.Name = "MTB_RFC"
         MTB_RFC.Size = New Size(202, 29)
@@ -89,7 +89,7 @@ Partial Class UC_E_Modificar
         ' 
         ' MTB_Telefono
         ' 
-        MTB_Telefono.Font = New Font("Segoe UI", 12.0F)
+        MTB_Telefono.Font = New Font("Segoe UI", 12F)
         MTB_Telefono.Location = New Point(261, 195)
         MTB_Telefono.Name = "MTB_Telefono"
         MTB_Telefono.Size = New Size(202, 29)
@@ -97,7 +97,7 @@ Partial Class UC_E_Modificar
         ' 
         ' MTB_Codigo
         ' 
-        MTB_Codigo.Font = New Font("Segoe UI", 12.0F)
+        MTB_Codigo.Font = New Font("Segoe UI", 12F)
         MTB_Codigo.Location = New Point(261, 38)
         MTB_Codigo.Name = "MTB_Codigo"
         MTB_Codigo.Size = New Size(202, 29)
@@ -105,7 +105,7 @@ Partial Class UC_E_Modificar
         ' 
         ' MTB_Nombre
         ' 
-        MTB_Nombre.Font = New Font("Segoe UI", 12.0F)
+        MTB_Nombre.Font = New Font("Segoe UI", 12F)
         MTB_Nombre.Location = New Point(261, 90)
         MTB_Nombre.Name = "MTB_Nombre"
         MTB_Nombre.Size = New Size(202, 29)
@@ -113,18 +113,18 @@ Partial Class UC_E_Modificar
         ' 
         ' Button_Buscar
         ' 
-        Button_Buscar.Font = New Font("Segoe UI", 12.0F)
+        Button_Buscar.Font = New Font("Segoe UI", 12F)
         Button_Buscar.Location = New Point(481, 38)
         Button_Buscar.Name = "Button_Buscar"
         Button_Buscar.Size = New Size(175, 26)
         Button_Buscar.TabIndex = 67
-        Button_Buscar.Text = "Buscar Material"
+        Button_Buscar.Text = "Buscar Empleado"
         Button_Buscar.UseVisualStyleBackColor = True
         ' 
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 12.0F)
+        Label7.Font = New Font("Segoe UI", 12F)
         Label7.Location = New Point(88, 300)
         Label7.Name = "Label7"
         Label7.Size = New Size(89, 21)
@@ -133,7 +133,7 @@ Partial Class UC_E_Modificar
         ' 
         ' Button1
         ' 
-        Button1.Font = New Font("Segoe UI", 12.0F)
+        Button1.Font = New Font("Segoe UI", 12F)
         Button1.Location = New Point(306, 352)
         Button1.Name = "Button1"
         Button1.Size = New Size(122, 30)
@@ -144,7 +144,7 @@ Partial Class UC_E_Modificar
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 12.0F)
+        Label2.Font = New Font("Segoe UI", 12F)
         Label2.Location = New Point(88, 38)
         Label2.Name = "Label2"
         Label2.Size = New Size(60, 21)
@@ -154,7 +154,7 @@ Partial Class UC_E_Modificar
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.Font = New Font("Segoe UI", 12F)
         Label3.Location = New Point(88, 142)
         Label3.Name = "Label3"
         Label3.Size = New Size(33, 21)
@@ -164,7 +164,7 @@ Partial Class UC_E_Modificar
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 12.0F)
+        Label4.Font = New Font("Segoe UI", 12F)
         Label4.Location = New Point(88, 90)
         Label4.Name = "Label4"
         Label4.Size = New Size(68, 21)
@@ -174,7 +174,7 @@ Partial Class UC_E_Modificar
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12.0F)
+        Label6.Font = New Font("Segoe UI", 12F)
         Label6.Location = New Point(88, 248)
         Label6.Name = "Label6"
         Label6.Size = New Size(38, 21)
@@ -184,7 +184,7 @@ Partial Class UC_E_Modificar
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 12.0F)
+        Label5.Font = New Font("Segoe UI", 12F)
         Label5.Location = New Point(88, 195)
         Label5.Name = "Label5"
         Label5.Size = New Size(68, 21)
@@ -193,7 +193,7 @@ Partial Class UC_E_Modificar
         ' 
         ' UC_E_Modificar
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(Panel_Form)
         Name = "UC_E_Modificar"
