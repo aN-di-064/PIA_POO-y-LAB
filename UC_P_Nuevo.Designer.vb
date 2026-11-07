@@ -23,14 +23,13 @@ Partial Class UC_P_Nuevo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        Button2 = New Button()
         Button1 = New Button()
         Label2 = New Label()
         Label1 = New Label()
-        MaskedTextBox1 = New MaskedTextBox()
+        MTB_Codigo = New MaskedTextBox()
         MTB_Nombre = New MaskedTextBox()
+        MTB_Direccion = New MaskedTextBox()
         MTB_Telefono = New MaskedTextBox()
-        MTB_RFC = New MaskedTextBox()
         Label5 = New Label()
         Label6 = New Label()
         Panel1.SuspendLayout()
@@ -40,30 +39,19 @@ Partial Class UC_P_Nuevo
         ' 
         Panel1.Anchor = AnchorStyles.None
         Panel1.AutoScroll = True
-        Panel1.Controls.Add(Button2)
         Panel1.Controls.Add(Button1)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Label1)
-        Panel1.Controls.Add(MaskedTextBox1)
+        Panel1.Controls.Add(MTB_Codigo)
         Panel1.Controls.Add(MTB_Nombre)
+        Panel1.Controls.Add(MTB_Direccion)
         Panel1.Controls.Add(MTB_Telefono)
-        Panel1.Controls.Add(MTB_RFC)
         Panel1.Controls.Add(Label5)
         Panel1.Controls.Add(Label6)
         Panel1.Location = New Point(3, 3)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(694, 444)
         Panel1.TabIndex = 9
-        ' 
-        ' Button2
-        ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(478, 50)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 84
-        Button2.Text = "Buscar Proveedor"
-        Button2.UseVisualStyleBackColor = True
         ' 
         ' Button1
         ' 
@@ -95,13 +83,13 @@ Partial Class UC_P_Nuevo
         Label1.TabIndex = 81
         Label1.Text = "Codigo"
         ' 
-        ' MaskedTextBox1
+        ' MTB_Codigo
         ' 
-        MaskedTextBox1.Font = New Font("Segoe UI", 12F)
-        MaskedTextBox1.Location = New Point(234, 50)
-        MaskedTextBox1.Name = "MaskedTextBox1"
-        MaskedTextBox1.Size = New Size(202, 29)
-        MaskedTextBox1.TabIndex = 80
+        MTB_Codigo.Font = New Font("Segoe UI", 12F)
+        MTB_Codigo.Location = New Point(234, 50)
+        MTB_Codigo.Name = "MTB_Codigo"
+        MTB_Codigo.Size = New Size(202, 29)
+        MTB_Codigo.TabIndex = 80
         ' 
         ' MTB_Nombre
         ' 
@@ -111,21 +99,21 @@ Partial Class UC_P_Nuevo
         MTB_Nombre.Size = New Size(202, 29)
         MTB_Nombre.TabIndex = 79
         ' 
+        ' MTB_Direccion
+        ' 
+        MTB_Direccion.Font = New Font("Segoe UI", 12F)
+        MTB_Direccion.Location = New Point(234, 162)
+        MTB_Direccion.Name = "MTB_Direccion"
+        MTB_Direccion.Size = New Size(202, 29)
+        MTB_Direccion.TabIndex = 77
+        ' 
         ' MTB_Telefono
         ' 
         MTB_Telefono.Font = New Font("Segoe UI", 12F)
-        MTB_Telefono.Location = New Point(234, 162)
+        MTB_Telefono.Location = New Point(234, 227)
         MTB_Telefono.Name = "MTB_Telefono"
         MTB_Telefono.Size = New Size(202, 29)
-        MTB_Telefono.TabIndex = 77
-        ' 
-        ' MTB_RFC
-        ' 
-        MTB_RFC.Font = New Font("Segoe UI", 12F)
-        MTB_RFC.Location = New Point(234, 227)
-        MTB_RFC.Name = "MTB_RFC"
-        MTB_RFC.Size = New Size(202, 29)
-        MTB_RFC.TabIndex = 78
+        MTB_Telefono.TabIndex = 78
         ' 
         ' Label5
         ' 
@@ -161,14 +149,13 @@ Partial Class UC_P_Nuevo
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MTB_Telefono As MaskedTextBox
-    Friend WithEvents MTB_RFC As MaskedTextBox
+    Friend WithEvents MTB_Direccion As MaskedTextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents MaskedTextBox1 As MaskedTextBox
+    Friend WithEvents MTB_Codigo As MaskedTextBox
     Friend WithEvents MTB_Nombre As MaskedTextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
 
 End Class

@@ -22,23 +22,12 @@ Partial Class UC_CAT_Nuevo
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Button2 = New Button()
         Button1 = New Button()
         Label2 = New Label()
         MTB_Codigo = New MaskedTextBox()
         MTB_Nombre = New MaskedTextBox()
         Label4 = New Label()
         SuspendLayout()
-        ' 
-        ' Button2
-        ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(456, 50)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 81
-        Button2.Text = "Buscar Categoria"
-        Button2.UseVisualStyleBackColor = True
         ' 
         ' Button1
         ' 
@@ -90,7 +79,6 @@ Partial Class UC_CAT_Nuevo
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(Button2)
         Controls.Add(Button1)
         Controls.Add(Label2)
         Controls.Add(MTB_Codigo)
@@ -101,7 +89,6 @@ Partial Class UC_CAT_Nuevo
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents MTB_Codigo As MaskedTextBox

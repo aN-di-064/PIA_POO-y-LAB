@@ -23,7 +23,10 @@ Partial Class UC_I_Modificar
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        Button2 = New Button()
+        CB_Proveedores = New ComboBox()
+        Button_Prov = New Button()
+        Label1 = New Label()
+        Button_Cat = New Button()
         CB_Cat = New ComboBox()
         Button_Buscar = New Button()
         MTB_Existencias = New MaskedTextBox()
@@ -38,9 +41,6 @@ Partial Class UC_I_Modificar
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
-        MTB_Proveedores = New MaskedTextBox()
-        Label1 = New Label()
-        Button3 = New Button()
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -48,10 +48,10 @@ Partial Class UC_I_Modificar
         ' 
         Panel1.Anchor = AnchorStyles.None
         Panel1.AutoScroll = True
-        Panel1.Controls.Add(Button3)
-        Panel1.Controls.Add(MTB_Proveedores)
+        Panel1.Controls.Add(CB_Proveedores)
+        Panel1.Controls.Add(Button_Prov)
         Panel1.Controls.Add(Label1)
-        Panel1.Controls.Add(Button2)
+        Panel1.Controls.Add(Button_Cat)
         Panel1.Controls.Add(CB_Cat)
         Panel1.Controls.Add(Button_Buscar)
         Panel1.Controls.Add(MTB_Existencias)
@@ -71,20 +71,48 @@ Partial Class UC_I_Modificar
         Panel1.Size = New Size(694, 444)
         Panel1.TabIndex = 7
         ' 
-        ' Button2
+        ' CB_Proveedores
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(481, 142)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 82
-        Button2.Text = "Buscar Categoría"
-        Button2.UseVisualStyleBackColor = True
+        CB_Proveedores.FormattingEnabled = True
+        CB_Proveedores.Location = New Point(255, 344)
+        CB_Proveedores.Name = "CB_Proveedores"
+        CB_Proveedores.Size = New Size(202, 23)
+        CB_Proveedores.TabIndex = 86
+        ' 
+        ' Button_Prov
+        ' 
+        Button_Prov.Font = New Font("Segoe UI", 12F)
+        Button_Prov.Location = New Point(481, 347)
+        Button_Prov.Name = "Button_Prov"
+        Button_Prov.Size = New Size(175, 26)
+        Button_Prov.TabIndex = 85
+        Button_Prov.Text = "Buscar Categoría"
+        Button_Prov.UseVisualStyleBackColor = True
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 12F)
+        Label1.Location = New Point(89, 344)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(97, 21)
+        Label1.TabIndex = 83
+        Label1.Text = "Proveedores"
+        ' 
+        ' Button_Cat
+        ' 
+        Button_Cat.Font = New Font("Segoe UI", 12F)
+        Button_Cat.Location = New Point(481, 142)
+        Button_Cat.Name = "Button_Cat"
+        Button_Cat.Size = New Size(175, 26)
+        Button_Cat.TabIndex = 82
+        Button_Cat.Text = "Buscar Categoría"
+        Button_Cat.UseVisualStyleBackColor = True
         ' 
         ' CB_Cat
         ' 
         CB_Cat.FormattingEnabled = True
-        CB_Cat.Location = New Point(255, 140)
+        CB_Cat.Location = New Point(255, 142)
         CB_Cat.Name = "CB_Cat"
         CB_Cat.Size = New Size(202, 23)
         CB_Cat.TabIndex = 81
@@ -102,7 +130,7 @@ Partial Class UC_I_Modificar
         ' MTB_Existencias
         ' 
         MTB_Existencias.Font = New Font("Segoe UI", 12F)
-        MTB_Existencias.Location = New Point(255, 300)
+        MTB_Existencias.Location = New Point(255, 292)
         MTB_Existencias.Name = "MTB_Existencias"
         MTB_Existencias.Size = New Size(201, 29)
         MTB_Existencias.TabIndex = 80
@@ -110,7 +138,7 @@ Partial Class UC_I_Modificar
         ' MTB_PVenta
         ' 
         MTB_PVenta.Font = New Font("Segoe UI", 12F)
-        MTB_PVenta.Location = New Point(254, 248)
+        MTB_PVenta.Location = New Point(254, 240)
         MTB_PVenta.Name = "MTB_PVenta"
         MTB_PVenta.Size = New Size(202, 29)
         MTB_PVenta.TabIndex = 79
@@ -119,7 +147,7 @@ Partial Class UC_I_Modificar
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Segoe UI", 12F)
-        Label7.Location = New Point(88, 300)
+        Label7.Location = New Point(88, 293)
         Label7.Name = "Label7"
         Label7.Size = New Size(84, 21)
         Label7.TabIndex = 65
@@ -128,7 +156,7 @@ Partial Class UC_I_Modificar
         ' MTB_PCompra
         ' 
         MTB_PCompra.Font = New Font("Segoe UI", 12F)
-        MTB_PCompra.Location = New Point(254, 195)
+        MTB_PCompra.Location = New Point(254, 188)
         MTB_PCompra.Name = "MTB_PCompra"
         MTB_PCompra.Size = New Size(202, 29)
         MTB_PCompra.TabIndex = 78
@@ -136,11 +164,11 @@ Partial Class UC_I_Modificar
         ' Button1
         ' 
         Button1.Font = New Font("Segoe UI", 12F)
-        Button1.Location = New Point(280, 391)
+        Button1.Location = New Point(295, 391)
         Button1.Name = "Button1"
         Button1.Size = New Size(122, 30)
         Button1.TabIndex = 56
-        Button1.Text = "Eliminar"
+        Button1.Text = "Modificar"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' MTB_Codigo
@@ -173,7 +201,7 @@ Partial Class UC_I_Modificar
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 12F)
-        Label3.Location = New Point(88, 142)
+        Label3.Location = New Point(88, 140)
         Label3.Name = "Label3"
         Label3.Size = New Size(77, 21)
         Label3.TabIndex = 57
@@ -183,7 +211,7 @@ Partial Class UC_I_Modificar
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 12F)
-        Label4.Location = New Point(88, 90)
+        Label4.Location = New Point(88, 89)
         Label4.Name = "Label4"
         Label4.Size = New Size(91, 21)
         Label4.TabIndex = 58
@@ -193,7 +221,7 @@ Partial Class UC_I_Modificar
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Segoe UI", 12F)
-        Label6.Location = New Point(88, 248)
+        Label6.Location = New Point(88, 242)
         Label6.Name = "Label6"
         Label6.Size = New Size(116, 21)
         Label6.TabIndex = 60
@@ -203,39 +231,11 @@ Partial Class UC_I_Modificar
         ' 
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 12F)
-        Label5.Location = New Point(88, 195)
+        Label5.Location = New Point(88, 191)
         Label5.Name = "Label5"
         Label5.Size = New Size(131, 21)
         Label5.TabIndex = 59
         Label5.Text = "Precio de compra"
-        ' 
-        ' MTB_Proveedores
-        ' 
-        MTB_Proveedores.Font = New Font("Segoe UI", 12F)
-        MTB_Proveedores.Location = New Point(256, 344)
-        MTB_Proveedores.Name = "MTB_Proveedores"
-        MTB_Proveedores.Size = New Size(201, 29)
-        MTB_Proveedores.TabIndex = 84
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 12F)
-        Label1.Location = New Point(89, 344)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(97, 21)
-        Label1.TabIndex = 83
-        Label1.Text = "Proveedores"
-        ' 
-        ' Button3
-        ' 
-        Button3.Font = New Font("Segoe UI", 12F)
-        Button3.Location = New Point(481, 347)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(175, 26)
-        Button3.TabIndex = 85
-        Button3.Text = "Buscar Categoría"
-        Button3.UseVisualStyleBackColor = True
         ' 
         ' UC_I_Modificar
         ' 
@@ -263,9 +263,9 @@ Partial Class UC_I_Modificar
     Friend WithEvents MTB_PCompra As MaskedTextBox
     Friend WithEvents MTB_Codigo As MaskedTextBox
     Friend WithEvents MTB_Descripcion As MaskedTextBox
-    Friend WithEvents Button2 As Button
-    Friend WithEvents MTB_Proveedores As MaskedTextBox
+    Friend WithEvents Button_Cat As Button
     Friend WithEvents Label1 As Label
-    Friend WithEvents Button3 As Button
+    Friend WithEvents Button_Prov As Button
+    Friend WithEvents CB_Proveedores As ComboBox
 
 End Class

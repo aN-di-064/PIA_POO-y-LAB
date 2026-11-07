@@ -13,10 +13,17 @@ Public Class Busqueda_Venta
     Public Property DescripcionSeleccionada As String
 
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property DireccionSeleccionada As String
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property TelefonoSeleccionado As String
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
     Public Property PrecioSeleccionado As Decimal
 
     Private Sub Busqueda_Venta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If TipoBusqueda = "EMPLEADO" Then
+            If ComboBox IsNot Nothing Then ComboBox.Visible = True
             CargarFiltroRoles()
             CargarDatosGrid("")
         Else
@@ -67,8 +74,21 @@ Public Class Busqueda_Venta
                             query &= " AND E.ID_rol = " & idRolSeleccionado
                         End If
                     End If
-                Else
-                    query = "SELECT Id_prod, Descripcion_prod, Precio_prod FROM Producto WHERE 1=1"
+
+                ElseIf TipoBusqueda = "CATEGORIA" Then
+                    query = "SELECT Id_cat, Nombre_cat FROM Categoria WHERE 1=1"
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        query &= " AND Nombre_cat LIKE ?"
+                    End If
+
+                ElseIf TipoBusqueda = "PROVEEDOR" Then
+                    query = "SELECT Id_prov, Nombre_prov, Direccion_prov, Telefono_prov FROM Proveedor WHERE 1=1"
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        query &= " AND Nombre_prov LIKE ?"
+                    End If
+
+                Else ' PRODUCTO (Incluye Id_cat e Id_prov para las relaciones foráneas)
+                    query = "SELECT Id_prod, Descripcion_prod, PVenta_prod, PCompra_prod, Existencias, Id_cat, Id_prov FROM Producto WHERE 1=1"
                     If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
                         query &= " AND Descripcion_prod LIKE ?"
                     End If
@@ -108,10 +128,21 @@ Public Class Busqueda_Venta
             If TipoBusqueda = "EMPLEADO" Then
                 CodigoSeleccionado = fila.Cells("Id_emp").Value.ToString()
                 Me.Tag = CodigoSeleccionado
-            Else
+
+            ElseIf TipoBusqueda = "CATEGORIA" Then
+                CodigoSeleccionado = fila.Cells("Id_cat").Value.ToString()
+                DescripcionSeleccionada = fila.Cells("Nombre_cat").Value.ToString()
+
+            ElseIf TipoBusqueda = "PROVEEDOR" Then
+                CodigoSeleccionado = fila.Cells("Id_prov").Value.ToString()
+                DescripcionSeleccionada = fila.Cells("Nombre_prov").Value.ToString()
+                DireccionSeleccionada = If(fila.Cells("Direccion_prov").Value Is DBNull.Value, "", fila.Cells("Direccion_prov").Value.ToString())
+                TelefonoSeleccionado = If(fila.Cells("Telefono_prov").Value Is DBNull.Value, "", fila.Cells("Telefono_prov").Value.ToString())
+
+            Else ' PRODUCTO
                 CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString()
                 DescripcionSeleccionada = fila.Cells("Descripcion_prod").Value.ToString()
-                PrecioSeleccionado = Convert.ToDecimal(fila.Cells("Precio_prod").Value)
+                PrecioSeleccionado = Convert.ToDecimal(fila.Cells("PVenta_prod").Value)
             End If
 
             DialogResult = DialogResult.OK
