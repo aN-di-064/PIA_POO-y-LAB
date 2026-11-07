@@ -23,8 +23,12 @@ Partial Class UC_Ventas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        CB_Vendedor = New ComboBox()
+        Label6 = New Label()
         Button3 = New Button()
+        LBL_IDCOMPRA = New Label()
         Label4 = New Label()
+        Label7 = New Label()
         Button4 = New Button()
         Label5 = New Label()
         BTN_BORRAR = New Button()
@@ -39,10 +43,6 @@ Partial Class UC_Ventas
         Col_Precio = New DataGridViewTextBoxColumn()
         Col_Importe = New DataGridViewTextBoxColumn()
         Button2 = New Button()
-        CB_Vendedor = New ComboBox()
-        Label6 = New Label()
-        LBL_IDCOMPRA = New Label()
-        Label7 = New Label()
         Panel1.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -72,6 +72,27 @@ Partial Class UC_Ventas
         Panel1.Size = New Size(910, 525)
         Panel1.TabIndex = 1
         ' 
+        ' CB_Vendedor
+        ' 
+        CB_Vendedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        CB_Vendedor.AutoCompleteSource = AutoCompleteSource.ListItems
+        CB_Vendedor.Font = New Font("Segoe UI", 12F)
+        CB_Vendedor.FormattingEnabled = True
+        CB_Vendedor.Location = New Point(219, 85)
+        CB_Vendedor.Name = "CB_Vendedor"
+        CB_Vendedor.Size = New Size(121, 29)
+        CB_Vendedor.TabIndex = 29
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 12F)
+        Label6.Location = New Point(26, 85)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(148, 21)
+        Label6.TabIndex = 28
+        Label6.Text = "Nombre del Cliente:"
+        ' 
         ' Button3
         ' 
         Button3.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
@@ -83,6 +104,16 @@ Partial Class UC_Ventas
         Button3.Text = "Borrar producto seleccionado"
         Button3.UseVisualStyleBackColor = True
         ' 
+        ' LBL_IDCOMPRA
+        ' 
+        LBL_IDCOMPRA.AutoSize = True
+        LBL_IDCOMPRA.Font = New Font("Segoe UI", 12F)
+        LBL_IDCOMPRA.Location = New Point(114, 55)
+        LBL_IDCOMPRA.Name = "LBL_IDCOMPRA"
+        LBL_IDCOMPRA.Size = New Size(43, 21)
+        LBL_IDCOMPRA.TabIndex = 26
+        LBL_IDCOMPRA.Text = "label"
+        ' 
         ' Label4
         ' 
         Label4.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
@@ -93,6 +124,16 @@ Partial Class UC_Ventas
         Label4.Size = New Size(43, 21)
         Label4.TabIndex = 18
         Label4.Text = "label"
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Font = New Font("Segoe UI", 12F)
+        Label7.Location = New Point(26, 55)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(74, 21)
+        Label7.TabIndex = 27
+        Label7.Text = "Venta no."
         ' 
         ' Button4
         ' 
@@ -228,47 +269,6 @@ Partial Class UC_Ventas
         Button2.TabIndex = 3
         Button2.Text = "Buscar producto"
         Button2.UseVisualStyleBackColor = True
-        ' 
-        ' CB_Vendedor
-        ' 
-        CB_Vendedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        CB_Vendedor.AutoCompleteSource = AutoCompleteSource.ListItems
-        CB_Vendedor.Font = New Font("Segoe UI", 12F)
-        CB_Vendedor.FormattingEnabled = True
-        CB_Vendedor.Location = New Point(219, 85)
-        CB_Vendedor.Name = "CB_Vendedor"
-        CB_Vendedor.Size = New Size(121, 29)
-        CB_Vendedor.TabIndex = 29
-        ' 
-        ' Label6
-        ' 
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12F)
-        Label6.Location = New Point(26, 85)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(166, 21)
-        Label6.TabIndex = 28
-        Label6.Text = "Nombre del vendedor:"
-        ' 
-        ' LBL_IDCOMPRA
-        ' 
-        LBL_IDCOMPRA.AutoSize = True
-        LBL_IDCOMPRA.Font = New Font("Segoe UI", 12F)
-        LBL_IDCOMPRA.Location = New Point(114, 55)
-        LBL_IDCOMPRA.Name = "LBL_IDCOMPRA"
-        LBL_IDCOMPRA.Size = New Size(43, 21)
-        LBL_IDCOMPRA.TabIndex = 26
-        LBL_IDCOMPRA.Text = "label"
-        ' 
-        ' Label7
-        ' 
-        Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 12F)
-        Label7.Location = New Point(26, 55)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(74, 21)
-        Label7.TabIndex = 27
-        Label7.Text = "Venta no."
         ' 
         ' UC_Ventas
         ' 
