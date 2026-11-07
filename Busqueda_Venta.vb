@@ -19,6 +19,12 @@ Public Class Busqueda_Venta
     Public Property TelefonoSeleccionado As String
 
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property CorreoSeleccionado As String
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property RFCSeleccionado As String
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
     Public Property PrecioSeleccionado As Decimal
 
     Private Sub Busqueda_Venta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -87,7 +93,13 @@ Public Class Busqueda_Venta
                         query &= " AND Nombre_prov LIKE ?"
                     End If
 
-                Else ' PRODUCTO (Incluye Id_cat e Id_prov para las relaciones foráneas)
+                ElseIf TipoBusqueda = "CLIENTE" Then
+                    query = "SELECT Id_cli, Nombre_cli, Telefono_cli, Correo_cli, RFC_cli, Direccion_cli FROM Cliente WHERE 1=1"
+                    If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
+                        query &= " AND Nombre_cli LIKE ?"
+                    End If
+
+                Else ' PRODUCTO
                     query = "SELECT Id_prod, Descripcion_prod, PVenta_prod, PCompra_prod, Existencias, Id_cat, Id_prov FROM Producto WHERE 1=1"
                     If Not String.IsNullOrWhiteSpace(txtBuscar.Text) Then
                         query &= " AND Descripcion_prod LIKE ?"
@@ -138,6 +150,14 @@ Public Class Busqueda_Venta
                 DescripcionSeleccionada = fila.Cells("Nombre_prov").Value.ToString()
                 DireccionSeleccionada = If(fila.Cells("Direccion_prov").Value Is DBNull.Value, "", fila.Cells("Direccion_prov").Value.ToString())
                 TelefonoSeleccionado = If(fila.Cells("Telefono_prov").Value Is DBNull.Value, "", fila.Cells("Telefono_prov").Value.ToString())
+
+            ElseIf TipoBusqueda = "CLIENTE" Then
+                CodigoSeleccionado = fila.Cells("Id_cli").Value.ToString()
+                DescripcionSeleccionada = fila.Cells("Nombre_cli").Value.ToString()
+                TelefonoSeleccionado = If(fila.Cells("Telefono_cli").Value Is DBNull.Value, "", fila.Cells("Telefono_cli").Value.ToString())
+                CorreoSeleccionado = If(fila.Cells("Correo_cli").Value Is DBNull.Value, "", fila.Cells("Correo_cli").Value.ToString())
+                RFCSeleccionado = If(fila.Cells("RFC_cli").Value Is DBNull.Value, "", fila.Cells("RFC_cli").Value.ToString())
+                DireccionSeleccionada = If(fila.Cells("Direccion_cli").Value Is DBNull.Value, "", fila.Cells("Direccion_cli").Value.ToString())
 
             Else ' PRODUCTO
                 CodigoSeleccionado = fila.Cells("Id_prod").Value.ToString()

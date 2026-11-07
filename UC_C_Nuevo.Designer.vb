@@ -23,15 +23,14 @@ Partial Class UC_C_Nuevo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel_Form = New Panel()
-        Button2 = New Button()
-        MTB_Pventa = New MaskedTextBox()
+        Me.MTB_RFC = New MaskedTextBox()
         Label7 = New Label()
         Button1 = New Button()
-        MTB_Pcompra = New MaskedTextBox()
+        MTB_Direccion = New MaskedTextBox()
         Label2 = New Label()
-        MTB_Unidad = New MaskedTextBox()
+        MTB_Correo = New MaskedTextBox()
         MTB_Codigo = New MaskedTextBox()
-        MTB_Tipo = New MaskedTextBox()
+        MTB_Telefono = New MaskedTextBox()
         Label3 = New Label()
         MTB_Nombre = New MaskedTextBox()
         Label4 = New Label()
@@ -44,15 +43,14 @@ Partial Class UC_C_Nuevo
         ' 
         Panel_Form.Anchor = AnchorStyles.None
         Panel_Form.AutoScroll = True
-        Panel_Form.Controls.Add(Button2)
-        Panel_Form.Controls.Add(MTB_Pventa)
+        Panel_Form.Controls.Add(Me.MTB_RFC)
         Panel_Form.Controls.Add(Label7)
         Panel_Form.Controls.Add(Button1)
-        Panel_Form.Controls.Add(MTB_Pcompra)
+        Panel_Form.Controls.Add(MTB_Direccion)
         Panel_Form.Controls.Add(Label2)
-        Panel_Form.Controls.Add(MTB_Unidad)
+        Panel_Form.Controls.Add(MTB_Correo)
         Panel_Form.Controls.Add(MTB_Codigo)
-        Panel_Form.Controls.Add(MTB_Tipo)
+        Panel_Form.Controls.Add(MTB_Telefono)
         Panel_Form.Controls.Add(Label3)
         Panel_Form.Controls.Add(MTB_Nombre)
         Panel_Form.Controls.Add(Label4)
@@ -63,23 +61,13 @@ Partial Class UC_C_Nuevo
         Panel_Form.Size = New Size(694, 444)
         Panel_Form.TabIndex = 4
         ' 
-        ' Button2
+        ' MTB_RFC
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(481, 38)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 67
-        Button2.Text = "Buscar Material"
-        Button2.UseVisualStyleBackColor = True
-        ' 
-        ' MTB_Pventa
-        ' 
-        MTB_Pventa.Font = New Font("Segoe UI", 12F)
-        MTB_Pventa.Location = New Point(262, 300)
-        MTB_Pventa.Name = "MTB_Pventa"
-        MTB_Pventa.Size = New Size(201, 29)
-        MTB_Pventa.TabIndex = 66
+        Me.MTB_RFC.Font = New Font("Segoe UI", 12F)
+        Me.MTB_RFC.Location = New Point(262, 300)
+        Me.MTB_RFC.Name = "MTB_RFC"
+        Me.MTB_RFC.Size = New Size(201, 29)
+        Me.MTB_RFC.TabIndex = 66
         ' 
         ' Label7
         ' 
@@ -98,16 +86,16 @@ Partial Class UC_C_Nuevo
         Button1.Name = "Button1"
         Button1.Size = New Size(122, 30)
         Button1.TabIndex = 56
-        Button1.Text = "Eliminar"
+        Button1.Text = "Agregar"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' MTB_Pcompra
+        ' MTB_Direccion
         ' 
-        MTB_Pcompra.Font = New Font("Segoe UI", 12F)
-        MTB_Pcompra.Location = New Point(262, 248)
-        MTB_Pcompra.Name = "MTB_Pcompra"
-        MTB_Pcompra.Size = New Size(202, 29)
-        MTB_Pcompra.TabIndex = 64
+        MTB_Direccion.Font = New Font("Segoe UI", 12F)
+        MTB_Direccion.Location = New Point(262, 248)
+        MTB_Direccion.Name = "MTB_Direccion"
+        MTB_Direccion.Size = New Size(202, 29)
+        MTB_Direccion.TabIndex = 64
         ' 
         ' Label2
         ' 
@@ -119,13 +107,13 @@ Partial Class UC_C_Nuevo
         Label2.TabIndex = 54
         Label2.Text = "Código"
         ' 
-        ' MTB_Unidad
+        ' MTB_Correo
         ' 
-        MTB_Unidad.Font = New Font("Segoe UI", 12F)
-        MTB_Unidad.Location = New Point(262, 195)
-        MTB_Unidad.Name = "MTB_Unidad"
-        MTB_Unidad.Size = New Size(202, 29)
-        MTB_Unidad.TabIndex = 63
+        MTB_Correo.Font = New Font("Segoe UI", 12F)
+        MTB_Correo.Location = New Point(262, 195)
+        MTB_Correo.Name = "MTB_Correo"
+        MTB_Correo.Size = New Size(202, 29)
+        MTB_Correo.TabIndex = 63
         ' 
         ' MTB_Codigo
         ' 
@@ -135,13 +123,13 @@ Partial Class UC_C_Nuevo
         MTB_Codigo.Size = New Size(202, 29)
         MTB_Codigo.TabIndex = 55
         ' 
-        ' MTB_Tipo
+        ' MTB_Telefono
         ' 
-        MTB_Tipo.Font = New Font("Segoe UI", 12F)
-        MTB_Tipo.Location = New Point(262, 142)
-        MTB_Tipo.Name = "MTB_Tipo"
-        MTB_Tipo.Size = New Size(202, 29)
-        MTB_Tipo.TabIndex = 62
+        MTB_Telefono.Font = New Font("Segoe UI", 12F)
+        MTB_Telefono.Location = New Point(262, 142)
+        MTB_Telefono.Name = "MTB_Telefono"
+        MTB_Telefono.Size = New Size(202, 29)
+        MTB_Telefono.TabIndex = 62
         ' 
         ' Label3
         ' 
@@ -204,15 +192,14 @@ Partial Class UC_C_Nuevo
     End Sub
 
     Friend WithEvents Panel_Form As Panel
-    Friend WithEvents Button2 As Button
-    Friend WithEvents MTB_Pventa As MaskedTextBox
+    Friend WithEvents MTB_RFC As MaskedTextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents MTB_Pcompra As MaskedTextBox
+    Friend WithEvents MTB_Direccion As MaskedTextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents MTB_Unidad As MaskedTextBox
+    Friend WithEvents MTB_Correo As MaskedTextBox
     Friend WithEvents MTB_Codigo As MaskedTextBox
-    Friend WithEvents MTB_Tipo As MaskedTextBox
+    Friend WithEvents MTB_Telefono As MaskedTextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents MTB_Nombre As MaskedTextBox
     Friend WithEvents Label4 As Label

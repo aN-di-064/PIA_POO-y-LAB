@@ -23,7 +23,7 @@ Partial Class UC_Ventas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        CB_Vendedor = New ComboBox()
+        CB_Cliente = New ComboBox()
         Label6 = New Label()
         Button3 = New Button()
         LBL_IDCOMPRA = New Label()
@@ -51,7 +51,7 @@ Partial Class UC_Ventas
         ' 
         Panel1.Anchor = AnchorStyles.None
         Panel1.BackColor = Color.White
-        Panel1.Controls.Add(CB_Vendedor)
+        Panel1.Controls.Add(CB_Cliente)
         Panel1.Controls.Add(Label6)
         Panel1.Controls.Add(Button3)
         Panel1.Controls.Add(LBL_IDCOMPRA)
@@ -72,21 +72,21 @@ Partial Class UC_Ventas
         Panel1.Size = New Size(910, 525)
         Panel1.TabIndex = 1
         ' 
-        ' CB_Vendedor
+        ' CB_Cliente
         ' 
-        CB_Vendedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        CB_Vendedor.AutoCompleteSource = AutoCompleteSource.ListItems
-        CB_Vendedor.Font = New Font("Segoe UI", 12F)
-        CB_Vendedor.FormattingEnabled = True
-        CB_Vendedor.Location = New Point(219, 85)
-        CB_Vendedor.Name = "CB_Vendedor"
-        CB_Vendedor.Size = New Size(121, 29)
-        CB_Vendedor.TabIndex = 29
+        CB_Cliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        CB_Cliente.AutoCompleteSource = AutoCompleteSource.ListItems
+        CB_Cliente.Font = New Font("Segoe UI", 12.0F)
+        CB_Cliente.FormattingEnabled = True
+        CB_Cliente.Location = New Point(219, 85)
+        CB_Cliente.Name = "CB_Cliente"
+        CB_Cliente.Size = New Size(121, 29)
+        CB_Cliente.TabIndex = 29
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12F)
+        Label6.Font = New Font("Segoe UI", 12.0F)
         Label6.Location = New Point(26, 85)
         Label6.Name = "Label6"
         Label6.Size = New Size(148, 21)
@@ -96,7 +96,7 @@ Partial Class UC_Ventas
         ' Button3
         ' 
         Button3.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        Button3.Font = New Font("Segoe UI", 12F)
+        Button3.Font = New Font("Segoe UI", 12.0F)
         Button3.Location = New Point(26, 439)
         Button3.Name = "Button3"
         Button3.Size = New Size(153, 56)
@@ -107,7 +107,7 @@ Partial Class UC_Ventas
         ' LBL_IDCOMPRA
         ' 
         LBL_IDCOMPRA.AutoSize = True
-        LBL_IDCOMPRA.Font = New Font("Segoe UI", 12F)
+        LBL_IDCOMPRA.Font = New Font("Segoe UI", 12.0F)
         LBL_IDCOMPRA.Location = New Point(114, 55)
         LBL_IDCOMPRA.Name = "LBL_IDCOMPRA"
         LBL_IDCOMPRA.Size = New Size(43, 21)
@@ -118,7 +118,7 @@ Partial Class UC_Ventas
         ' 
         Label4.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 12F)
+        Label4.Font = New Font("Segoe UI", 12.0F)
         Label4.Location = New Point(726, 439)
         Label4.Name = "Label4"
         Label4.Size = New Size(43, 21)
@@ -128,7 +128,7 @@ Partial Class UC_Ventas
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 12F)
+        Label7.Font = New Font("Segoe UI", 12.0F)
         Label7.Location = New Point(26, 55)
         Label7.Name = "Label7"
         Label7.Size = New Size(74, 21)
@@ -138,7 +138,7 @@ Partial Class UC_Ventas
         ' Button4
         ' 
         Button4.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button4.Font = New Font("Segoe UI", 12F)
+        Button4.Font = New Font("Segoe UI", 12.0F)
         Button4.Location = New Point(700, 469)
         Button4.Name = "Button4"
         Button4.Size = New Size(113, 29)
@@ -150,7 +150,7 @@ Partial Class UC_Ventas
         ' 
         Label5.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 12F)
+        Label5.Font = New Font("Segoe UI", 12.0F)
         Label5.Location = New Point(674, 439)
         Label5.Name = "Label5"
         Label5.Size = New Size(45, 21)
@@ -160,7 +160,7 @@ Partial Class UC_Ventas
         ' BTN_BORRAR
         ' 
         BTN_BORRAR.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        BTN_BORRAR.Font = New Font("Segoe UI", 12F)
+        BTN_BORRAR.Font = New Font("Segoe UI", 12.0F)
         BTN_BORRAR.Location = New Point(26, 853)
         BTN_BORRAR.Name = "BTN_BORRAR"
         BTN_BORRAR.Size = New Size(153, 56)
@@ -172,7 +172,7 @@ Partial Class UC_Ventas
         ' 
         LBL_TOTAL.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         LBL_TOTAL.AutoSize = True
-        LBL_TOTAL.Font = New Font("Segoe UI", 12F)
+        LBL_TOTAL.Font = New Font("Segoe UI", 12.0F)
         LBL_TOTAL.Location = New Point(1436, 853)
         LBL_TOTAL.Name = "LBL_TOTAL"
         LBL_TOTAL.Size = New Size(43, 21)
@@ -182,7 +182,7 @@ Partial Class UC_Ventas
         ' Button1
         ' 
         Button1.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button1.Font = New Font("Segoe UI", 12F)
+        Button1.Font = New Font("Segoe UI", 12.0F)
         Button1.Location = New Point(1410, 883)
         Button1.Name = "Button1"
         Button1.Size = New Size(113, 29)
@@ -193,7 +193,7 @@ Partial Class UC_Ventas
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(9, 11)
         Label1.Name = "Label1"
         Label1.Size = New Size(214, 32)
@@ -204,7 +204,7 @@ Partial Class UC_Ventas
         ' 
         Label2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 12F)
+        Label2.Font = New Font("Segoe UI", 12.0F)
         Label2.Location = New Point(1384, 853)
         Label2.Name = "Label2"
         Label2.Size = New Size(45, 21)
@@ -240,7 +240,7 @@ Partial Class UC_Ventas
         ' 
         ' Col_Descripcion
         ' 
-        Col_Descripcion.FillWeight = 200F
+        Col_Descripcion.FillWeight = 200.0F
         Col_Descripcion.HeaderText = "Descripción"
         Col_Descripcion.MinimumWidth = 6
         Col_Descripcion.Name = "Col_Descripcion"
@@ -262,7 +262,7 @@ Partial Class UC_Ventas
         ' 
         ' Button2
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
+        Button2.Font = New Font("Segoe UI", 12.0F)
         Button2.Location = New Point(638, 74)
         Button2.Name = "Button2"
         Button2.Size = New Size(175, 29)
@@ -272,7 +272,7 @@ Partial Class UC_Ventas
         ' 
         ' UC_Ventas
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(Panel1)
         Margin = New Padding(3, 2, 3, 2)
@@ -301,7 +301,7 @@ Partial Class UC_Ventas
     Friend WithEvents Label4 As Label
     Friend WithEvents Button4 As Button
     Friend WithEvents Label5 As Label
-    Friend WithEvents CB_Vendedor As ComboBox
+    Friend WithEvents CB_Cliente As ComboBox
     Friend WithEvents Label6 As Label
     Friend WithEvents LBL_IDCOMPRA As Label
     Friend WithEvents Label7 As Label

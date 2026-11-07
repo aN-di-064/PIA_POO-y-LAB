@@ -41,8 +41,8 @@ Partial Class Interfaz_Principal
         ToolStripButton6 = New ToolStripButton()
         ToolStripSeparator8 = New ToolStripSeparator()
         ToolStripSplitButton1 = New ToolStripSplitButton()
-        panelContenido = New Panel()
         ToolStripButton8 = New ToolStripButton()
+        panelContenido = New Panel()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -170,6 +170,14 @@ Partial Class Interfaz_Principal
         ToolStripSplitButton1.Size = New Size(87, 62)
         ToolStripSplitButton1.Text = "Volver"
         ' 
+        ' ToolStripButton8
+        ' 
+        ToolStripButton8.Image = CType(resources.GetObject("ToolStripButton8.Image"), Image)
+        ToolStripButton8.ImageTransparentColor = Color.Magenta
+        ToolStripButton8.Name = "ToolStripButton8"
+        ToolStripButton8.Size = New Size(94, 62)
+        ToolStripButton8.Text = "Categoria"
+        ' 
         ' panelContenido
         ' 
         panelContenido.BackColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
@@ -178,14 +186,6 @@ Partial Class Interfaz_Principal
         panelContenido.Name = "panelContenido"
         panelContenido.Size = New Size(1036, 385)
         panelContenido.TabIndex = 1
-        ' 
-        ' ToolStripButton8
-        ' 
-        ToolStripButton8.Image = CType(resources.GetObject("ToolStripButton8.Image"), Image)
-        ToolStripButton8.ImageTransparentColor = Color.Magenta
-        ToolStripButton8.Name = "ToolStripButton8"
-        ToolStripButton8.Size = New Size(94, 62)
-        ToolStripButton8.Text = "Categoria"
         ' 
         ' Interfaz_Principal
         ' 

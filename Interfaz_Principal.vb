@@ -141,4 +141,8 @@
     Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
         MostrarVista(New UC_Categoria())
     End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        MostrarVista(New UC_Corte())
+    End Sub
 End Class
