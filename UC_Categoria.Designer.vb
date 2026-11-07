@@ -23,12 +23,12 @@ Partial Class UC_Categoria
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        Panel_de_contenido = New Panel()
-        Label1 = New Label()
         Panel2 = New Panel()
-        Button3 = New Button()
-        Button2 = New Button()
         Button1 = New Button()
+        Button2 = New Button()
+        Button3 = New Button()
+        Label1 = New Label()
+        Panel_de_contenido = New Panel()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -48,25 +48,6 @@ Partial Class UC_Categoria
         Panel1.Size = New Size(910, 516)
         Panel1.TabIndex = 0
         ' 
-        ' Panel_de_contenido
-        ' 
-        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        Panel_de_contenido.AutoScroll = True
-        Panel_de_contenido.Location = New Point(26, 90)
-        Panel_de_contenido.Name = "Panel_de_contenido"
-        Panel_de_contenido.Size = New Size(858, 405)
-        Panel_de_contenido.TabIndex = 4
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
-        Label1.Location = New Point(26, 10)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(95, 30)
-        Label1.TabIndex = 2
-        Label1.Text = "Clientes"
-        ' 
         ' Panel2
         ' 
         Panel2.BackColor = Color.LightGray
@@ -78,15 +59,15 @@ Partial Class UC_Categoria
         Panel2.Size = New Size(858, 45)
         Panel2.TabIndex = 5
         ' 
-        ' Button3
+        ' Button1
         ' 
-        Button3.Font = New Font("Segoe UI", 12F)
-        Button3.Location = New Point(79, 9)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(122, 30)
-        Button3.TabIndex = 0
-        Button3.Text = "Agregar"
-        Button3.UseVisualStyleBackColor = True
+        Button1.Font = New Font("Segoe UI", 12F)
+        Button1.Location = New Point(711, 9)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(122, 30)
+        Button1.TabIndex = 2
+        Button1.Text = "Eliminar"
+        Button1.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
@@ -98,15 +79,34 @@ Partial Class UC_Categoria
         Button2.Text = "Modificar"
         Button2.UseVisualStyleBackColor = True
         ' 
-        ' Button1
+        ' Button3
         ' 
-        Button1.Font = New Font("Segoe UI", 12F)
-        Button1.Location = New Point(711, 9)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(122, 30)
-        Button1.TabIndex = 2
-        Button1.Text = "Eliminar"
-        Button1.UseVisualStyleBackColor = True
+        Button3.Font = New Font("Segoe UI", 12F)
+        Button3.Location = New Point(79, 9)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(122, 30)
+        Button3.TabIndex = 0
+        Button3.Text = "Agregar"
+        Button3.UseVisualStyleBackColor = True
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        Label1.Location = New Point(26, 10)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(114, 30)
+        Label1.TabIndex = 2
+        Label1.Text = "Categoría"
+        ' 
+        ' Panel_de_contenido
+        ' 
+        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel_de_contenido.AutoScroll = True
+        Panel_de_contenido.Location = New Point(26, 90)
+        Panel_de_contenido.Name = "Panel_de_contenido"
+        Panel_de_contenido.Size = New Size(858, 405)
+        Panel_de_contenido.TabIndex = 4
         ' 
         ' TableLayoutPanel1
         ' 

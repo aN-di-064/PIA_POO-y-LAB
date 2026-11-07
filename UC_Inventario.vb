@@ -28,8 +28,8 @@
     End Sub
 
     ' Botón de Categorías (para administrar la tabla Categoria desde VB.NET)
-    Private Sub BTN_CAT_Click(sender As Object, e As EventArgs) Handles BTN_CAT.Click
-        MostrarSubVista(New UC_I_Categoria())
+    Private Sub BTN_CAT_Click(sender As Object, e As EventArgs)
+        MostrarSubVista(New UC_I_Categoria)
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint

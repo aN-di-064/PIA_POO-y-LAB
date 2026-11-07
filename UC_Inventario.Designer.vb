@@ -26,7 +26,6 @@ Partial Class UC_Inventario
         Panel2 = New Panel()
         Label1 = New Label()
         Panel_de_botones = New Panel()
-        BTN_CAT = New Button()
         BTN_DEL = New Button()
         BTN_MOD = New Button()
         BTN_NEW = New Button()
@@ -46,6 +45,7 @@ Partial Class UC_Inventario
         Panel1.Name = "Panel1"
         Panel1.RowCount = 1
         Panel1.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
+        Panel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
         Panel1.Size = New Size(1120, 540)
         Panel1.TabIndex = 0
         ' 
@@ -76,7 +76,6 @@ Partial Class UC_Inventario
         ' 
         Panel_de_botones.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         Panel_de_botones.BackColor = Color.LightGray
-        Panel_de_botones.Controls.Add(BTN_CAT)
         Panel_de_botones.Controls.Add(BTN_DEL)
         Panel_de_botones.Controls.Add(BTN_MOD)
         Panel_de_botones.Controls.Add(BTN_NEW)
@@ -84,16 +83,6 @@ Partial Class UC_Inventario
         Panel_de_botones.Name = "Panel_de_botones"
         Panel_de_botones.Size = New Size(858, 45)
         Panel_de_botones.TabIndex = 0
-        ' 
-        ' BTN_CAT
-        ' 
-        BTN_CAT.Font = New Font("Segoe UI", 12F)
-        BTN_CAT.Location = New Point(704, 9)
-        BTN_CAT.Name = "BTN_CAT"
-        BTN_CAT.Size = New Size(122, 30)
-        BTN_CAT.TabIndex = 3
-        BTN_CAT.Text = "Categoría"
-        BTN_CAT.UseVisualStyleBackColor = True
         ' 
         ' BTN_DEL
         ' 
@@ -152,7 +141,6 @@ Partial Class UC_Inventario
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel_de_botones As Panel
-    Friend WithEvents BTN_CAT As Button
     Friend WithEvents BTN_DEL As Button
     Friend WithEvents BTN_MOD As Button
     Friend WithEvents BTN_NEW As Button

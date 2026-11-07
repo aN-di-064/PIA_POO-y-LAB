@@ -24,12 +24,12 @@ Partial Class UC_Proveedores
     Private Sub InitializeComponent()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
+        Label1 = New Label()
+        Panel_de_contenido = New Panel()
         Panel3 = New Panel()
         BTN_DEL = New Button()
         BTN_MOD = New Button()
         BTN_NEW = New Button()
-        Panel_de_contenido = New Panel()
-        Label1 = New Label()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
@@ -61,6 +61,25 @@ Partial Class UC_Proveedores
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(910, 525)
         Panel1.TabIndex = 0
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        Label1.Location = New Point(26, 12)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(121, 30)
+        Label1.TabIndex = 2
+        Label1.Text = "Proveedor"
+        ' 
+        ' Panel_de_contenido
+        ' 
+        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel_de_contenido.AutoScroll = True
+        Panel_de_contenido.Location = New Point(26, 90)
+        Panel_de_contenido.Name = "Panel_de_contenido"
+        Panel_de_contenido.Size = New Size(858, 405)
+        Panel_de_contenido.TabIndex = 5
         ' 
         ' Panel3
         ' 
@@ -103,25 +122,6 @@ Partial Class UC_Proveedores
         BTN_NEW.TabIndex = 0
         BTN_NEW.Text = "Agregar"
         BTN_NEW.UseVisualStyleBackColor = True
-        ' 
-        ' Panel_de_contenido
-        ' 
-        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        Panel_de_contenido.AutoScroll = True
-        Panel_de_contenido.Location = New Point(26, 90)
-        Panel_de_contenido.Name = "Panel_de_contenido"
-        Panel_de_contenido.Size = New Size(858, 405)
-        Panel_de_contenido.TabIndex = 5
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
-        Label1.Location = New Point(26, 12)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(121, 30)
-        Label1.TabIndex = 2
-        Label1.Text = "Proveedor"
         ' 
         ' UC_Proveedores
         ' 

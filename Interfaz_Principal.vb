@@ -137,4 +137,8 @@
     Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
         MostrarVista(New UC_Proveedores())
     End Sub
+
+    Private Sub ToolStripButton8_Click(sender As Object, e As EventArgs) Handles ToolStripButton8.Click
+        MostrarVista(New UC_Categoria())
+    End Sub
 End Class
