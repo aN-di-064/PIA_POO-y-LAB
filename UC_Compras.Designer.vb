@@ -23,54 +23,98 @@ Partial Class UC_Compras
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        lblTotal = New Label()
+        Label6 = New Label()
+        btnCobrar = New Button()
+        btnEliminar = New Button()
         LBL_TOTAL = New Label()
-        CB_Vendedor = New ComboBox()
+        cboProveedor = New ComboBox()
         Label2 = New Label()
         Label1 = New Label()
         Button1 = New Button()
         BTN_BORRAR = New Button()
         Label4 = New Label()
-        DataGridView1 = New DataGridView()
+        dgvCompra = New DataGridView()
         Col_Cantidad = New DataGridViewTextBoxColumn()
         Col_Código = New DataGridViewTextBoxColumn()
         Col_Descripcion = New DataGridViewTextBoxColumn()
         Col_Precio = New DataGridViewTextBoxColumn()
         Col_Importe = New DataGridViewTextBoxColumn()
-        LBL_IDCOMPRA = New Label()
-        Button2 = New Button()
+        lblNumeroCompra = New Label()
+        btnBuscarProducto = New Button()
         Label3 = New Label()
-        Label5 = New Label()
-        Label6 = New Label()
-        Button3 = New Button()
-        Button4 = New Button()
         Panel1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvCompra, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Panel1
         ' 
         Panel1.Anchor = AnchorStyles.None
         Panel1.BackColor = Color.White
-        Panel1.Controls.Add(Label5)
+        Panel1.Controls.Add(lblTotal)
         Panel1.Controls.Add(Label6)
-        Panel1.Controls.Add(Button3)
-        Panel1.Controls.Add(Button4)
+        Panel1.Controls.Add(btnCobrar)
+        Panel1.Controls.Add(btnEliminar)
         Panel1.Controls.Add(LBL_TOTAL)
-        Panel1.Controls.Add(CB_Vendedor)
+        Panel1.Controls.Add(cboProveedor)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Label1)
         Panel1.Controls.Add(Button1)
         Panel1.Controls.Add(BTN_BORRAR)
         Panel1.Controls.Add(Label4)
-        Panel1.Controls.Add(DataGridView1)
-        Panel1.Controls.Add(LBL_IDCOMPRA)
-        Panel1.Controls.Add(Button2)
+        Panel1.Controls.Add(dgvCompra)
+        Panel1.Controls.Add(lblNumeroCompra)
+        Panel1.Controls.Add(btnBuscarProducto)
         Panel1.Controls.Add(Label3)
-        Panel1.Location = New Point(105, 24)
+        Panel1.Location = New Point(190, 84)
         Panel1.Margin = New Padding(3, 2, 3, 2)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(910, 525)
         Panel1.TabIndex = 1
+        ' 
+        ' lblTotal
+        ' 
+        lblTotal.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        lblTotal.AutoSize = True
+        lblTotal.Font = New Font("Segoe UI", 12F)
+        lblTotal.Location = New Point(656, 460)
+        lblTotal.Name = "lblTotal"
+        lblTotal.Size = New Size(43, 21)
+        lblTotal.TabIndex = 29
+        lblTotal.Text = "label"
+        ' 
+        ' Label6
+        ' 
+        Label6.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        Label6.AutoSize = True
+        Label6.Font = New Font("Segoe UI", 12F)
+        Label6.Location = New Point(604, 460)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(45, 21)
+        Label6.TabIndex = 28
+        Label6.Text = "Total:"
+        ' 
+        ' btnCobrar
+        ' 
+        btnCobrar.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        btnCobrar.Font = New Font("Segoe UI", 12F)
+        btnCobrar.Location = New Point(753, 450)
+        btnCobrar.Name = "btnCobrar"
+        btnCobrar.Size = New Size(131, 40)
+        btnCobrar.TabIndex = 26
+        btnCobrar.Text = "Cobrar"
+        btnCobrar.UseVisualStyleBackColor = True
+        ' 
+        ' btnEliminar
+        ' 
+        btnEliminar.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        btnEliminar.Font = New Font("Segoe UI", 12F)
+        btnEliminar.Location = New Point(28, 450)
+        btnEliminar.Name = "btnEliminar"
+        btnEliminar.Size = New Size(147, 40)
+        btnEliminar.TabIndex = 27
+        btnEliminar.Text = "Eliminar selección"
+        btnEliminar.UseVisualStyleBackColor = True
         ' 
         ' LBL_TOTAL
         ' 
@@ -83,16 +127,16 @@ Partial Class UC_Compras
         LBL_TOTAL.TabIndex = 23
         LBL_TOTAL.Text = "label"
         ' 
-        ' CB_Vendedor
+        ' cboProveedor
         ' 
-        CB_Vendedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        CB_Vendedor.AutoCompleteSource = AutoCompleteSource.ListItems
-        CB_Vendedor.Font = New Font("Segoe UI", 12F)
-        CB_Vendedor.FormattingEnabled = True
-        CB_Vendedor.Location = New Point(219, 82)
-        CB_Vendedor.Name = "CB_Vendedor"
-        CB_Vendedor.Size = New Size(121, 29)
-        CB_Vendedor.TabIndex = 25
+        cboProveedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cboProveedor.AutoCompleteSource = AutoCompleteSource.ListItems
+        cboProveedor.Font = New Font("Segoe UI", 12F)
+        cboProveedor.FormattingEnabled = True
+        cboProveedor.Location = New Point(219, 82)
+        cboProveedor.Name = "cboProveedor"
+        cboProveedor.Size = New Size(121, 29)
+        cboProveedor.TabIndex = 25
         ' 
         ' Label2
         ' 
@@ -143,23 +187,23 @@ Partial Class UC_Compras
         Label4.Font = New Font("Segoe UI", 12F)
         Label4.Location = New Point(26, 82)
         Label4.Name = "Label4"
-        Label4.Size = New Size(166, 21)
+        Label4.Size = New Size(168, 21)
         Label4.TabIndex = 24
-        Label4.Text = "Nombre del vendedor:"
+        Label4.Text = "Nombre de proveedor:"
         ' 
-        ' DataGridView1
+        ' dgvCompra
         ' 
-        DataGridView1.AllowUserToAddRows = False
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.BackgroundColor = Color.White
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Importe})
-        DataGridView1.Location = New Point(26, 120)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.RowHeadersWidth = 51
-        DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        DataGridView1.Size = New Size(858, 300)
-        DataGridView1.TabIndex = 17
+        dgvCompra.AllowUserToAddRows = False
+        dgvCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgvCompra.BackgroundColor = Color.White
+        dgvCompra.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvCompra.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Importe})
+        dgvCompra.Location = New Point(26, 120)
+        dgvCompra.Name = "dgvCompra"
+        dgvCompra.RowHeadersWidth = 51
+        dgvCompra.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvCompra.Size = New Size(858, 300)
+        dgvCompra.TabIndex = 17
         ' 
         ' Col_Cantidad
         ' 
@@ -196,25 +240,25 @@ Partial Class UC_Compras
         Col_Importe.Name = "Col_Importe"
         Col_Importe.ReadOnly = True
         ' 
-        ' LBL_IDCOMPRA
+        ' lblNumeroCompra
         ' 
-        LBL_IDCOMPRA.AutoSize = True
-        LBL_IDCOMPRA.Font = New Font("Segoe UI", 12F)
-        LBL_IDCOMPRA.Location = New Point(114, 52)
-        LBL_IDCOMPRA.Name = "LBL_IDCOMPRA"
-        LBL_IDCOMPRA.Size = New Size(43, 21)
-        LBL_IDCOMPRA.TabIndex = 20
-        LBL_IDCOMPRA.Text = "label"
+        lblNumeroCompra.AutoSize = True
+        lblNumeroCompra.Font = New Font("Segoe UI", 12F)
+        lblNumeroCompra.Location = New Point(114, 52)
+        lblNumeroCompra.Name = "lblNumeroCompra"
+        lblNumeroCompra.Size = New Size(43, 21)
+        lblNumeroCompra.TabIndex = 20
+        lblNumeroCompra.Text = "label"
         ' 
-        ' Button2
+        ' btnBuscarProducto
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(656, 82)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 29)
-        Button2.TabIndex = 16
-        Button2.Text = "Buscar producto"
-        Button2.UseVisualStyleBackColor = True
+        btnBuscarProducto.Font = New Font("Segoe UI", 12F)
+        btnBuscarProducto.Location = New Point(656, 82)
+        btnBuscarProducto.Name = "btnBuscarProducto"
+        btnBuscarProducto.Size = New Size(175, 29)
+        btnBuscarProducto.TabIndex = 16
+        btnBuscarProducto.Text = "Buscar producto"
+        btnBuscarProducto.UseVisualStyleBackColor = True
         ' 
         ' Label3
         ' 
@@ -226,50 +270,6 @@ Partial Class UC_Compras
         Label3.TabIndex = 21
         Label3.Text = "Venta no."
         ' 
-        ' Label5
-        ' 
-        Label5.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 12F)
-        Label5.Location = New Point(726, 442)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(43, 21)
-        Label5.TabIndex = 29
-        Label5.Text = "label"
-        ' 
-        ' Label6
-        ' 
-        Label6.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 12F)
-        Label6.Location = New Point(674, 442)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(45, 21)
-        Label6.TabIndex = 28
-        Label6.Text = "Total:"
-        ' 
-        ' Button3
-        ' 
-        Button3.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button3.Font = New Font("Segoe UI", 12F)
-        Button3.Location = New Point(700, 472)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(113, 29)
-        Button3.TabIndex = 26
-        Button3.Text = "Cobrar"
-        Button3.UseVisualStyleBackColor = True
-        ' 
-        ' Button4
-        ' 
-        Button4.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        Button4.Font = New Font("Segoe UI", 12F)
-        Button4.Location = New Point(26, 442)
-        Button4.Name = "Button4"
-        Button4.Size = New Size(153, 56)
-        Button4.TabIndex = 27
-        Button4.Text = "Borrar producto seleccionado"
-        Button4.UseVisualStyleBackColor = True
-        ' 
         ' UC_Compras
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -277,33 +277,33 @@ Partial Class UC_Compras
         Controls.Add(Panel1)
         Margin = New Padding(3, 2, 3, 2)
         Name = "UC_Compras"
-        Size = New Size(1120, 573)
+        Size = New Size(1291, 693)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvCompra, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label5 As Label
+    Friend WithEvents lblTotal As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
+    Friend WithEvents btnCobrar As Button
+    Friend WithEvents btnEliminar As Button
     Friend WithEvents LBL_TOTAL As Label
-    Friend WithEvents CB_Vendedor As ComboBox
+    Friend WithEvents cboProveedor As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents BTN_BORRAR As Button
     Friend WithEvents Label4 As Label
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgvCompra As DataGridView
     Friend WithEvents Col_Cantidad As DataGridViewTextBoxColumn
     Friend WithEvents Col_Código As DataGridViewTextBoxColumn
     Friend WithEvents Col_Descripcion As DataGridViewTextBoxColumn
     Friend WithEvents Col_Precio As DataGridViewTextBoxColumn
     Friend WithEvents Col_Importe As DataGridViewTextBoxColumn
-    Friend WithEvents LBL_IDCOMPRA As Label
-    Friend WithEvents Button2 As Button
+    Friend WithEvents lblNumeroCompra As Label
+    Friend WithEvents btnBuscarProducto As Button
     Friend WithEvents Label3 As Label
 
 End Class
