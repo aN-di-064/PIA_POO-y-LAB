@@ -22,8 +22,127 @@ Partial Class UC_Categoria
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Panel1 = New Panel()
+        Panel_de_contenido = New Panel()
+        Label1 = New Label()
+        Panel2 = New Panel()
+        Button3 = New Button()
+        Button2 = New Button()
+        Button1 = New Button()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        Panel1.SuspendLayout()
+        Panel2.SuspendLayout()
+        TableLayoutPanel1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Anchor = AnchorStyles.None
+        Panel1.BackColor = Color.White
+        Panel1.Controls.Add(Panel2)
+        Panel1.Controls.Add(Label1)
+        Panel1.Controls.Add(Panel_de_contenido)
+        Panel1.Location = New Point(105, 8)
+        Panel1.Margin = New Padding(3, 2, 3, 2)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(910, 516)
+        Panel1.TabIndex = 0
+        ' 
+        ' Panel_de_contenido
+        ' 
+        Panel_de_contenido.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel_de_contenido.AutoScroll = True
+        Panel_de_contenido.Location = New Point(26, 90)
+        Panel_de_contenido.Name = "Panel_de_contenido"
+        Panel_de_contenido.Size = New Size(858, 405)
+        Panel_de_contenido.TabIndex = 4
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
+        Label1.Location = New Point(26, 10)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(95, 30)
+        Label1.TabIndex = 2
+        Label1.Text = "Clientes"
+        ' 
+        ' Panel2
+        ' 
+        Panel2.BackColor = Color.LightGray
+        Panel2.Controls.Add(Button1)
+        Panel2.Controls.Add(Button2)
+        Panel2.Controls.Add(Button3)
+        Panel2.Location = New Point(26, 43)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(858, 45)
+        Panel2.TabIndex = 5
+        ' 
+        ' Button3
+        ' 
+        Button3.Font = New Font("Segoe UI", 12F)
+        Button3.Location = New Point(79, 9)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(122, 30)
+        Button3.TabIndex = 0
+        Button3.Text = "Agregar"
+        Button3.UseVisualStyleBackColor = True
+        ' 
+        ' Button2
+        ' 
+        Button2.Font = New Font("Segoe UI", 12F)
+        Button2.Location = New Point(389, 9)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(122, 30)
+        Button2.TabIndex = 1
+        Button2.Text = "Modificar"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' Button1
+        ' 
+        Button1.Font = New Font("Segoe UI", 12F)
+        Button1.Location = New Point(711, 9)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(122, 30)
+        Button1.TabIndex = 2
+        Button1.Text = "Eliminar"
+        Button1.UseVisualStyleBackColor = True
+        ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 1
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.Controls.Add(Panel1, 0, 0)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 2
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 8F))
+        TableLayoutPanel1.Size = New Size(1120, 540)
+        TableLayoutPanel1.TabIndex = 1
+        ' 
+        ' UC_Categoria
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(TableLayoutPanel1)
+        Name = "UC_Categoria"
+        Size = New Size(1120, 540)
+        Panel1.ResumeLayout(False)
+        Panel1.PerformLayout()
+        Panel2.ResumeLayout(False)
+        TableLayoutPanel1.ResumeLayout(False)
+        ResumeLayout(False)
     End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Panel_de_contenido As Panel
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 
 End Class
