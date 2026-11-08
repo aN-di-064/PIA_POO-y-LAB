@@ -67,6 +67,9 @@ Partial Class Busqueda_Venta
         ' 
         ' dgvProductos
         ' 
+        dgvProductos.AllowUserToAddRows = False
+        dgvProductos.AllowUserToDeleteRows = False
+        dgvProductos.AllowUserToResizeRows = False
         dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgvProductos.BackgroundColor = Color.White
         DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft

@@ -24,6 +24,8 @@ Partial Class UC_ReporteDia
     Private Sub InitializeComponent()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
+        LBL_TOTAL = New Label()
+        LBL_ETIQUETA_TOTAL = New Label()
         DataGridView1 = New DataGridView()
         Col_Código = New DataGridViewTextBoxColumn()
         Col_Descripcion = New DataGridViewTextBoxColumn()
@@ -33,8 +35,6 @@ Partial Class UC_ReporteDia
         Label2 = New Label()
         Label1 = New Label()
         Label3 = New Label()
-        LBL_TOTAL = New Label()
-        LBL_ETIQUETA_TOTAL = New Label()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
@@ -68,6 +68,28 @@ Partial Class UC_ReporteDia
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(910, 525)
         Panel1.TabIndex = 0
+        ' 
+        ' LBL_TOTAL
+        ' 
+        LBL_TOTAL.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        LBL_TOTAL.AutoSize = True
+        LBL_TOTAL.Font = New Font("Segoe UI", 12F)
+        LBL_TOTAL.Location = New Point(158, 477)
+        LBL_TOTAL.Name = "LBL_TOTAL"
+        LBL_TOTAL.Size = New Size(115, 21)
+        LBL_TOTAL.TabIndex = 14
+        LBL_TOTAL.Text = "Total de ventas:"
+        ' 
+        ' LBL_ETIQUETA_TOTAL
+        ' 
+        LBL_ETIQUETA_TOTAL.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        LBL_ETIQUETA_TOTAL.AutoSize = True
+        LBL_ETIQUETA_TOTAL.Font = New Font("Segoe UI", 12F)
+        LBL_ETIQUETA_TOTAL.Location = New Point(26, 477)
+        LBL_ETIQUETA_TOTAL.Name = "LBL_ETIQUETA_TOTAL"
+        LBL_ETIQUETA_TOTAL.Size = New Size(115, 21)
+        LBL_ETIQUETA_TOTAL.TabIndex = 13
+        LBL_ETIQUETA_TOTAL.Text = "Total de ventas:"
         ' 
         ' DataGridView1
         ' 
@@ -120,7 +142,7 @@ Partial Class UC_ReporteDia
         Label2.AutoSize = True
         Label2.BackColor = Color.White
         Label2.Font = New Font("Segoe UI", 12F)
-        Label2.Location = New Point(158, 30)
+        Label2.Location = New Point(217, 30)
         Label2.Name = "Label2"
         Label2.Size = New Size(56, 21)
         Label2.TabIndex = 11
@@ -146,28 +168,6 @@ Partial Class UC_ReporteDia
         Label3.Size = New Size(78, 21)
         Label3.TabIndex = 12
         Label3.Text = "Resumen:"
-        ' 
-        ' LBL_TOTAL
-        ' 
-        LBL_TOTAL.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        LBL_TOTAL.AutoSize = True
-        LBL_TOTAL.Font = New Font("Segoe UI", 12F)
-        LBL_TOTAL.Location = New Point(158, 477)
-        LBL_TOTAL.Name = "LBL_TOTAL"
-        LBL_TOTAL.Size = New Size(115, 21)
-        LBL_TOTAL.TabIndex = 14
-        LBL_TOTAL.Text = "Total de ventas:"
-        ' 
-        ' LBL_ETIQUETA_TOTAL
-        ' 
-        LBL_ETIQUETA_TOTAL.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        LBL_ETIQUETA_TOTAL.AutoSize = True
-        LBL_ETIQUETA_TOTAL.Font = New Font("Segoe UI", 12F)
-        LBL_ETIQUETA_TOTAL.Location = New Point(26, 477)
-        LBL_ETIQUETA_TOTAL.Name = "LBL_ETIQUETA_TOTAL"
-        LBL_ETIQUETA_TOTAL.Size = New Size(115, 21)
-        LBL_ETIQUETA_TOTAL.TabIndex = 13
-        LBL_ETIQUETA_TOTAL.Text = "Total de ventas:"
         ' 
         ' UC_ReporteDia
         ' 

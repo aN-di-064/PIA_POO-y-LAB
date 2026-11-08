@@ -8,6 +8,21 @@ Public Class UC_Ventas
         CalcularTotal()
     End Sub
 
+    '========================================
+    ' FUNCIONES AUXILIARES DE COLUMNAS (ROBUSTO)
+    '========================================
+    Private Function ObtenerIndiceColumna(dgv As DataGridView, ParamArray posiblesNombres() As String) As Integer
+        For Each nombre In posiblesNombres
+            If dgv.Columns.Contains(nombre) Then
+                Return dgv.Columns(nombre).Index
+            End If
+        Next
+        If dgv.Columns.Count > 0 Then
+            Return Math.Min(posiblesNombres.Length - 1, dgv.Columns.Count - 1)
+        End If
+        Return -1
+    End Function
+
     ' 1. Obtener el número preview de venta (MAX(Id_v) + 1)
     Private Sub ObtenerSiguienteIDVenta()
         Try
@@ -59,33 +74,50 @@ Public Class UC_Ventas
     Private Sub ConexionBusqueda()
         Dim buscador As New Busqueda_Venta()
         buscador.TipoBusqueda = "PRODUCTO"
+        buscador.Tag = "VENTA" ' Opcional: especificar que es venta para usar PVenta_prod
 
         If buscador.ShowDialog() = DialogResult.OK Then
             Dim codigo As String = buscador.CodigoSeleccionado
             Dim descripcion As String = buscador.DescripcionSeleccionada
             Dim precio As Decimal = buscador.PrecioSeleccionado
 
+            Dim idProdInt As Integer = 0
+            Integer.TryParse(codigo, idProdInt)
+
+            Dim idxCodigo As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Código", "Codigo", "ID_prod")
+            Dim idxCant As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Cantidad", "Cantidad")
+            Dim idxDesc As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Descuento", "Descuento")
+            Dim idxImporte As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Importe", "Subtotal")
+
             ' Verificar si ya está en la lista para incrementar la cantidad
             Dim yaExiste As Boolean = False
-            For Each row As DataGridViewRow In DataGridView1.Rows
-                If row.Cells("Col_Código").Value IsNot Nothing AndAlso row.Cells("Col_Código").Value.ToString() = codigo Then
-                    Dim cantActual As Decimal = Convert.ToDecimal(row.Cells("Col_Cantidad").Value)
-                    Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells("Col_Descuento").Value)
+            If idxCodigo >= 0 Then
+                For Each row As DataGridViewRow In DataGridView1.Rows
+                    If row.Cells(idxCodigo).Value IsNot Nothing AndAlso row.Cells(idxCodigo).Value.ToString() = codigo Then
+                        Dim cantActual As Decimal = Convert.ToDecimal(row.Cells(idxCant).Value)
+                        Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells(idxDesc).Value)
 
-                    Dim nuevaCant As Decimal = cantActual + 1
-                    Dim importeBruto As Decimal = nuevaCant * precio
-                    Dim montoDescuento As Decimal = importeBruto * (pctDescuento / 100)
+                        Dim nuevaCant As Decimal = cantActual + 1D
+                        Dim importeBruto As Decimal = nuevaCant * precio
+                        Dim montoDescuento As Decimal = importeBruto * (pctDescuento / 100D)
 
-                    row.Cells("Col_Cantidad").Value = nuevaCant
-                    row.Cells("Col_Importe").Value = importeBruto - montoDescuento
-                    yaExiste = True
-                    Exit For
-                End If
-            Next
+                        row.Cells(idxCant).Value = nuevaCant
+                        If idxImporte >= 0 Then
+                            row.Cells(idxImporte).Value = importeBruto - montoDescuento
+                        End If
+                        yaExiste = True
+                        Exit For
+                    End If
+                Next
+            End If
 
-            ' Si no existe, agregarlo como nuevo renglón (Cantidad = 1, Descuento % = 0)
+            ' Si no existe, agregarlo como nuevo renglón
             If Not yaExiste Then
-                DataGridView1.Rows.Add(1, codigo, descripcion, precio, 0.00, precio)
+                If DataGridView1.Columns.Count >= 6 Then
+                    DataGridView1.Rows.Add(idProdInt, codigo, descripcion, precio, 0.00D, precio)
+                Else
+                    DataGridView1.Rows.Add(1D, codigo, descripcion, precio, 0.00D, precio)
+                End If
             End If
 
             CalcularTotal()
@@ -96,31 +128,51 @@ Public Class UC_Ventas
     Private Sub DataGridView1_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellValueChanged
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
-            Dim cantidad As Decimal = 0
-            Dim precio As Decimal = 0
-            Dim pctDescuento As Decimal = 0
+            Dim cantidad As Decimal = 0D
+            Dim precio As Decimal = 0D
+            Dim pctDescuento As Decimal = 0D
 
-            Decimal.TryParse(Convert.ToString(row.Cells("Col_Cantidad").Value), cantidad)
-            Decimal.TryParse(Convert.ToString(row.Cells("Col_Precio").Value), precio)
-            Decimal.TryParse(Convert.ToString(row.Cells("Col_Descuento").Value), pctDescuento)
+            Dim idxCant As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Cantidad", "Cantidad")
+            Dim idxPrecio As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Precio", "Precio")
+            Dim idxDesc As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Descuento", "Descuento")
+            Dim idxImporte As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Importe", "Subtotal")
+
+            If idxCant >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxCant).Value), cantidad)
+            If idxPrecio >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxPrecio).Value), precio)
+            If idxDesc >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxDesc).Value), pctDescuento)
 
             ' Subtotal = (Cantidad * Precio) - porcentaje de descuento
             Dim bruto As Decimal = cantidad * precio
-            Dim descuentoCalculado As Decimal = bruto * (pctDescuento / 100)
+            Dim descuentoCalculado As Decimal = bruto * (pctDescuento / 100D)
 
-            row.Cells("Col_Importe").Value = bruto - descuentoCalculado
+            If idxImporte >= 0 Then
+                row.Cells(idxImporte).Value = bruto - descuentoCalculado
+            End If
+
             CalcularTotal()
         End If
     End Sub
 
     ' 5. Recalcular el total acumulado
     Private Sub CalcularTotal()
-        Dim total As Decimal = 0
-        For Each row As DataGridViewRow In DataGridView1.Rows
-            If row.Cells("Col_Importe").Value IsNot Nothing Then
-                total += Convert.ToDecimal(row.Cells("Col_Importe").Value)
-            End If
-        Next
+Bytes:  Dim total As Decimal = 0D
+        Dim idxImporte As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Importe", "Subtotal")
+
+        If idxImporte < 0 OrElse (DataGridView1.Columns.Count > 0 AndAlso idxImporte >= DataGridView1.Columns.Count) Then
+            idxImporte = DataGridView1.Columns.Count - 1
+        End If
+
+        If idxImporte >= 0 Then
+            For Each row As DataGridViewRow In DataGridView1.Rows
+                If row.Cells(idxImporte).Value IsNot Nothing AndAlso Not IsDBNull(row.Cells(idxImporte).Value) Then
+                    Dim valCell As Decimal = 0D
+                    If Decimal.TryParse(row.Cells(idxImporte).Value.ToString(), valCell) Then
+                        total += valCell
+                    End If
+                End If
+            Next
+        End If
+
         Label4.Text = total.ToString("C2")
         Label4.Tag = total
     End Sub
@@ -152,7 +204,7 @@ Public Class UC_Ventas
         End If
     End Sub
 
-    ' 7. Botón "Cobrar" (Con validación previa de caja para evitar impresiones si hay imprevistos)
+    ' 7. Botón "Cobrar" (Con validación previa de caja y llamada a la pantalla de cobro compartida)
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click, Button1.Click
         ' Validar productos
         If DataGridView1.Rows.Count = 0 Then
@@ -188,8 +240,8 @@ Public Class UC_Ventas
             Exit Sub
         End Try
 
-        ' Abrir la pantalla de cobro únicamente si la caja está efectivamente abierta
-        Dim totalVenta As Decimal = If(Label4.Tag IsNot Nothing, Convert.ToDecimal(Label4.Tag), 0)
+        ' Abrir la pantalla de cobro compartida configurada para Venta (EsVenta = True)
+        Dim totalVenta As Decimal = If(Label4.Tag IsNot Nothing, Convert.ToDecimal(Label4.Tag), 0D)
 
         Dim frmCobro As New Cobro()
         frmCobro.EsVenta = True
@@ -203,7 +255,7 @@ Public Class UC_Ventas
         End If
     End Sub
 
-    ' 8. Guardar Venta, Detalle_VP y actualizar existencias (Corregido con tipos OleDb explícitos)
+    ' 8. Guardar Venta, Detalle_VP y actualizar existencias
     Private Sub ProcesarVentaEnBD(totalVenta As Decimal)
         Try
             Using con As OleDbConnection = ObtenerConexion()
@@ -221,7 +273,7 @@ Public Class UC_Ventas
 
                 Dim idCorteInt As Integer = Convert.ToInt32(idCorteActivo)
                 Dim idClienteInt As Integer = Convert.ToInt32(CB_Cliente.SelectedValue)
-                Dim idEmpleadoInt As Integer = 1 ' Puedes cambiarlo por tu variable global de sesión de empleado
+                Dim idEmpleadoInt As Integer = If(InicioSesion.IdUsuarioActual > 0, InicioSesion.IdUsuarioActual, 1)
 
                 Dim idVentaGenerado As Integer = 0
                 Dim queryVenta As String = "INSERT INTO Venta (fecha_v, Id_cli, Id_emp, Id_cor, total_v) VALUES (?, ?, ?, ?, ?)"
@@ -237,16 +289,30 @@ Public Class UC_Ventas
                     idVentaGenerado = Convert.ToInt32(cmdVenta.ExecuteScalar())
                 End Using
 
+                Dim idxIDProd As Integer = ObtenerIndiceColumna(DataGridView1, "ID_prod", "Col_ID")
+                Dim idxCodigo As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Código", "Codigo")
+                Dim idxCant As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Cantidad", "Cantidad")
+                Dim idxPrecio As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Precio", "Precio")
+                Dim idxDesc As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Descuento", "Descuento")
+                Dim idxImporte As Integer = ObtenerIndiceColumna(DataGridView1, "Col_Importe", "Subtotal")
+
                 For Each row As DataGridViewRow In DataGridView1.Rows
                     If row.IsNewRow Then Continue For
 
-                    Dim idProd As Integer = Convert.ToInt32(row.Cells("Col_Código").Value)
-                    Dim cantidad As Decimal = Convert.ToDecimal(row.Cells("Col_Cantidad").Value)
-                    Dim precio As Decimal = Convert.ToDecimal(row.Cells("Col_Precio").Value)
-                    Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells("Col_Descuento").Value)
-                    Dim subtotal As Decimal = Convert.ToDecimal(row.Cells("Col_Importe").Value)
+                    Dim idProd As Integer = 0
+                    If idxIDProd >= 0 AndAlso row.Cells(idxIDProd).Value IsNot Nothing Then
+                        Integer.TryParse(Convert.ToString(row.Cells(idxIDProd).Value), idProd)
+                    End If
+                    If idProd = 0 AndAlso idxCodigo >= 0 AndAlso row.Cells(idxCodigo).Value IsNot Nothing Then
+                        Integer.TryParse(Convert.ToString(row.Cells(idxCodigo).Value), idProd)
+                    End If
 
-                    Dim montoDescuentoTotal As Decimal = (cantidad * precio) * (pctDescuento / 100)
+                    Dim cantidad As Decimal = If(idxCant >= 0, Convert.ToDecimal(row.Cells(idxCant).Value), 0D)
+                    Dim precio As Decimal = If(idxPrecio >= 0, Convert.ToDecimal(row.Cells(idxPrecio).Value), 0D)
+                    Dim pctDescuento As Decimal = If(idxDesc >= 0, Convert.ToDecimal(row.Cells(idxDesc).Value), 0D)
+                    Dim subtotal As Decimal = If(idxImporte >= 0, Convert.ToDecimal(row.Cells(idxImporte).Value), 0D)
+
+                    Dim montoDescuentoTotal As Decimal = (cantidad * precio) * (pctDescuento / 100D)
 
                     Dim queryDetalle As String = "INSERT INTO Detalle_VP (Id_v, Id_prod, Cantidad_VP, Precio_VP, Descuento_VP, Subtotal_VP) VALUES (?, ?, ?, ?, ?, ?)"
                     Using cmdDet As New OleDbCommand(queryDetalle, con)

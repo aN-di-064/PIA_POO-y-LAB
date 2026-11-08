@@ -1,654 +1,359 @@
-﻿
-Imports System.Data.OleDb
+﻿Imports System.Data.OleDb
 
 Public Class UC_Compras
 
     '========================================
     ' INICIALIZAR FORMULARIO
     '========================================
-
     Private Sub UC_Compras_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        ConfigurarTabla()
-        CargarProveedor()
         ActualizarNumeroCompra()
-
-        btnBuscarProducto.Enabled = False
-        btnCobrar.Enabled = False
-        btnEliminar.Enabled = False
-
-        lblTotal.Text = "$0.00"
-
+        CargarProveedor()
+        CalcularTotal()
     End Sub
 
     '========================================
-    ' CONFIGURAR DATAGRIDVIEW
+    ' FUNCIONES AUXILIARES DE COLUMNAS (ROBUSTO)
     '========================================
-
-    Private Sub ConfigurarTabla()
-
-        dgvCompra.Columns.Clear()
-
-        dgvCompra.AllowUserToAddRows = False
-        dgvCompra.AllowUserToDeleteRows = False
-        dgvCompra.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvCompra.MultiSelect = False
-        dgvCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-
-        dgvCompra.Columns.Add("ID_prod", "ID")
-        dgvCompra.Columns.Add("Cantidad", "Cantidad (kg)")
-        dgvCompra.Columns.Add("Codigo", "Código")
-        dgvCompra.Columns.Add("Descripcion", "Descripción")
-        dgvCompra.Columns.Add("Precio", "Precio por kilo")
-        dgvCompra.Columns.Add("Descuento", "Descuento (%)")
-        dgvCompra.Columns.Add("Subtotal", "Subtotal")
-
-        dgvCompra.Columns("ID_prod").Visible = False
-
-        dgvCompra.Columns("Cantidad").ReadOnly = False
-        dgvCompra.Columns("Descuento").ReadOnly = False
-
-        dgvCompra.Columns("Codigo").ReadOnly = True
-        dgvCompra.Columns("Descripcion").ReadOnly = True
-        dgvCompra.Columns("Precio").ReadOnly = True
-        dgvCompra.Columns("Subtotal").ReadOnly = True
-
-        dgvCompra.Columns("Precio").DefaultCellStyle.Format = "C2"
-        dgvCompra.Columns("Subtotal").DefaultCellStyle.Format = "C2"
-        dgvCompra.Columns("Descuento").DefaultCellStyle.Format = "N2"
-
-    End Sub
+    Private Function ObtenerIndiceColumna(dgv As DataGridView, ParamArray posiblesNombres() As String) As Integer
+        For Each nombre In posiblesNombres
+            If dgv.Columns.Contains(nombre) Then
+                Return dgv.Columns(nombre).Index
+            End If
+        Next
+        If dgv.Columns.Count > 0 Then
+            Return Math.Min(posiblesNombres.Length - 1, dgv.Columns.Count - 1)
+        End If
+        Return -1
+    End Function
 
     '========================================
-    ' CARGAR PROVEEDORES
+    ' 1. MOSTRAR SIGUIENTE NÚMERO DE COMPRA
     '========================================
-
-    Private Sub CargarProveedor()
-
+    Private Sub ActualizarNumeroCompra()
         Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim query As String = "SELECT MAX(ID_com) FROM Compras"
+                Using cmd As New OleDbCommand(query, con)
+                    Dim result = cmd.ExecuteScalar()
+                    If result IsNot DBNull.Value AndAlso result IsNot Nothing Then
+                        lblNumeroCompra.Text = (Convert.ToInt32(result) + 1).ToString()
+                    Else
+                        lblNumeroCompra.Text = "1"
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            lblNumeroCompra.Text = "1"
+        End Try
+    End Sub
 
-            Using conexion As OleDbConnection = ObtenerConexion()
-
-                Dim consulta As String =
-                    "SELECT ID_prov, Nombre_prov FROM proveedor ORDER BY Nombre_prov"
-
-                Using adaptador As New OleDbDataAdapter(consulta, conexion)
-
-                    Dim tabla As New DataTable()
-                    adaptador.Fill(tabla)
-
-                    cboProveedor.DataSource = tabla
+    '========================================
+    ' 2. CARGAR PROVEEDORES
+    '========================================
+    Private Sub CargarProveedor()
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim query As String = "SELECT ID_prov, Nombre_prov FROM Proveedor ORDER BY Nombre_prov"
+                Using adapter As New OleDbDataAdapter(query, con)
+                    Dim dt As New DataTable()
+                    adapter.Fill(dt)
+                    cboProveedor.DataSource = dt
                     cboProveedor.DisplayMember = "Nombre_prov"
                     cboProveedor.ValueMember = "ID_prov"
-                    cboProveedor.SelectedIndex = -1
 
+                    If dt.Rows.Count > 0 Then
+                        cboProveedor.SelectedIndex = 0
+                    Else
+                        cboProveedor.SelectedIndex = -1
+                    End If
                 End Using
-
             End Using
-
         Catch ex As Exception
-
-            MessageBox.Show("Error al cargar proveedores: " & ex.Message)
-
+            MessageBox.Show("Error al cargar proveedores: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
 
+    Private Sub cboProveedor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboProveedor.SelectedIndexChanged
+        If btnBuscarProducto IsNot Nothing Then
+            btnBuscarProducto.Enabled = cboProveedor.SelectedIndex <> -1 AndAlso cboProveedor.SelectedValue IsNot Nothing
+        End If
     End Sub
 
     '========================================
-    ' SELECCIONAR PROVEEDOR
+    ' 3. BUSCAR Y AGREGAR PRODUCTO
     '========================================
-
-    Private Sub cboProveedor_SelectedIndexChanged(
-        sender As Object,
-        e As EventArgs
-    ) Handles cboProveedor.SelectedIndexChanged
-
-        btnBuscarProducto.Enabled =
-            TypeOf cboProveedor.SelectedValue Is Integer
-
+    Private Sub btnBuscarProducto_Click(sender As Object, e As EventArgs) Handles btnBuscarProducto.Click
+        ConexionBusqueda()
     End Sub
 
-    '========================================
-    ' ABRIR VENTANA DE PRODUCTOS
-    '========================================
-
-    Private Sub btnBuscarProducto_Click(
-        sender As Object,
-        e As EventArgs
-    ) Handles btnBuscarProducto.Click
-
+    Private Sub ConexionBusqueda()
         If cboProveedor.SelectedIndex = -1 Then
-            MessageBox.Show("Selecciona un proveedor primero.")
-            Return
+            MessageBox.Show("Selecciona un proveedor primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
         End If
 
-        Using ventana As New C_SeleccionarProducto()
+        Using buscador As New Busqueda_Venta()
+            buscador.TipoBusqueda = "PRODUCTO"
+            buscador.Tag = "COMPRA" ' Pasar Tag para obtener PCompra_prod en lugar de PVenta_prod
 
-            If ventana.ShowDialog() = DialogResult.OK Then
+            If buscador.ShowDialog() = DialogResult.OK Then
+                Dim codigo As String = buscador.CodigoSeleccionado
+                Dim descripcion As String = buscador.DescripcionSeleccionada
+                Dim costo As Decimal = buscador.PrecioSeleccionado
 
-                AgregarProducto(
-                    ventana.IDProducto,
-                    ventana.CodigoProducto,
-                    ventana.DescripcionProducto,
-                    ventana.PrecioProducto
-                )
+                Dim idProdInt As Integer = 0
+                Integer.TryParse(codigo, idProdInt)
 
+                Dim idxCodigo As Integer = ObtenerIndiceColumna(dgvCompra, "Codigo", "Col_Código")
+                Dim idxCant As Integer = ObtenerIndiceColumna(dgvCompra, "Cantidad", "Col_Cantidad")
+                Dim idxDesc As Integer = ObtenerIndiceColumna(dgvCompra, "Descuento", "Col_Descuento")
+                Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
+
+                ' Verificar si ya existe en la lista
+                Dim yaExiste As Boolean = False
+                If idxCodigo >= 0 Then
+                    For Each row As DataGridViewRow In dgvCompra.Rows
+                        If row.Cells(idxCodigo).Value IsNot Nothing AndAlso row.Cells(idxCodigo).Value.ToString() = codigo Then
+                            Dim cantActual As Decimal = Convert.ToDecimal(row.Cells(idxCant).Value)
+                            Dim pctDescuento As Decimal = Convert.ToDecimal(row.Cells(idxDesc).Value)
+
+                            Dim nuevaCant As Decimal = cantActual + 1D
+                            Dim bruto As Decimal = nuevaCant * costo
+                            Dim descCalculado As Decimal = bruto * (pctDescuento / 100D)
+
+                            row.Cells(idxCant).Value = nuevaCant
+                            If idxSubtotal >= 0 Then
+                                row.Cells(idxSubtotal).Value = bruto - descCalculado
+                            End If
+                            yaExiste = True
+                            Exit For
+                        End If
+                    Next
+                End If
+
+                If Not yaExiste Then
+                    If dgvCompra.Columns.Count >= 7 Then
+                        dgvCompra.Rows.Add(idProdInt, 1D, codigo, descripcion, costo, 0.00D, costo)
+                    Else
+                        dgvCompra.Rows.Add(1D, codigo, descripcion, costo, 0.00D, costo)
+                    End If
+                End If
+
+                If btnCobrar IsNot Nothing Then btnCobrar.Enabled = True
+                If btnEliminar IsNot Nothing Then btnEliminar.Enabled = True
+
+                CalcularTotal()
             End If
-
         End Using
-
     End Sub
 
     '========================================
-    ' AGREGAR PRODUCTO A LA COMPRA
+    ' 4. RECALCULAR SUBTOTAL EN EDICIÓN
     '========================================
+    Private Sub dgvCompra_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCompra.CellValueChanged
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = dgvCompra.Rows(e.RowIndex)
+            Dim cantidad As Decimal = 0D
+            Dim precio As Decimal = 0D
+            Dim pctDescuento As Decimal = 0D
 
-    Private Sub AgregarProducto(
-        id As Integer,
-        codigo As String,
-        descripcion As String,
-        precio As Decimal
-    )
+            Dim idxCant As Integer = ObtenerIndiceColumna(dgvCompra, "Cantidad", "Col_Cantidad")
+            Dim idxPrecio As Integer = ObtenerIndiceColumna(dgvCompra, "Precio", "Col_Precio")
+            Dim idxDesc As Integer = ObtenerIndiceColumna(dgvCompra, "Descuento", "Col_Descuento")
+            Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
 
-        'Verificar si el producto ya está agregado
+            If idxCant >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxCant).Value), cantidad)
+            If idxPrecio >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxPrecio).Value), precio)
+            If idxDesc >= 0 Then Decimal.TryParse(Convert.ToString(row.Cells(idxDesc).Value), pctDescuento)
 
-        For Each fila As DataGridViewRow In dgvCompra.Rows
+            Dim bruto As Decimal = cantidad * precio
+            Dim descuentoCalculado As Decimal = bruto * (pctDescuento / 100D)
 
-            If CInt(fila.Cells("ID_prod").Value) = id Then
-
-                Dim cantidadActual As Decimal =
-                    CDec(fila.Cells("Cantidad").Value)
-
-                fila.Cells("Cantidad").Value = cantidadActual + 1
-
-                ActualizarSubtotal(fila)
-
-                Return
-
+            If idxSubtotal >= 0 Then
+                row.Cells(idxSubtotal).Value = bruto - descuentoCalculado
             End If
 
-        Next
-
-        'Agregar nuevo producto
-
-        dgvCompra.Rows.Add(
-            id,
-            1D,
-            codigo,
-            descripcion,
-            precio,
-            0D,
-            precio
-        )
-
-        btnCobrar.Enabled = True
-        btnEliminar.Enabled = True
-
-        CalcularTotal()
-
+            CalcularTotal()
+        End If
     End Sub
 
     '========================================
-    ' MODIFICAR CANTIDAD
+    ' 5. CALCULAR TOTAL ACUMULADO
     '========================================
-
-    Private Sub dgvCompra_CellEndEdit(
-        sender As Object,
-        e As DataGridViewCellEventArgs
-    ) Handles dgvCompra.CellEndEdit
-
-        If e.RowIndex < 0 Then Return
-
-        Dim fila As DataGridViewRow = dgvCompra.Rows(e.RowIndex)
-
-        Select Case dgvCompra.Columns(e.ColumnIndex).Name
-
-            Case "Cantidad"
-
-                Dim cantidad As Decimal
-
-                If Not Decimal.TryParse(
-                Convert.ToString(fila.Cells("Cantidad").Value),
-                cantidad
-            ) OrElse cantidad <= 0 Then
-
-                    MessageBox.Show("Ingresa una cantidad válida.")
-
-                    fila.Cells("Cantidad").Value = 1D
-
-                End If
-
-            Case "Descuento"
-
-                Dim descuento As Decimal
-
-                If Not Decimal.TryParse(
-                Convert.ToString(fila.Cells("Descuento").Value),
-                descuento
-            ) OrElse descuento < 0 OrElse descuento > 100 Then
-
-                    MessageBox.Show(
-                    "El descuento debe ser un valor entre 0 y 100."
-                )
-
-                    fila.Cells("Descuento").Value = 0D
-
-                End If
-
-        End Select
-
-        ActualizarSubtotal(fila)
-
-    End Sub
-
-    '========================================
-    ' ACTUALIZAR SUBTOTAL
-    '========================================
-
-    Private Sub ActualizarSubtotal(fila As DataGridViewRow)
-
-        Dim cantidad As Decimal =
-            Convert.ToDecimal(fila.Cells("Cantidad").Value)
-
-        Dim precio As Decimal =
-            Convert.ToDecimal(fila.Cells("Precio").Value)
-
-        Dim descuento As Decimal =
-            Convert.ToDecimal(fila.Cells("Descuento").Value)
-
-        'Aplicar descuento al precio unitario
-        Dim precioDescontado As Decimal =
-            precio * (1 - descuento / 100D)
-
-        'Redondear el precio unitario a dos decimales
-        precioDescontado = Math.Round(
-            precioDescontado,
-            2,
-            MidpointRounding.AwayFromZero
-        )
-
-        'Calcular subtotal
-        Dim subtotal As Decimal =
-            cantidad * precioDescontado
-
-        fila.Cells("Subtotal").Value = Math.Round(
-            subtotal,
-            2,
-            MidpointRounding.AwayFromZero
-        )
-
-        CalcularTotal()
-
-    End Sub
-
-    '========================================
-    ' CALCULAR TOTAL DE LA COMPRA
-    '========================================
-
     Private Sub CalcularTotal()
+        Dim total As Decimal = 0D
+        Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
 
-        Dim total As Decimal = 0
+        If idxSubtotal < 0 OrElse (dgvCompra.Columns.Count > 0 AndAlso idxSubtotal >= dgvCompra.Columns.Count) Then
+            idxSubtotal = dgvCompra.Columns.Count - 1
+        End If
 
-        For Each fila As DataGridViewRow In dgvCompra.Rows
-
-            total += Convert.ToDecimal(fila.Cells("Subtotal").Value)
-
-        Next
+        If idxSubtotal >= 0 Then
+            For Each row As DataGridViewRow In dgvCompra.Rows
+                If row.Cells(idxSubtotal).Value IsNot Nothing AndAlso Not IsDBNull(row.Cells(idxSubtotal).Value) Then
+                    Dim valCell As Decimal = 0D
+                    If Decimal.TryParse(row.Cells(idxSubtotal).Value.ToString(), valCell) Then
+                        total += valCell
+                    End If
+                End If
+            Next
+        End If
 
         lblTotal.Text = total.ToString("C2")
-
+        lblTotal.Tag = total
     End Sub
 
     '========================================
-    ' ELIMINAR PRODUCTO SELECCIONADO
+    ' 6. ELIMINAR PRODUCTO SELECCIONADO
     '========================================
+    Private Sub EliminarProductoSeleccionado()
+        If dgvCompra.SelectedRows.Count > 0 Then
+            Dim respuesta As DialogResult = MessageBox.Show("¿Desea eliminar el producto seleccionado?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If respuesta = DialogResult.Yes Then
+                For Each row As DataGridViewRow In dgvCompra.SelectedRows
+                    If Not row.IsNewRow Then
+                        dgvCompra.Rows.Remove(row)
+                    End If
+                Next
+                CalcularTotal()
 
-    Private Sub btnEliminar_Click(
-        sender As Object,
-        e As EventArgs
-    ) Handles btnEliminar.Click
-
-        If dgvCompra.SelectedRows.Count = 0 Then
-
-            MessageBox.Show("Selecciona un producto para eliminar.")
-            Return
-
-        End If
-
-        dgvCompra.Rows.Remove(dgvCompra.SelectedRows(0))
-
-        CalcularTotal()
-
-        If dgvCompra.Rows.Count = 0 Then
-
-            btnCobrar.Enabled = False
-            btnEliminar.Enabled = False
-
-        End If
-
-    End Sub
-
-    '========================================
-    ' REGISTRAR COMPRA
-    '========================================
-
-    Private Sub btnAgregar_Click(
-        sender As Object,
-        e As EventArgs
-    ) Handles btnCobrar.Click
-
-        GuardarCompra()
-
-    End Sub
-
-    Private Sub GuardarCompra()
-
-        If cboProveedor.SelectedIndex = -1 OrElse
-           Not TypeOf cboProveedor.SelectedValue Is Integer Then
-
-            MessageBox.Show("Selecciona un proveedor.")
-            Return
-
-        End If
-
-        If dgvCompra.Rows.Count = 0 Then
-
-            MessageBox.Show("Agrega al menos un producto.")
-            Return
-
-        End If
-
-        If InicioSesion.IdUsuarioActual <= 0 Then
-
-            MessageBox.Show("No se ha identificado al empleado.")
-            Return
-
-        End If
-
-        Try
-
-            dgvCompra.EndEdit()
-
-            Dim total As Decimal = 0
-
-            'Calcular y validar total
-
-            For Each fila As DataGridViewRow In dgvCompra.Rows
-
-                Dim cantidad As Decimal =
-            Convert.ToDecimal(fila.Cells("Cantidad").Value)
-
-                Dim precio As Decimal =
-            Convert.ToDecimal(fila.Cells("Precio").Value)
-
-                Dim descuento As Decimal =
-            Convert.ToDecimal(fila.Cells("Descuento").Value)
-
-                If cantidad <= 0 OrElse precio < 0 OrElse
-           descuento < 0 OrElse descuento > 100 Then
-
-                    MessageBox.Show(
-                "Verifica las cantidades, precios y descuentos. " &
-                "El descuento debe estar entre 0 y 100."
-            )
-
-                    Return
-
+                If dgvCompra.Rows.Count = 0 Then
+                    If btnCobrar IsNot Nothing Then btnCobrar.Enabled = False
+                    If btnEliminar IsNot Nothing Then btnEliminar.Enabled = False
                 End If
+            End If
+        Else
+            MessageBox.Show("Seleccione una fila para borrar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
 
-                Dim precioDescontado As Decimal =
-            Math.Round(
-                precio * (1 - descuento / 100D),
-                2,
-                MidpointRounding.AwayFromZero
-            )
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        EliminarProductoSeleccionado()
+    End Sub
 
-                total += Math.Round(
-                cantidad * precioDescontado,
-                2,
-                MidpointRounding.AwayFromZero
-             )
+    Private Sub dgvCompra_KeyDown(sender As Object, e As KeyEventArgs) Handles dgvCompra.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            EliminarProductoSeleccionado()
+        End If
+    End Sub
 
-            Next
+    '========================================
+    ' 7. BOTÓN COBRAR / ABRIR VENTANA DE COBRO
+    '========================================
+    Private Sub btnCobrar_Click(sender As Object, e As EventArgs) Handles btnCobrar.Click
+        If dgvCompra.Rows.Count = 0 Then
+            MessageBox.Show("No hay productos agregados a la compra.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
 
-            Dim idProveedor As Integer =
-                Convert.ToInt32(cboProveedor.SelectedValue)
+        If cboProveedor.SelectedIndex = -1 OrElse cboProveedor.SelectedValue Is Nothing OrElse String.IsNullOrWhiteSpace(cboProveedor.Text) Then
+            MessageBox.Show("No hay un proveedor seleccionado. Por favor, seleccione un proveedor antes de continuar.", "Proveedor Requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboProveedor.Focus()
+            Exit Sub
+        End If
 
-            Using conexion As OleDbConnection = ObtenerConexion()
+        Dim totalCompra As Decimal = If(lblTotal.Tag IsNot Nothing, Convert.ToDecimal(lblTotal.Tag), 0D)
 
-                Using transaccion As OleDbTransaction =
-                    conexion.BeginTransaction()
+        ' Abrir la pantalla de Cobro configurada para Compras (EsVenta = False)
+        Dim frmCobro As New Cobro()
+        frmCobro.EsVenta = False
+        frmCobro.TotalTransaccion = totalCompra
+        frmCobro.FolioVenta = lblNumeroCompra.Text
+        frmCobro.NombreCliente = cboProveedor.Text
+        frmCobro.ListaProductos = dgvCompra.Rows
 
-                    Try
+        If frmCobro.ShowDialog() = DialogResult.OK Then
+            ProcesarCompraEnBD(totalCompra)
+        End If
+    End Sub
 
-                        '--------------------------------
-                        ' INSERTAR COMPRA
-                        '--------------------------------
+    '========================================
+    ' 8. GUARDAR COMPRA EN BASE DE DATOS
+    '========================================
+    Private Sub ProcesarCompraEnBD(totalCompra As Decimal)
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
 
-                        Dim consultaCompra As String =
-                            "INSERT INTO Compra " &
-                            "(Fecha_com, ID_prov, ID_emp, total_com) " &
-                            "VALUES (?, ?, ?, ?)"
+                Dim idProveedorInt As Integer = Convert.ToInt32(cboProveedor.SelectedValue)
+                Dim idEmpleadoInt As Integer = If(InicioSesion.IdUsuarioActual > 0, InicioSesion.IdUsuarioActual, 1)
 
-                        Using comando As New OleDbCommand(
-                            consultaCompra,
-                            conexion,
-                            transaccion
-                        )
+                Dim idCompraGenerado As Integer = 0
+                Dim queryCompra As String = "INSERT INTO Compras (Fecha_com, ID_prov, ID_emp, total_com) VALUES (?, ?, ?, ?)"
+                Using cmdCompra As New OleDbCommand(queryCompra, con)
+                    cmdCompra.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now
+                    cmdCompra.Parameters.Add("?", OleDbType.Integer).Value = idProveedorInt
+                    cmdCompra.Parameters.Add("?", OleDbType.Integer).Value = idEmpleadoInt
+                    cmdCompra.Parameters.Add("?", OleDbType.Currency).Value = totalCompra
+                    cmdCompra.ExecuteNonQuery()
 
-                            comando.Parameters.Add(
-                                "Fecha", OleDbType.Date
-                            ).Value = DateTime.Now
-
-                            comando.Parameters.Add(
-                                "Proveedor", OleDbType.Integer
-                            ).Value = idProveedor
-
-                            comando.Parameters.Add(
-                                "Empleado", OleDbType.Integer
-                            ).Value = InicioSesion.IdUsuarioActual
-
-                            comando.Parameters.Add(
-                                "Total", OleDbType.Currency
-                            ).Value = total
-
-                            comando.ExecuteNonQuery()
-
-                        End Using
-
-                        '--------------------------------
-                        ' OBTENER ID DE LA COMPRA
-                        '--------------------------------
-
-                        Dim idCompra As Integer
-
-                        Using comandoID As New OleDbCommand(
-                            "SELECT @@IDENTITY",
-                            conexion,
-                            transaccion
-                        )
-
-                            idCompra = Convert.ToInt32(
-                                comandoID.ExecuteScalar()
-                            )
-
-                        End Using
-
-                        '--------------------------------
-                        ' INSERTAR DETALLES EN Detalle_CP
-                        '--------------------------------
-
-                        Dim consultaDetalle As String =
-                            "INSERT INTO Detalle_CP " &
-                            "(ID_com, ID_prod, Cantidad_CP, " &
-                            "CostoUnitario_CP, Descuento_CP, subtotal_CP) " &
-                            "VALUES (?, ?, ?, ?, ?, ?)"
-
-                        For Each fila As DataGridViewRow In dgvCompra.Rows
-                            Dim idProducto As Integer =
-                                CInt(fila.Cells("ID_prod").Value)
-
-                            Dim cantidad As Decimal =
-                                CDec(fila.Cells("Cantidad").Value)
-
-                            Dim precio As Decimal =
-                                CDec(fila.Cells("Precio").Value)
-
-                            Dim descuento As Decimal =
-                                CDec(fila.Cells("Descuento").Value)
-
-                            'Calcular precio unitario con descuento
-                            Dim precioDescontado As Decimal =
-                                Math.Round(
-                                    precio * (1 - descuento / 100D),
-                                    2,
-                                    MidpointRounding.AwayFromZero
-                                )
-
-                            'Calcular subtotal con descuento
-                            Dim subtotal As Decimal =
-                                Math.Round(
-                                    cantidad * precioDescontado,
-                                    2,
-                                    MidpointRounding.AwayFromZero
-                                )
-
-                            Using comando As New OleDbCommand(
-                                consultaDetalle,
-                                conexion,
-                                transaccion
-                            )
-
-                                comando.Parameters.Add(
-                                    "Compra", OleDbType.Integer
-                                ).Value = idCompra
-
-                                comando.Parameters.Add(
-                                    "Producto", OleDbType.Integer
-                                ).Value = idProducto
-
-                                comando.Parameters.Add(
-                                    "Cantidad", OleDbType.Double
-                                ).Value = CDbl(cantidad)
-
-                                comando.Parameters.Add(
-                                    "Costo", OleDbType.Currency
-                                ).Value = precio
-
-                                comando.Parameters.Add(
-                                    "Descuento", OleDbType.Double
-                                ).Value = CDbl(descuento)
-
-                                comando.Parameters.Add(
-                                    "Subtotal", OleDbType.Currency
-                                ).Value = subtotal
-
-                                comando.ExecuteNonQuery()
-
-                            End Using
-
-                        Next
-
-                        '--------------------------------
-                        ' CONFIRMAR TRANSACCIÓN
-                        '--------------------------------
-
-                        transaccion.Commit()
-
-                        MessageBox.Show(
-                            "Compra registrada correctamente." &
-                            vbCrLf & "Folio: " & idCompra &
-                            vbCrLf & "Total: " & total.ToString("C2"),
-                            "Compra registrada",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        )
-
-                    Catch ex As Exception
-
-                        transaccion.Rollback()
-
-                        Throw New Exception(
-                            "Error al registrar la compra: " & ex.Message
-                        )
-
-                    End Try
-
+                    cmdCompra.CommandText = "SELECT @@IDENTITY"
+                    idCompraGenerado = Convert.ToInt32(cmdCompra.ExecuteScalar())
                 End Using
 
-            End Using
+                Dim idxIDProd As Integer = ObtenerIndiceColumna(dgvCompra, "ID_prod")
+                Dim idxCodigo As Integer = ObtenerIndiceColumna(dgvCompra, "Codigo", "Col_Código")
+                Dim idxCant As Integer = ObtenerIndiceColumna(dgvCompra, "Cantidad", "Col_Cantidad")
+                Dim idxPrecio As Integer = ObtenerIndiceColumna(dgvCompra, "Precio", "Col_Precio")
+                Dim idxDesc As Integer = ObtenerIndiceColumna(dgvCompra, "Descuento", "Col_Descuento")
+                Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
 
-            '--------------------------------
-            ' LIMPIAR FORMULARIO
-            '--------------------------------
+                For Each row As DataGridViewRow In dgvCompra.Rows
+                    If row.IsNewRow Then Continue For
 
-            dgvCompra.Rows.Clear()
-
-            cboProveedor.SelectedIndex = -1
-
-            lblTotal.Text = "$0.00"
-
-            btnBuscarProducto.Enabled = False
-            btnCobrar.Enabled = False
-            btnEliminar.Enabled = False
-
-            'Actualizar el siguiente número de compra
-            ActualizarNumeroCompra()
-
-        Catch ex As Exception
-
-            MessageBox.Show(
-                ex.Message,
-                "Error al registrar compra",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            )
-
-        End Try
-
-    End Sub
-
-    '========================================
-    ' MOSTRAR SIGUIENTE NÚMERO DE COMPRA
-    '========================================
-
-    Private Sub ActualizarNumeroCompra()
-
-        Try
-
-            Using conexion As OleDbConnection = ObtenerConexion()
-
-                Dim consulta As String =
-                "SELECT MAX(ID_com) FROM Compras"
-
-                Using comando As New OleDbCommand(consulta, conexion)
-
-                    Dim resultado As Object = comando.ExecuteScalar()
-
-                    Dim siguienteID As Integer = 1
-
-                    If resultado IsNot DBNull.Value AndAlso resultado IsNot Nothing Then
-                        siguienteID = Convert.ToInt32(resultado) + 1
+                    Dim idProd As Integer = 0
+                    If idxIDProd >= 0 AndAlso row.Cells(idxIDProd).Value IsNot Nothing Then
+                        Integer.TryParse(Convert.ToString(row.Cells(idxIDProd).Value), idProd)
+                    End If
+                    If idProd = 0 AndAlso idxCodigo >= 0 AndAlso row.Cells(idxCodigo).Value IsNot Nothing Then
+                        Integer.TryParse(Convert.ToString(row.Cells(idxCodigo).Value), idProd)
                     End If
 
-                    lblNumeroCompra.Text = siguienteID.ToString()
+                    Dim cantidad As Decimal = If(idxCant >= 0, Convert.ToDecimal(row.Cells(idxCant).Value), 0D)
+                    Dim costo As Decimal = If(idxPrecio >= 0, Convert.ToDecimal(row.Cells(idxPrecio).Value), 0D)
+                    Dim pctDescuento As Decimal = If(idxDesc >= 0, Convert.ToDecimal(row.Cells(idxDesc).Value), 0D)
+                    Dim subtotal As Decimal = If(idxSubtotal >= 0, Convert.ToDecimal(row.Cells(idxSubtotal).Value), 0D)
 
-                End Using
+                    Dim montoDescuentoTotal As Decimal = (cantidad * costo) * (pctDescuento / 100D)
+
+                    ' Insertar registro en Detalle_CP
+                    Dim queryDetalle As String = "INSERT INTO Detalle_CP (ID_com, ID_prod, Cantidad_CP, CostoUnitario_CP, Descuento_CP, subtotal_CP) VALUES (?, ?, ?, ?, ?, ?)"
+                    Using cmdDet As New OleDbCommand(queryDetalle, con)
+                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idCompraGenerado
+                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idProd
+                        cmdDet.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = costo
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = montoDescuentoTotal
+                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = subtotal
+                        cmdDet.ExecuteNonQuery()
+                    End Using
+
+                    ' Incrementar existencias del inventario en la tabla Producto
+                    Dim queryStock As String = "UPDATE Producto SET Existencias = Existencias + ? WHERE Id_prod = ?"
+                    Using cmdStock As New OleDbCommand(queryStock, con)
+                        cmdStock.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
+                        cmdStock.Parameters.Add("?", OleDbType.Integer).Value = idProd
+                        cmdStock.ExecuteNonQuery()
+                    End Using
+                Next
+
+                MessageBox.Show("¡Compra registrada e inventario actualizado exitosamente!" & vbCrLf & "Folio: " & idCompraGenerado, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                ' Limpieza y refresco del formulario
+                dgvCompra.Rows.Clear()
+                CalcularTotal()
+                ActualizarNumeroCompra()
+                CargarProveedor()
+
+                If btnCobrar IsNot Nothing Then btnCobrar.Enabled = False
+                If btnEliminar IsNot Nothing Then btnEliminar.Enabled = False
 
             End Using
-
         Catch ex As Exception
-
-            MessageBox.Show(
-            "Error al consultar el número de compra: " & ex.Message
-        )
-
+            MessageBox.Show("Error al guardar la compra: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub Label5_Click(sender As Object, e As EventArgs) Handles lblTotal.Click
-
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
     End Sub
+
 End Class
-

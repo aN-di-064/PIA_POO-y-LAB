@@ -1,33 +1,52 @@
-﻿Public Class RangoFechas
-    ' Propiedades para transferir las fechas a la vista principal
+﻿Imports System.ComponentModel
 
-    Public FechaInicio As DateTime
-    Public FechaFin As DateTime
+Public Class RangoFechas
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property FechaInicio As DateTime
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property FechaFin As DateTime
+
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Property TipoConsulta As String = "Ventas"
 
     Private Sub RangoFechas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Establecer la fecha actual por defecto en ambos controles
         DateTimePicker1.Value = DateTime.Now
         DateTimePicker2.Value = DateTime.Now
+
+        ' Si el ComboBox del diseñador está vacío, agregar las opciones en plural
+        If CB_TIPOCONSULTA.Items.Count = 0 Then
+            CB_TIPOCONSULTA.Items.Clear()
+            CB_TIPOCONSULTA.Items.Add("Ventas")
+            CB_TIPOCONSULTA.Items.Add("Compras")
+        End If
+
+        If CB_TIPOCONSULTA.SelectedIndex = -1 Then
+            CB_TIPOCONSULTA.SelectedIndex = 0 ' Selecciona "Ventas" por defecto
+        End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-        ' Validar que la fecha inicial no sea posterior a la fecha final
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If DateTimePicker1.Value.Date > DateTimePicker2.Value.Date Then
             MessageBox.Show("La fecha de inicio no puede ser posterior a la fecha de fin.",
-                            "Rango Inválido",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning)
+                            "Rango Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' Asignar la fecha de inicio
+        If CB_TIPOCONSULTA.SelectedIndex = -1 Then
+            MessageBox.Show("Por favor seleccione si desea consultar Ventas o Compras.",
+                            "Opción Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            CB_TIPOCONSULTA.Focus()
+            Exit Sub
+        End If
+
         FechaInicio = DateTimePicker1.Value.Date
-
-        ' Asignar la fecha final marcando el límite exacto del día (23:59:59)
         FechaFin = DateTimePicker2.Value.Date.AddDays(1).AddSeconds(-1)
+        TipoConsulta = CB_TIPOCONSULTA.SelectedItem.ToString()
 
-        ' Indicar que la acción fue exitosa y cerrar la ventana modal
         DialogResult = DialogResult.OK
-        Close
+        Close()
     End Sub
+
 End Class

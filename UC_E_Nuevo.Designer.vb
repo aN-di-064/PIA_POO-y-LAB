@@ -23,7 +23,7 @@ Partial Class UC_E_Nuevo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel_Form = New Panel()
-        Button2 = New Button()
+        CB_Rol = New ComboBox()
         MTB_Contraseña = New MaskedTextBox()
         Label7 = New Label()
         Button1 = New Button()
@@ -36,7 +36,6 @@ Partial Class UC_E_Nuevo
         Label4 = New Label()
         Label6 = New Label()
         Label5 = New Label()
-        CB_Rol = New ComboBox()
         Panel_Form.SuspendLayout()
         SuspendLayout()
         ' 
@@ -45,7 +44,6 @@ Partial Class UC_E_Nuevo
         Panel_Form.Anchor = AnchorStyles.None
         Panel_Form.AutoScroll = True
         Panel_Form.Controls.Add(CB_Rol)
-        Panel_Form.Controls.Add(Button2)
         Panel_Form.Controls.Add(MTB_Contraseña)
         Panel_Form.Controls.Add(Label7)
         Panel_Form.Controls.Add(Button1)
@@ -63,15 +61,13 @@ Partial Class UC_E_Nuevo
         Panel_Form.Size = New Size(694, 444)
         Panel_Form.TabIndex = 6
         ' 
-        ' Button2
+        ' CB_Rol
         ' 
-        Button2.Font = New Font("Segoe UI", 12F)
-        Button2.Location = New Point(481, 38)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(175, 26)
-        Button2.TabIndex = 67
-        Button2.Text = "Buscar Material"
-        Button2.UseVisualStyleBackColor = True
+        CB_Rol.FormattingEnabled = True
+        CB_Rol.Location = New Point(262, 144)
+        CB_Rol.Name = "CB_Rol"
+        CB_Rol.Size = New Size(202, 23)
+        CB_Rol.TabIndex = 68
         ' 
         ' MTB_Contraseña
         ' 
@@ -183,14 +179,6 @@ Partial Class UC_E_Nuevo
         Label5.TabIndex = 59
         Label5.Text = "Telefono"
         ' 
-        ' CB_Rol
-        ' 
-        CB_Rol.FormattingEnabled = True
-        CB_Rol.Location = New Point(262, 144)
-        CB_Rol.Name = "CB_Rol"
-        CB_Rol.Size = New Size(202, 23)
-        CB_Rol.TabIndex = 68
-        ' 
         ' UC_E_Nuevo
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -204,7 +192,6 @@ Partial Class UC_E_Nuevo
     End Sub
 
     Friend WithEvents Panel_Form As Panel
-    Friend WithEvents Button2 As Button
     Friend WithEvents MTB_Contraseña As MaskedTextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents Button1 As Button

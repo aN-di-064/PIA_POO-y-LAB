@@ -92,12 +92,13 @@
         Using frmRango As New RangoFechas()
             ' Abrir la ventana de manera modal
             If frmRango.ShowDialog() = DialogResult.OK Then
-                ' Capturar las fechas definidas en la ventana modal
+                ' Capturar las fechas y el tipo de consulta definidos en la ventana modal
                 Dim fInicio As DateTime = frmRango.FechaInicio
                 Dim fFin As DateTime = frmRango.FechaFin
+                Dim tipoConsulta As String = frmRango.TipoConsulta
 
-                ' Cargar la vista pasándole el rango de fechas
-                MostrarVista(New UC_ReporteDia(fInicio, fFin))
+                ' Cargar la vista pasándole el rango de fechas y el tipo ("Venta" o "Compra")
+                MostrarVista(New UC_ReporteDia(fInicio, fFin, tipoConsulta))
             End If
         End Using
     End Sub
@@ -145,4 +146,5 @@
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         MostrarVista(New UC_Corte())
     End Sub
+
 End Class

@@ -35,14 +35,15 @@ Partial Class UC_Compras
         BTN_BORRAR = New Button()
         Label4 = New Label()
         dgvCompra = New DataGridView()
+        lblNumeroCompra = New Label()
+        btnBuscarProducto = New Button()
+        Label3 = New Label()
         Col_Cantidad = New DataGridViewTextBoxColumn()
         Col_Código = New DataGridViewTextBoxColumn()
         Col_Descripcion = New DataGridViewTextBoxColumn()
         Col_Precio = New DataGridViewTextBoxColumn()
+        Col_Descuento = New DataGridViewTextBoxColumn()
         Col_Importe = New DataGridViewTextBoxColumn()
-        lblNumeroCompra = New Label()
-        btnBuscarProducto = New Button()
-        Label3 = New Label()
         Panel1.SuspendLayout()
         CType(dgvCompra, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -197,48 +198,13 @@ Partial Class UC_Compras
         dgvCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgvCompra.BackgroundColor = Color.White
         dgvCompra.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvCompra.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Importe})
+        dgvCompra.Columns.AddRange(New DataGridViewColumn() {Col_Cantidad, Col_Código, Col_Descripcion, Col_Precio, Col_Descuento, Col_Importe})
         dgvCompra.Location = New Point(26, 120)
         dgvCompra.Name = "dgvCompra"
         dgvCompra.RowHeadersWidth = 51
         dgvCompra.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         dgvCompra.Size = New Size(858, 300)
         dgvCompra.TabIndex = 17
-        ' 
-        ' Col_Cantidad
-        ' 
-        Col_Cantidad.HeaderText = "Cantidad (kg)"
-        Col_Cantidad.MinimumWidth = 6
-        Col_Cantidad.Name = "Col_Cantidad"
-        ' 
-        ' Col_Código
-        ' 
-        Col_Código.HeaderText = "Código"
-        Col_Código.MinimumWidth = 6
-        Col_Código.Name = "Col_Código"
-        Col_Código.ReadOnly = True
-        ' 
-        ' Col_Descripcion
-        ' 
-        Col_Descripcion.FillWeight = 200F
-        Col_Descripcion.HeaderText = "Descripción"
-        Col_Descripcion.MinimumWidth = 6
-        Col_Descripcion.Name = "Col_Descripcion"
-        Col_Descripcion.ReadOnly = True
-        ' 
-        ' Col_Precio
-        ' 
-        Col_Precio.HeaderText = "Precio por kilo"
-        Col_Precio.MinimumWidth = 6
-        Col_Precio.Name = "Col_Precio"
-        Col_Precio.ReadOnly = True
-        ' 
-        ' Col_Importe
-        ' 
-        Col_Importe.HeaderText = "Subtotal"
-        Col_Importe.MinimumWidth = 6
-        Col_Importe.Name = "Col_Importe"
-        Col_Importe.ReadOnly = True
         ' 
         ' lblNumeroCompra
         ' 
@@ -270,6 +236,46 @@ Partial Class UC_Compras
         Label3.TabIndex = 21
         Label3.Text = "Venta no."
         ' 
+        ' Col_Cantidad
+        ' 
+        Col_Cantidad.HeaderText = "Cantidad (kg)"
+        Col_Cantidad.MinimumWidth = 6
+        Col_Cantidad.Name = "Col_Cantidad"
+        ' 
+        ' Col_Código
+        ' 
+        Col_Código.HeaderText = "Código"
+        Col_Código.MinimumWidth = 6
+        Col_Código.Name = "Col_Código"
+        Col_Código.ReadOnly = True
+        ' 
+        ' Col_Descripcion
+        ' 
+        Col_Descripcion.FillWeight = 200F
+        Col_Descripcion.HeaderText = "Descripción"
+        Col_Descripcion.MinimumWidth = 6
+        Col_Descripcion.Name = "Col_Descripcion"
+        Col_Descripcion.ReadOnly = True
+        ' 
+        ' Col_Precio
+        ' 
+        Col_Precio.HeaderText = "Precio unitario"
+        Col_Precio.MinimumWidth = 6
+        Col_Precio.Name = "Col_Precio"
+        Col_Precio.ReadOnly = True
+        ' 
+        ' Col_Descuento
+        ' 
+        Col_Descuento.HeaderText = "Descuento"
+        Col_Descuento.Name = "Col_Descuento"
+        ' 
+        ' Col_Importe
+        ' 
+        Col_Importe.HeaderText = "Subtotal"
+        Col_Importe.MinimumWidth = 6
+        Col_Importe.Name = "Col_Importe"
+        Col_Importe.ReadOnly = True
+        ' 
         ' UC_Compras
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -297,13 +303,14 @@ Partial Class UC_Compras
     Friend WithEvents BTN_BORRAR As Button
     Friend WithEvents Label4 As Label
     Friend WithEvents dgvCompra As DataGridView
+    Friend WithEvents lblNumeroCompra As Label
+    Friend WithEvents btnBuscarProducto As Button
+    Friend WithEvents Label3 As Label
     Friend WithEvents Col_Cantidad As DataGridViewTextBoxColumn
     Friend WithEvents Col_Código As DataGridViewTextBoxColumn
     Friend WithEvents Col_Descripcion As DataGridViewTextBoxColumn
     Friend WithEvents Col_Precio As DataGridViewTextBoxColumn
+    Friend WithEvents Col_Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Col_Importe As DataGridViewTextBoxColumn
-    Friend WithEvents lblNumeroCompra As Label
-    Friend WithEvents btnBuscarProducto As Button
-    Friend WithEvents Label3 As Label
 
 End Class

@@ -33,6 +33,8 @@ Partial Class Cobro
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
         CheckBox1 = New CheckBox()
+        Label5 = New Label()
+        CB_Pago = New ComboBox()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
@@ -48,7 +50,7 @@ Partial Class Cobro
         ' TXT_TOTAL
         ' 
         TXT_TOTAL.BackColor = Color.White
-        TXT_TOTAL.Font = New Font("Segoe UI", 12.0F)
+        TXT_TOTAL.Font = New Font("Segoe UI", 12F)
         TXT_TOTAL.Location = New Point(170, 38)
         TXT_TOTAL.Name = "TXT_TOTAL"
         TXT_TOTAL.ReadOnly = True
@@ -58,7 +60,7 @@ Partial Class Cobro
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 12.0F)
+        Label2.Font = New Font("Segoe UI", 12F)
         Label2.Location = New Point(22, 38)
         Label2.Name = "Label2"
         Label2.Size = New Size(45, 21)
@@ -67,7 +69,7 @@ Partial Class Cobro
         ' 
         ' Button1
         ' 
-        Button1.Font = New Font("Segoe UI", 12.0F)
+        Button1.Font = New Font("Segoe UI", 12F)
         Button1.Location = New Point(109, 256)
         Button1.Name = "Button1"
         Button1.Size = New Size(122, 30)
@@ -78,7 +80,7 @@ Partial Class Cobro
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 12.0F)
+        Label3.Font = New Font("Segoe UI", 12F)
         Label3.Location = New Point(22, 83)
         Label3.Name = "Label3"
         Label3.Size = New Size(120, 21)
@@ -87,7 +89,7 @@ Partial Class Cobro
         ' 
         ' TXT_DR
         ' 
-        TXT_DR.Font = New Font("Segoe UI", 12.0F)
+        TXT_DR.Font = New Font("Segoe UI", 12F)
         TXT_DR.Location = New Point(170, 83)
         TXT_DR.Name = "TXT_DR"
         TXT_DR.Size = New Size(150, 29)
@@ -96,7 +98,7 @@ Partial Class Cobro
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 12.0F)
+        Label4.Font = New Font("Segoe UI", 12F)
         Label4.Location = New Point(22, 128)
         Label4.Name = "Label4"
         Label4.Size = New Size(64, 21)
@@ -106,7 +108,7 @@ Partial Class Cobro
         ' TXT_CAMBIO
         ' 
         TXT_CAMBIO.BackColor = Color.White
-        TXT_CAMBIO.Font = New Font("Segoe UI", 12.0F)
+        TXT_CAMBIO.Font = New Font("Segoe UI", 12F)
         TXT_CAMBIO.Location = New Point(170, 128)
         TXT_CAMBIO.Name = "TXT_CAMBIO"
         TXT_CAMBIO.ReadOnly = True
@@ -116,16 +118,16 @@ Partial Class Cobro
         ' TableLayoutPanel1
         ' 
         TableLayoutPanel1.ColumnCount = 1
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
         TableLayoutPanel1.Controls.Add(Panel1, 0, 0)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Margin = New Padding(3, 2, 3, 2)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 1
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50.0F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel1.Size = New Size(424, 346)
         TableLayoutPanel1.TabIndex = 8
         ' 
@@ -133,6 +135,8 @@ Partial Class Cobro
         ' 
         Panel1.Anchor = AnchorStyles.None
         Panel1.BackColor = Color.White
+        Panel1.Controls.Add(CB_Pago)
+        Panel1.Controls.Add(Label5)
         Panel1.Controls.Add(CheckBox1)
         Panel1.Controls.Add(Button1)
         Panel1.Controls.Add(TXT_CAMBIO)
@@ -150,12 +154,31 @@ Partial Class Cobro
         ' CheckBox1
         ' 
         CheckBox1.AutoSize = True
-        CheckBox1.Location = New Point(125, 201)
+        CheckBox1.Location = New Point(125, 222)
         CheckBox1.Name = "CheckBox1"
         CheckBox1.Size = New Size(106, 19)
         CheckBox1.TabIndex = 9
         CheckBox1.Text = "Imprimir Ticket"
         CheckBox1.UseVisualStyleBackColor = True
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Font = New Font("Segoe UI", 12F)
+        Label5.Location = New Point(22, 173)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(124, 21)
+        Label5.TabIndex = 11
+        Label5.Text = "Metodo de pago"
+        ' 
+        ' CB_Pago
+        ' 
+        CB_Pago.FormattingEnabled = True
+        CB_Pago.Items.AddRange(New Object() {"Efectivo", "Tarjeta de crédito"})
+        CB_Pago.Location = New Point(170, 175)
+        CB_Pago.Name = "CB_Pago"
+        CB_Pago.Size = New Size(150, 23)
+        CB_Pago.TabIndex = 12
         ' 
         ' Cobro
         ' 
@@ -188,4 +211,6 @@ Partial Class Cobro
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CB_Pago As ComboBox
+    Friend WithEvents Label5 As Label
 End Class
