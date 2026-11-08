@@ -5,15 +5,16 @@ Module ConexionBD
 
     Public ReadOnly StringConexion As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Base de datos\Dulceria.accdb") & ";"
 
-    ' Devuelve la conexión sin abrir para que cada bloque Using controle su propio inicio y cierre
+    ' ObtenerConexion devuelve la conexión ABIERTA lista para usarse
     Public Function ObtenerConexion() As OleDbConnection
-        Return New OleDbConnection(StringConexion)
+        Dim con As New OleDbConnection(StringConexion)
+        con.Open()
+        Return con
     End Function
 
     Public Function ProbarConexion() As Boolean
         Try
             Using con As OleDbConnection = ObtenerConexion()
-                con.Open()
                 Return True
             End Using
         Catch ex As Exception

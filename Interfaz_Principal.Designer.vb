@@ -42,7 +42,11 @@ Partial Class Interfaz_Principal
         ToolStripSeparator8 = New ToolStripSeparator()
         ToolStripSplitButton1 = New ToolStripSplitButton()
         ToolStripButton8 = New ToolStripButton()
+        ToolStripButton9 = New ToolStripButton()
         panelContenido = New Panel()
+        ToolStripSeparator9 = New ToolStripSeparator()
+        ToolStripSeparator10 = New ToolStripSeparator()
+        ToolStripSeparator11 = New ToolStripSeparator()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -50,10 +54,10 @@ Partial Class Interfaz_Principal
         ' 
         ToolStrip1.AutoSize = False
         ToolStrip1.ImageScalingSize = New Size(32, 32)
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator2, ToolStripButton7, ToolStripSeparator7, ToolStripButton4, ToolStripSeparator5, ToolStripSplitButton2, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator3, ToolStripButton3, ToolStripSeparator4, ToolStripButton5, ToolStripSeparator6, ToolStripButton6, ToolStripSeparator8, ToolStripSplitButton1, ToolStripButton8})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator2, ToolStripButton7, ToolStripSeparator7, ToolStripButton9, ToolStripSeparator11, ToolStripButton4, ToolStripSeparator5, ToolStripSplitButton2, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator3, ToolStripButton8, ToolStripSeparator8, ToolStripButton5, ToolStripSeparator6, ToolStripButton6, ToolStripSeparator4, ToolStripButton3, ToolStripSeparator9, ToolStripSplitButton1, ToolStripSeparator10})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(1036, 65)
+        ToolStrip1.Size = New Size(1182, 65)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -178,20 +182,43 @@ Partial Class Interfaz_Principal
         ToolStripButton8.Size = New Size(94, 62)
         ToolStripButton8.Text = "Categoria"
         ' 
+        ' ToolStripButton9
+        ' 
+        ToolStripButton9.Image = CType(resources.GetObject("ToolStripButton9.Image"), Image)
+        ToolStripButton9.ImageTransparentColor = Color.Magenta
+        ToolStripButton9.Name = "ToolStripButton9"
+        ToolStripButton9.Size = New Size(95, 62)
+        ToolStripButton9.Text = "Consultas"
+        ' 
         ' panelContenido
         ' 
         panelContenido.BackColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
         panelContenido.Dock = DockStyle.Fill
         panelContenido.Location = New Point(0, 65)
         panelContenido.Name = "panelContenido"
-        panelContenido.Size = New Size(1036, 385)
+        panelContenido.Size = New Size(1182, 385)
         panelContenido.TabIndex = 1
+        ' 
+        ' ToolStripSeparator9
+        ' 
+        ToolStripSeparator9.Name = "ToolStripSeparator9"
+        ToolStripSeparator9.Size = New Size(6, 65)
+        ' 
+        ' ToolStripSeparator10
+        ' 
+        ToolStripSeparator10.Name = "ToolStripSeparator10"
+        ToolStripSeparator10.Size = New Size(6, 65)
+        ' 
+        ' ToolStripSeparator11
+        ' 
+        ToolStripSeparator11.Name = "ToolStripSeparator11"
+        ToolStripSeparator11.Size = New Size(6, 65)
         ' 
         ' Interfaz_Principal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1036, 450)
+        ClientSize = New Size(1182, 450)
         Controls.Add(panelContenido)
         Controls.Add(ToolStrip1)
         Name = "Interfaz_Principal"
@@ -222,4 +249,8 @@ Partial Class Interfaz_Principal
     Friend WithEvents ToolStripButton7 As ToolStripButton
     Friend WithEvents ToolStripSeparator8 As ToolStripSeparator
     Friend WithEvents ToolStripButton8 As ToolStripButton
+    Friend WithEvents ToolStripButton9 As ToolStripButton
+    Friend WithEvents ToolStripSeparator9 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator10 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator11 As ToolStripSeparator
 End Class

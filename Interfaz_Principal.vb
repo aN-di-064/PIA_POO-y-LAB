@@ -147,4 +147,7 @@
         MostrarVista(New UC_Corte())
     End Sub
 
+    Private Sub ToolStripButton9_Click(sender As Object, e As EventArgs) Handles ToolStripButton9.Click
+        MostrarVista(New UC_Consulta())
+    End Sub
 End Class

@@ -71,17 +71,15 @@ Public Class Cobro
     End Sub
 
     Private Sub CargarMetodosPago()
-        ' Respetar las opciones agregadas desde el diseñador ("Efectivo", "Tarjeta de crédito")
         If CB_Pago IsNot Nothing Then
             If CB_Pago.Items.Count = 0 Then
                 CB_Pago.Items.Add("Efectivo")
                 CB_Pago.Items.Add("Tarjeta de crédito")
             End If
-            CB_Pago.SelectedIndex = -1 ' Sin selección inicial obligatoria
+            CB_Pago.SelectedIndex = -1
         End If
     End Sub
 
-    ' Calcular cambio automáticamente al escribir en TXT_DR
     Private Sub TXT_DR_TextChanged(sender As Object, e As EventArgs) Handles TXT_DR.TextChanged
         Dim dineroRecibido As Decimal = 0D
         If Decimal.TryParse(TXT_DR.Text, dineroRecibido) Then
@@ -92,9 +90,7 @@ Public Class Cobro
         End If
     End Sub
 
-    ' Botón Confirmar Pago
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ' 1. Validar Dinero Recibido
         Dim dineroRecibido As Decimal = 0D
         If Not Decimal.TryParse(TXT_DR.Text, dineroRecibido) OrElse dineroRecibido < TotalPagar Then
             MessageBox.Show("El dinero recibido es inválido o insuficiente.", "Error de Pago", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -102,7 +98,6 @@ Public Class Cobro
             Exit Sub
         End If
 
-        ' 2. Validar Selección del Método de Pago Obligatorio
         If CB_Pago.SelectedIndex = -1 AndAlso String.IsNullOrWhiteSpace(CB_Pago.Text) Then
             MessageBox.Show("Por favor seleccione un método de pago.", "Método Requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             CB_Pago.Focus()
@@ -111,7 +106,6 @@ Public Class Cobro
 
         Dim textoMetodoPago As String = CB_Pago.Text.Trim()
 
-        ' 3. Procesar y guardar en la base de datos
         If TipoTransaccion.Equals("Venta", StringComparison.OrdinalIgnoreCase) Then
             GuardarVenta(textoMetodoPago)
         Else
@@ -119,9 +113,9 @@ Public Class Cobro
         End If
     End Sub
 
-    ' Función auxiliar universal para extraer los detalles de cualquier origen (DataTable o Grid)
-    Private Function ExtraerDatosDetalle() As List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, String))
-        Dim lista As New List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, String))()
+    ' Extrae: (IdProd, Cantidad, Precio/Costo, Descuento, Subtotal, Descripcion)
+    Private Function ExtraerDatosDetalle() As List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String))
+        Dim lista As New List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String))()
 
         If DetalleTransaccion Is Nothing Then Return lista
 
@@ -131,35 +125,38 @@ Public Class Cobro
                 If TypeOf r Is DataGridViewRow Then
                     Dim row As DataGridViewRow = CType(r, DataGridViewRow)
                     If Not row.IsNewRow Then
-                        Dim idProd As Integer = Convert.ToInt32(ObtenerValorFila(row, "Código", "Id_prod"))
-                        Dim cant As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Cantidad", "Cantidad_VP", "Cantidad_CP"))
-                        Dim prec As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Precio", "Precio_VP", "CostoUnitario_CP"))
-                        Dim subt As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Subtotal", "Subtotal_VP", "subtotal_CP"))
-                        Dim desc As String = ObtenerValorFila(row, "Descripción", "Descripcion_prod")
-                        lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, String)(idProd, cant, prec, subt, desc))
+                        Dim idProd As Integer = ExtraerIdEnteroFila(row)
+                        Dim cant As Decimal = ExtraerDecimalFila(row, {"Cantidad", "Cantidad_VP", "Cantidad_CP", "cant"}, 1D)
+                        Dim prec As Decimal = ExtraerDecimalFila(row, {"Precio", "Precio_VP", "CostoUnitario_CP", "Precio unitario"}, 0D)
+                        Dim desc As Decimal = ExtraerDecimalFila(row, {"Descuento", "Descuento_VP", "Descuento_CP"}, 0D)
+                        Dim subt As Decimal = ExtraerDecimalFila(row, {"Subtotal", "Subtotal_VP", "subtotal_CP"}, 0D)
+                        Dim nombreDesc As String = ExtraerTextoFila(row, {"Descripción", "Descripcion", "Descripcion_prod", "Nombre"})
+                        lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String)(idProd, cant, prec, desc, subt, nombreDesc))
                     End If
                 End If
             Next
         ElseIf TypeOf DetalleTransaccion Is DataTable Then
             Dim dt As DataTable = CType(DetalleTransaccion, DataTable)
             For Each row As DataRow In dt.Rows
-                Dim idProd As Integer = Convert.ToInt32(ObtenerValorDataRow(row, "Código", "Id_prod"))
-                Dim cant As Decimal = Convert.ToDecimal(ObtenerValorDataRow(row, "Cantidad", "Cantidad_VP", "Cantidad_CP"))
-                Dim prec As Decimal = Convert.ToDecimal(ObtenerValorDataRow(row, "Precio", "Precio_VP", "CostoUnitario_CP"))
-                Dim subt As Decimal = Convert.ToDecimal(ObtenerValorDataRow(row, "Subtotal", "Subtotal_VP", "subtotal_CP"))
-                Dim desc As String = ObtenerValorDataRow(row, "Descripción", "Descripcion_prod")
-                lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, String)(idProd, cant, prec, subt, desc))
+                Dim idProd As Integer = ExtraerIdEnteroDataRow(row)
+                Dim cant As Decimal = ExtraerDecimalDataRow(row, {"Cantidad", "Cantidad_VP", "Cantidad_CP"}, 1D)
+                Dim prec As Decimal = ExtraerDecimalDataRow(row, {"Precio", "Precio_VP", "CostoUnitario_CP"}, 0D)
+                Dim desc As Decimal = ExtraerDecimalDataRow(row, {"Descuento", "Descuento_VP", "Descuento_CP"}, 0D)
+                Dim subt As Decimal = ExtraerDecimalDataRow(row, {"Subtotal", "Subtotal_VP", "subtotal_CP"}, 0D)
+                Dim nombreDesc As String = ExtraerTextoDataRow(row, {"Descripción", "Descripcion", "Descripcion_prod"})
+                lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String)(idProd, cant, prec, desc, subt, nombreDesc))
             Next
         ElseIf TypeOf DetalleTransaccion Is DataGridView Then
             Dim dgv As DataGridView = CType(DetalleTransaccion, DataGridView)
             For Each row As DataGridViewRow In dgv.Rows
                 If Not row.IsNewRow Then
-                    Dim idProd As Integer = Convert.ToInt32(ObtenerValorFila(row, "Código", "Id_prod"))
-                    Dim cant As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Cantidad", "Cantidad_VP", "Cantidad_CP"))
-                    Dim prec As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Precio", "Precio_VP", "CostoUnitario_CP"))
-                    Dim subt As Decimal = Convert.ToDecimal(ObtenerValorFila(row, "Subtotal", "Subtotal_VP", "subtotal_CP"))
-                    Dim desc As String = ObtenerValorFila(row, "Descripción", "Descripcion_prod")
-                    lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, String)(idProd, cant, prec, subt, desc))
+                    Dim idProd As Integer = ExtraerIdEnteroFila(row)
+                    Dim cant As Decimal = ExtraerDecimalFila(row, {"Cantidad", "Cantidad_VP", "Cantidad_CP", "cant"}, 1D)
+                    Dim prec As Decimal = ExtraerDecimalFila(row, {"Precio", "Precio_VP", "CostoUnitario_CP", "Precio unitario"}, 0D)
+                    Dim desc As Decimal = ExtraerDecimalFila(row, {"Descuento", "Descuento_VP", "Descuento_CP"}, 0D)
+                    Dim subt As Decimal = ExtraerDecimalFila(row, {"Subtotal", "Subtotal_VP", "subtotal_CP"}, 0D)
+                    Dim nombreDesc As String = ExtraerTextoFila(row, {"Descripción", "Descripcion", "Descripcion_prod", "Nombre"})
+                    lista.Add(New Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String)(idProd, cant, prec, desc, subt, nombreDesc))
                 End If
             Next
         End If
@@ -167,28 +164,133 @@ Public Class Cobro
         Return lista
     End Function
 
-    Private Function ObtenerValorFila(row As DataGridViewRow, ParamArray nombresColumna() As String) As Object
-        For Each col In nombresColumna
-            If row.DataGridView IsNot Nothing AndAlso row.DataGridView.Columns.Contains(col) AndAlso row.Cells(col).Value IsNot Nothing Then
-                Return row.Cells(col).Value
+    Private Function ExtraerIdEnteroFila(row As DataGridViewRow) As Integer
+        Dim nombresId As String() = {"Código", "Codigo", "Id_prod", "ID", "ID_Producto", "colCodigo", "Id"}
+        If row.DataGridView IsNot Nothing Then
+            For Each col In nombresId
+                For Each dgvCol As DataGridViewColumn In row.DataGridView.Columns
+                    If dgvCol.Name.Equals(col, StringComparison.OrdinalIgnoreCase) OrElse dgvCol.HeaderText.Equals(col, StringComparison.OrdinalIgnoreCase) Then
+                        Dim val = row.Cells(dgvCol.Index).Value
+                        Dim parsedId As Integer
+                        If val IsNot Nothing AndAlso Integer.TryParse(val.ToString(), parsedId) AndAlso parsedId > 0 Then
+                            Return parsedId
+                        End If
+                    End If
+                Next
+            Next
+        End If
+
+        For Each cell As DataGridViewCell In row.Cells
+            Dim headerText As String = cell.OwningColumn.HeaderText.ToLower()
+            If headerText.Contains("cód") OrElse headerText.Contains("cod") OrElse headerText.Contains("id") Then
+                Dim valStr As String = cell.Value?.ToString().Trim()
+                Dim idResult As Integer
+                If Integer.TryParse(valStr, idResult) AndAlso idResult > 0 Then
+                    Return idResult
+                End If
             End If
         Next
-        Return 0
+
+        For Each cell As DataGridViewCell In row.Cells
+            If cell.Value IsNot Nothing AndAlso Not IsDBNull(cell.Value) Then
+                Dim valStr As String = cell.Value.ToString().Trim()
+                Dim idResult As Integer
+                If Integer.TryParse(valStr, idResult) AndAlso idResult > 0 Then
+                    Return idResult
+                End If
+            End If
+        Next
+        Return 1
     End Function
 
-    Private Function ObtenerValorDataRow(row As DataRow, ParamArray nombresColumna() As String) As Object
-        For Each col In nombresColumna
-            If row.Table.Columns.Contains(col) AndAlso row(col) IsNot DBNull.Value AndAlso row(col) IsNot Nothing Then
-                Return row(col)
+    Private Function ExtraerDecimalFila(row As DataGridViewRow, nombresColumna() As String, valorDefecto As Decimal) As Decimal
+        If row.DataGridView IsNot Nothing Then
+            For Each col In nombresColumna
+                For Each dgvCol As DataGridViewColumn In row.DataGridView.Columns
+                    If dgvCol.Name.Equals(col, StringComparison.OrdinalIgnoreCase) OrElse dgvCol.HeaderText.Equals(col, StringComparison.OrdinalIgnoreCase) Then
+                        Dim val = row.Cells(dgvCol.Index).Value
+                        Dim res As Decimal
+                        If val IsNot Nothing AndAlso Decimal.TryParse(val.ToString(), res) Then
+                            Return res
+                        End If
+                    End If
+                Next
+            Next
+        End If
+        Return valorDefecto
+    End Function
+
+    Private Function ExtraerTextoFila(row As DataGridViewRow, nombresColumna() As String) As String
+        If row.DataGridView IsNot Nothing Then
+            For Each col In nombresColumna
+                For Each dgvCol As DataGridViewColumn In row.DataGridView.Columns
+                    If dgvCol.Name.Equals(col, StringComparison.OrdinalIgnoreCase) OrElse dgvCol.HeaderText.Equals(col, StringComparison.OrdinalIgnoreCase) Then
+                        Dim val = row.Cells(dgvCol.Index).Value
+                        If val IsNot Nothing AndAlso Not IsDBNull(val) Then
+                            Return val.ToString()
+                        End If
+                    End If
+                Next
+            Next
+        End If
+
+        For Each cell As DataGridViewCell In row.Cells
+            If cell.Value IsNot Nothing AndAlso Not IsDBNull(cell.Value) Then
+                Dim strVal As String = cell.Value.ToString()
+                Dim dummyInt As Integer
+                Dim dummyDec As Decimal
+                If Not Integer.TryParse(strVal, dummyInt) AndAlso Not Decimal.TryParse(strVal, dummyDec) Then
+                    Return strVal
+                End If
             End If
         Next
-        Return 0
+        Return ""
+    End Function
+
+    Private Function ExtraerIdEnteroDataRow(row As DataRow) As Integer
+        Dim nombresId As String() = {"Id_prod", "ID", "Código", "Codigo", "ID_Producto", "Id"}
+        For Each col In nombresId
+            If row.Table.Columns.Contains(col) AndAlso Not IsDBNull(row(col)) Then
+                Dim res As Integer
+                If Integer.TryParse(row(col).ToString(), res) AndAlso res > 0 Then Return res
+            End If
+        Next
+        Return 1
+    End Function
+
+    Private Function ExtraerDecimalDataRow(row As DataRow, nombresColumna() As String, valorDefecto As Decimal) As Decimal
+        For Each col In nombresColumna
+            If row.Table.Columns.Contains(col) AndAlso Not IsDBNull(row(col)) Then
+                Dim res As Decimal
+                If Decimal.TryParse(row(col).ToString(), res) Then Return res
+            End If
+        Next
+        Return valorDefecto
+    End Function
+
+    Private Function ExtraerTextoDataRow(row As DataRow, nombresColumna() As String) As String
+        For Each col In nombresColumna
+            If row.Table.Columns.Contains(col) AndAlso Not IsDBNull(row(col)) Then Return row(col).ToString()
+        Next
+        Return ""
+    End Function
+
+    Private Function ObtenerNombreEmpleado() As String
+        Try
+            Using con As OleDbConnection = ObtenerConexion()
+                Dim cmd As New OleDbCommand("SELECT Nombre_emp FROM Empleado WHERE Id_emp = ?", con)
+                cmd.Parameters.Add("?", OleDbType.Integer).Value = IdEmpleado
+                Dim res = cmd.ExecuteScalar()
+                If res IsNot Nothing AndAlso res IsNot DBNull.Value Then Return res.ToString()
+            End Using
+        Catch ex As Exception
+        End Try
+        Return "Sistema"
     End Function
 
     Private Sub GuardarVenta(metodoPago As String)
         Try
             Using con As OleDbConnection = ObtenerConexion()
-                con.Open()
                 Using trans As OleDbTransaction = con.BeginTransaction()
                     Try
                         Dim queryVenta As String = "INSERT INTO Venta (fecha_v, Id_cli, Id_emp, Id_cor, total_v, MetodoPago_v) VALUES (?, ?, ?, ?, ?, ?)"
@@ -212,14 +314,16 @@ Public Class Cobro
                             Dim idProd = item.Item1
                             Dim cantidad = item.Item2
                             Dim precio = item.Item3
-                            Dim subtotal = item.Item4
+                            Dim descVal = item.Item4
+                            Dim subtotal = item.Item5
 
-                            Dim queryDet As String = "INSERT INTO Detalle_VP (Id_v, Id_prod, Cantidad_VP, Precio_VP, Subtotal_VP) VALUES (?, ?, ?, ?, ?)"
+                            Dim queryDet As String = "INSERT INTO Detalle_VP (Id_v, Id_prod, Cantidad_VP, Precio_VP, Descuento_VP, Subtotal_VP) VALUES (?, ?, ?, ?, ?, ?)"
                             Using cmdDet As New OleDbCommand(queryDet, con, trans)
                                 cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idVentaGen
                                 cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idProd
                                 cmdDet.Parameters.Add("?", OleDbType.Decimal).Value = cantidad
                                 cmdDet.Parameters.Add("?", OleDbType.Currency).Value = precio
+                                cmdDet.Parameters.Add("?", OleDbType.Currency).Value = descVal
                                 cmdDet.Parameters.Add("?", OleDbType.Currency).Value = subtotal
                                 cmdDet.ExecuteNonQuery()
                             End Using
@@ -256,7 +360,6 @@ Public Class Cobro
     Private Sub GuardarCompra(metodoPago As String)
         Try
             Using con As OleDbConnection = ObtenerConexion()
-                con.Open()
                 Using trans As OleDbTransaction = con.BeginTransaction()
                     Try
                         Dim queryCompra As String = "INSERT INTO Compras (Fecha_com, ID_prov, ID_emp, total_com, MetodoPago_com) VALUES (?, ?, ?, ?, ?)"
@@ -279,14 +382,16 @@ Public Class Cobro
                             Dim idProd = item.Item1
                             Dim cantidad = item.Item2
                             Dim costo = item.Item3
-                            Dim subtotal = item.Item4
+                            Dim descVal = item.Item4
+                            Dim subtotal = item.Item5
 
-                            Dim queryDet As String = "INSERT INTO Detalle_CP (ID_com, ID_prod, Cantidad_CP, CostoUnitario_CP, subtotal_CP) VALUES (?, ?, ?, ?, ?)"
+                            Dim queryDet As String = "INSERT INTO Detalle_CP (ID_com, ID_prod, Cantidad_CP, CostoUnitario_CP, Descuento_CP, subtotal_CP) VALUES (?, ?, ?, ?, ?, ?)"
                             Using cmdDet As New OleDbCommand(queryDet, con, trans)
                                 cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idCompraGen
                                 cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idProd
                                 cmdDet.Parameters.Add("?", OleDbType.Decimal).Value = cantidad
                                 cmdDet.Parameters.Add("?", OleDbType.Currency).Value = costo
+                                cmdDet.Parameters.Add("?", OleDbType.Currency).Value = descVal
                                 cmdDet.Parameters.Add("?", OleDbType.Currency).Value = subtotal
                                 cmdDet.ExecuteNonQuery()
                             End Using
@@ -320,48 +425,76 @@ Public Class Cobro
         End Try
     End Sub
 
-    Private Sub ImprimirTicket(folio As Integer, metodoPago As String, items As List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, String)))
+    Private Sub ImprimirTicket(folio As Integer, metodoPago As String, items As List(Of Tuple(Of Integer, Decimal, Decimal, Decimal, Decimal, String)))
         Try
+            Dim nombreEmp As String = ObtenerNombreEmpleado()
+            Dim tipoTx As String = TipoTransaccion.ToUpper()
+            Dim etiquetaPersona As String = If(EsVenta, "Cliente: ", "Proveedor: ")
+
             Dim pd As New PrintDocument()
             AddHandler pd.PrintPage, Sub(senderObj, ev)
-                                         Dim fuenteTitulo As New Font("Arial", 10, FontStyle.Bold)
-                                         Dim fuenteTexto As New Font("Arial", 8, FontStyle.Regular)
-                                         Dim fuenteBold As New Font("Arial", 8, FontStyle.Bold)
+                                         Dim fTitulo As New Font("Arial", 10, FontStyle.Bold)
+                                         Dim fSub As New Font("Arial", 8, FontStyle.Bold)
+                                         Dim fTexto As New Font("Arial", 8, FontStyle.Regular)
                                          Dim yPos As Single = 10
                                          Dim posX As Single = 10
 
-                                         ev.Graphics.DrawString("--- TICKET DE " & TipoTransaccion.ToUpper() & " ---", fuenteTitulo, Brushes.Black, posX, yPos)
-                                         yPos += 20
-                                         ev.Graphics.DrawString("Folio #: " & folio, fuenteBold, Brushes.Black, posX, yPos)
+                                         ' Datos del Negocio
+                                         ev.Graphics.DrawString("HELADOS REGIA", fTitulo, Brushes.Black, posX, yPos)
+                                         yPos += 18
+                                         ev.Graphics.DrawString("Av. Gaspar Castaño 360,", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString("66648 Cdad. Apodaca, N.L.", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 18
+
+                                         ' Tipo de Transacción y Folio
+                                         ev.Graphics.DrawString($"--- TICKET DE {tipoTx} ---", fSub, Brushes.Black, posX, yPos)
                                          yPos += 15
-                                         ev.Graphics.DrawString("Fecha: " & DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fuenteTexto, Brushes.Black, posX, yPos)
+                                         ev.Graphics.DrawString($"Folio #: {folio}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString($"{etiquetaPersona}{NombreCliente}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString($"Atendió: {nombreEmp}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString($"Método Pago: {metodoPago}", fTexto, Brushes.Black, posX, yPos)
                                          yPos += 15
-                                         ev.Graphics.DrawString("Método Pago: " & metodoPago, fuenteTexto, Brushes.Black, posX, yPos)
-                                         yPos += 20
-                                         ev.Graphics.DrawString("------------------------------------------", fuenteTexto, Brushes.Black, posX, yPos)
+                                         ev.Graphics.DrawString("------------------------------------------", fTexto, Brushes.Black, posX, yPos)
                                          yPos += 15
 
+                                         ' Detalle de Productos
                                          For Each item In items
-                                             Dim desc = item.Item5
                                              Dim cant = item.Item2
-                                             Dim subt = item.Item4.ToString("$#,##0.00")
+                                             Dim descProd = item.Item6
+                                             Dim descuentoVal = item.Item4
+                                             Dim subt = item.Item5
 
-                                             ev.Graphics.DrawString($"{cant} x {desc}", fuenteTexto, Brushes.Black, posX, yPos)
-                                             yPos += 15
-                                             ev.Graphics.DrawString($"    Subtotal: {subt}", fuenteTexto, Brushes.Black, posX, yPos)
+                                             ev.Graphics.DrawString($"{cant} x {descProd}", fTexto, Brushes.Black, posX, yPos)
+                                             yPos += 13
+
+                                             If descuentoVal > 0 Then
+                                                 ev.Graphics.DrawString($"    Descuento: {descuentoVal.ToString("$#,##0.00")}", fTexto, Brushes.Black, posX, yPos)
+                                                 yPos += 13
+                                             End If
+
+                                             ev.Graphics.DrawString($"    Subtotal: {subt.ToString("$#,##0.00")}", fTexto, Brushes.Black, posX, yPos)
                                              yPos += 15
                                          Next
 
-                                         yPos += 10
-                                         ev.Graphics.DrawString("------------------------------------------", fuenteTexto, Brushes.Black, posX, yPos)
+                                         ev.Graphics.DrawString("------------------------------------------", fTexto, Brushes.Black, posX, yPos)
                                          yPos += 15
-                                         ev.Graphics.DrawString("TOTAL: " & TotalPagar.ToString("$#,##0.00"), fuenteTitulo, Brushes.Black, posX, yPos)
+
+                                         ' Totales y Pagos
+                                         ev.Graphics.DrawString($"TOTAL: {TotalPagar.ToString("$#,##0.00")}", fSub, Brushes.Black, posX, yPos)
                                          yPos += 15
-                                         ev.Graphics.DrawString("Recibido: $" & TXT_DR.Text, fuenteTexto, Brushes.Black, posX, yPos)
-                                         yPos += 15
-                                         ev.Graphics.DrawString("Cambio: $" & TXT_CAMBIO.Text, fuenteTexto, Brushes.Black, posX, yPos)
-                                         yPos += 25
-                                         ev.Graphics.DrawString("¡Gracias por su preferencia!", fuenteBold, Brushes.Black, posX, yPos)
+                                         ev.Graphics.DrawString($"Dinero Recibido: ${TXT_DR.Text}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 12
+                                         ev.Graphics.DrawString($"Cambio: ${TXT_CAMBIO.Text}", fTexto, Brushes.Black, posX, yPos)
+                                         yPos += 22
+
+                                         ' Mensaje de Agradecimiento
+                                         ev.Graphics.DrawString("¡Gracias por su compra!", fSub, Brushes.Black, posX, yPos)
                                      End Sub
             pd.Print()
         Catch ex As Exception

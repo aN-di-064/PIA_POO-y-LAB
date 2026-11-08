@@ -114,7 +114,7 @@ Partial Class UC_Corte
         LabelTotalVentas.Name = "LabelTotalVentas"
         LabelTotalVentas.Size = New Size(126, 21)
         LabelTotalVentas.TabIndex = 30
-        LabelTotalVentas.Text = "Ventas del turno:"
+        LabelTotalVentas.Text = "Efectivo en Caja:"
         ' 
         ' MTB_TotalVentas
         ' 
@@ -187,5 +187,4 @@ Partial Class UC_Corte
     Friend WithEvents MTB_MontoFinal As MaskedTextBox
     Friend WithEvents Button_Abrir As Button
     Friend WithEvents Button_Cerrar As Button
-
 End Class

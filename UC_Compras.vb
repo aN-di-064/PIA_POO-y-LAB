@@ -94,7 +94,7 @@ Public Class UC_Compras
 
         Using buscador As New Busqueda_Venta()
             buscador.TipoBusqueda = "PRODUCTO"
-            buscador.Tag = "COMPRA" ' Pasar Tag para obtener PCompra_prod en lugar de PVenta_prod
+            buscador.Tag = "COMPRA"
 
             If buscador.ShowDialog() = DialogResult.OK Then
                 Dim codigo As String = buscador.CodigoSeleccionado
@@ -109,7 +109,6 @@ Public Class UC_Compras
                 Dim idxDesc As Integer = ObtenerIndiceColumna(dgvCompra, "Descuento", "Col_Descuento")
                 Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
 
-                ' Verificar si ya existe en la lista
                 Dim yaExiste As Boolean = False
                 If idxCodigo >= 0 Then
                     For Each row As DataGridViewRow In dgvCompra.Rows
@@ -254,103 +253,26 @@ Public Class UC_Compras
 
         Dim totalCompra As Decimal = If(lblTotal.Tag IsNot Nothing, Convert.ToDecimal(lblTotal.Tag), 0D)
 
-        ' Abrir la pantalla de Cobro configurada para Compras (EsVenta = False)
+        ' Configurar e iniciar la ventana de Cobro compartida para Compras (EsVenta = False)
         Dim frmCobro As New Cobro()
         frmCobro.EsVenta = False
         frmCobro.TotalTransaccion = totalCompra
-        frmCobro.FolioVenta = lblNumeroCompra.Text
+        frmCobro.IdClienteProveedor = Convert.ToInt32(cboProveedor.SelectedValue)
+        frmCobro.IdEmpleado = If(InicioSesion.IdUsuarioActual > 0, InicioSesion.IdUsuarioActual, 1)
+        frmCobro.FolioVenta = Convert.ToInt32(lblNumeroCompra.Text)
         frmCobro.NombreCliente = cboProveedor.Text
         frmCobro.ListaProductos = dgvCompra.Rows
 
+        ' Como Cobro.vb ya realiza el guardado completo en la BD, aquí solo limpiamos la pantalla al recibir DialogResult.OK
         If frmCobro.ShowDialog() = DialogResult.OK Then
-            ProcesarCompraEnBD(totalCompra)
+            dgvCompra.Rows.Clear()
+            CalcularTotal()
+            ActualizarNumeroCompra()
+            CargarProveedor()
+
+            If btnCobrar IsNot Nothing Then btnCobrar.Enabled = False
+            If btnEliminar IsNot Nothing Then btnEliminar.Enabled = False
         End If
-    End Sub
-
-    '========================================
-    ' 8. GUARDAR COMPRA EN BASE DE DATOS
-    '========================================
-    Private Sub ProcesarCompraEnBD(totalCompra As Decimal)
-        Try
-            Using con As OleDbConnection = ObtenerConexion()
-
-                Dim idProveedorInt As Integer = Convert.ToInt32(cboProveedor.SelectedValue)
-                Dim idEmpleadoInt As Integer = If(InicioSesion.IdUsuarioActual > 0, InicioSesion.IdUsuarioActual, 1)
-
-                Dim idCompraGenerado As Integer = 0
-                Dim queryCompra As String = "INSERT INTO Compras (Fecha_com, ID_prov, ID_emp, total_com) VALUES (?, ?, ?, ?)"
-                Using cmdCompra As New OleDbCommand(queryCompra, con)
-                    cmdCompra.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now
-                    cmdCompra.Parameters.Add("?", OleDbType.Integer).Value = idProveedorInt
-                    cmdCompra.Parameters.Add("?", OleDbType.Integer).Value = idEmpleadoInt
-                    cmdCompra.Parameters.Add("?", OleDbType.Currency).Value = totalCompra
-                    cmdCompra.ExecuteNonQuery()
-
-                    cmdCompra.CommandText = "SELECT @@IDENTITY"
-                    idCompraGenerado = Convert.ToInt32(cmdCompra.ExecuteScalar())
-                End Using
-
-                Dim idxIDProd As Integer = ObtenerIndiceColumna(dgvCompra, "ID_prod")
-                Dim idxCodigo As Integer = ObtenerIndiceColumna(dgvCompra, "Codigo", "Col_Código")
-                Dim idxCant As Integer = ObtenerIndiceColumna(dgvCompra, "Cantidad", "Col_Cantidad")
-                Dim idxPrecio As Integer = ObtenerIndiceColumna(dgvCompra, "Precio", "Col_Precio")
-                Dim idxDesc As Integer = ObtenerIndiceColumna(dgvCompra, "Descuento", "Col_Descuento")
-                Dim idxSubtotal As Integer = ObtenerIndiceColumna(dgvCompra, "Subtotal", "Col_Importe")
-
-                For Each row As DataGridViewRow In dgvCompra.Rows
-                    If row.IsNewRow Then Continue For
-
-                    Dim idProd As Integer = 0
-                    If idxIDProd >= 0 AndAlso row.Cells(idxIDProd).Value IsNot Nothing Then
-                        Integer.TryParse(Convert.ToString(row.Cells(idxIDProd).Value), idProd)
-                    End If
-                    If idProd = 0 AndAlso idxCodigo >= 0 AndAlso row.Cells(idxCodigo).Value IsNot Nothing Then
-                        Integer.TryParse(Convert.ToString(row.Cells(idxCodigo).Value), idProd)
-                    End If
-
-                    Dim cantidad As Decimal = If(idxCant >= 0, Convert.ToDecimal(row.Cells(idxCant).Value), 0D)
-                    Dim costo As Decimal = If(idxPrecio >= 0, Convert.ToDecimal(row.Cells(idxPrecio).Value), 0D)
-                    Dim pctDescuento As Decimal = If(idxDesc >= 0, Convert.ToDecimal(row.Cells(idxDesc).Value), 0D)
-                    Dim subtotal As Decimal = If(idxSubtotal >= 0, Convert.ToDecimal(row.Cells(idxSubtotal).Value), 0D)
-
-                    Dim montoDescuentoTotal As Decimal = (cantidad * costo) * (pctDescuento / 100D)
-
-                    ' Insertar registro en Detalle_CP
-                    Dim queryDetalle As String = "INSERT INTO Detalle_CP (ID_com, ID_prod, Cantidad_CP, CostoUnitario_CP, Descuento_CP, subtotal_CP) VALUES (?, ?, ?, ?, ?, ?)"
-                    Using cmdDet As New OleDbCommand(queryDetalle, con)
-                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idCompraGenerado
-                        cmdDet.Parameters.Add("?", OleDbType.Integer).Value = idProd
-                        cmdDet.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
-                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = costo
-                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = montoDescuentoTotal
-                        cmdDet.Parameters.Add("?", OleDbType.Currency).Value = subtotal
-                        cmdDet.ExecuteNonQuery()
-                    End Using
-
-                    ' Incrementar existencias del inventario en la tabla Producto
-                    Dim queryStock As String = "UPDATE Producto SET Existencias = Existencias + ? WHERE Id_prod = ?"
-                    Using cmdStock As New OleDbCommand(queryStock, con)
-                        cmdStock.Parameters.Add("?", OleDbType.Numeric).Value = cantidad
-                        cmdStock.Parameters.Add("?", OleDbType.Integer).Value = idProd
-                        cmdStock.ExecuteNonQuery()
-                    End Using
-                Next
-
-                MessageBox.Show("¡Compra registrada e inventario actualizado exitosamente!" & vbCrLf & "Folio: " & idCompraGenerado, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                ' Limpieza y refresco del formulario
-                dgvCompra.Rows.Clear()
-                CalcularTotal()
-                ActualizarNumeroCompra()
-                CargarProveedor()
-
-                If btnCobrar IsNot Nothing Then btnCobrar.Enabled = False
-                If btnEliminar IsNot Nothing Then btnEliminar.Enabled = False
-
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error al guardar la compra: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
